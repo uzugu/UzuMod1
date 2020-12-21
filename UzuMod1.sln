@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UzuMod1", "UzuMod1\UzuMod1.csproj", "{4146ADBC-E01C-4691-A6C2-70A8BB5DFE9B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4146ADBC-E01C-4691-A6C2-70A8BB5DFE9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4146ADBC-E01C-4691-A6C2-70A8BB5DFE9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4146ADBC-E01C-4691-A6C2-70A8BB5DFE9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4146ADBC-E01C-4691-A6C2-70A8BB5DFE9B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B455E4BB-90F5-491F-92C0-5AFF52D443BA}
+	EndGlobalSection
+EndGlobal
