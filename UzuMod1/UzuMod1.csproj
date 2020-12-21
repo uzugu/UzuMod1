@@ -1,8 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="examplesurvivorbundle" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="examplesurvivorbundle" />
+  </ItemGroup>
 
   <ItemGroup>
     <Reference Include="0Harmony">
