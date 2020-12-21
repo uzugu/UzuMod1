@@ -18,13 +18,13 @@ namespace ExampleSurvivor
 
     [BepInDependency("com.bepis.r2api")]
 
-    [BepInPlugin(MODUID, "ExampleSurvivor", "1.0.0")] // put your own name and version here
+    [BepInPlugin(MODUID, "Agumon", "0.0.1")] // put your own name and version here
     [R2APISubmoduleDependency(nameof(PrefabAPI), nameof(SurvivorAPI), nameof(LoadoutAPI), nameof(ItemAPI), nameof(DifficultyAPI), nameof(BuffAPI))] // need these dependencies for the mod to work properly
 
 
     public class ExampleSurvivor : BaseUnityPlugin
     {
-        public const string MODUID = "com.developer_name.ExampleSurvivor"; // put your own names here
+        public const string MODUID = "com.uzugu.Agumon"; // put your own names here
 
         public static GameObject characterPrefab; // the survivor body prefab
         public GameObject characterDisplay; // the prefab used for character select
@@ -341,16 +341,16 @@ namespace ExampleSurvivor
 
 
             // write a clean survivor description here!
-            string desc = "Example Survivor something something.<color=#CCD3E0>" + Environment.NewLine + Environment.NewLine;
+            string desc = "Agumon comes from Digiword.<color=#CCD3E0>" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > Sample text 1." + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > Sample text 2." + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > Sample Text 3." + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > Sample Text 4.</color>" + Environment.NewLine + Environment.NewLine;
 
             // add the language tokens
-            LanguageAPI.Add("EXAMPLESURVIVOR_NAME", "Example Survivor");
+            LanguageAPI.Add("EXAMPLESURVIVOR_NAME", "Agumon");
             LanguageAPI.Add("EXAMPLESURVIVOR_DESCRIPTION", desc);
-            LanguageAPI.Add("EXAMPLESURVIVOR_SUBTITLE", "Template for Custom Survivors");
+            LanguageAPI.Add("EXAMPLESURVIVOR_SUBTITLE", "Digimon");
 
             // add our new survivor to the game~
             SurvivorDef survivorDef = new SurvivorDef
@@ -412,8 +412,8 @@ namespace ExampleSurvivor
         {
             SkillLocator component = characterPrefab.GetComponent<SkillLocator>();
 
-            LanguageAPI.Add("EXAMPLESURVIVOR_PRIMARY_CROSSBOW_NAME", "Crossbow");
-            LanguageAPI.Add("EXAMPLESURVIVOR_PRIMARY_CROSSBOW_DESCRIPTION", "Fire an arrow, dealing <style=cIsDamage>200% damage</style>.");
+            LanguageAPI.Add("EXAMPLESURVIVOR_PRIMARY_CROSSBOW_NAME", "Fire");
+            LanguageAPI.Add("EXAMPLESURVIVOR_PRIMARY_CROSSBOW_DESCRIPTION", "Fire a flame, dealing <style=cIsDamage>200% damage</style>.");
 
             // set up your primary skill def here!
 
