@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UzuMod1", "UzuMod1\UzuMod1.csproj", "{4146ADBC-E01C-4691-A6C2-70A8BB5DFE9B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExampleSurvivor", "..\ExampleSurvivor\ExampleSurvivor\ExampleSurvivor.csproj", "{74994841-85E3-4B51-A390-F031B0EAFA6D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{4146ADBC-E01C-4691-A6C2-70A8BB5DFE9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4146ADBC-E01C-4691-A6C2-70A8BB5DFE9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4146ADBC-E01C-4691-A6C2-70A8BB5DFE9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74994841-85E3-4B51-A390-F031B0EAFA6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74994841-85E3-4B51-A390-F031B0EAFA6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74994841-85E3-4B51-A390-F031B0EAFA6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74994841-85E3-4B51-A390-F031B0EAFA6D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

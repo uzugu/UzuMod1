@@ -1,6 +1,4 @@
-﻿using BepInEx;
-using RoR2;
-using System;
+﻿using System;
 using System.Reflection;
 using System.Collections.Generic;
 using BepInEx;
@@ -15,15 +13,18 @@ using UnityEngine;
 using UnityEngine.Networking;
 using KinematicCharacterController;
 
-
-namespace uzugu
+namespace ExampleSurvivor
 {
+
     [BepInDependency("com.bepis.r2api")]
-    //Change these
-    [BepInPlugin("com.UzuStation.UzuMod1", "For now, a test", "0.0.1")]
-    public class UzuMod1 : BaseUnityPlugin
+
+    [BepInPlugin(MODUID, "ExampleSurvivor", "1.0.0")] // put your own name and version here
+    [R2APISubmoduleDependency(nameof(PrefabAPI), nameof(SurvivorAPI), nameof(LoadoutAPI), nameof(ItemAPI), nameof(DifficultyAPI), nameof(BuffAPI))] // need these dependencies for the mod to work properly
+
+
+    public class ExampleSurvivor : BaseUnityPlugin
     {
-        public const string MODUID = "com.Uzugu.Agumon"; // put your own names here
+        public const string MODUID = "com.developer_name.ExampleSurvivor"; // put your own names here
 
         public static GameObject characterPrefab; // the survivor body prefab
         public GameObject characterDisplay; // the prefab used for character select
@@ -57,7 +58,7 @@ namespace uzugu
         internal static void CreatePrefab()
         {
             // first clone the commando prefab so we can turn that into our own survivor
-            characterPrefab = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/CharacterBodies/CommandoBody"), "ExampleSurvivorBody", true, "C:\\Users\\uzuik\\source\\repos\\UzuMod1\\UzuMod1\\UzuMod1.cs", "CreatePrefab", 151);
+            characterPrefab = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/CharacterBodies/CommandoBody"), "ExampleSurvivorBody", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "CreatePrefab", 151);
 
             characterPrefab.GetComponent<NetworkIdentity>().localPlayerAuthority = true;
 
@@ -100,8 +101,8 @@ namespace uzugu
             // set up the character body here
             CharacterBody bodyComponent = characterPrefab.GetComponent<CharacterBody>();
             bodyComponent.bodyIndex = -1;
-            bodyComponent.baseNameToken = "Agumon"; // name token
-            bodyComponent.subtitleNameToken = "Digimon"; // subtitle token- used for umbras
+            bodyComponent.baseNameToken = "EXAMPLESURVIVOR_NAME"; // name token
+            bodyComponent.subtitleNameToken = "EXAMPLESURVIVOR_SUBTITLE"; // subtitle token- used for umbras
             bodyComponent.bodyFlags = CharacterBody.BodyFlags.ImmuneToExecutes;
             bodyComponent.rootMotionInMainState = false;
             bodyComponent.mainRootSpeed = 0;
@@ -579,7 +580,7 @@ namespace EntityStates.ExampleSurvivorStates
 
                 if (base.isAuthority)
                 {
-                    ProjectileManager.instance.FireProjectile(UzuMod1.ExampleSurvivor.arrowProjectile, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), base.gameObject, this.damageCoefficient * this.damageStat, 0f, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);
+                    ProjectileManager.instance.FireProjectile(ExampleSurvivor.ExampleSurvivor.arrowProjectile, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), base.gameObject, this.damageCoefficient * this.damageStat, 0f, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);
                 }
             }
         }
