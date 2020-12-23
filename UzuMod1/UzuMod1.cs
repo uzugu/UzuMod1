@@ -12,6 +12,7 @@ using RoR2.Projectile;
 using UnityEngine;
 using UnityEngine.Networking;
 using KinematicCharacterController;
+using System.Collections;
 
 namespace ExampleSurvivor
 {
@@ -31,8 +32,9 @@ namespace ExampleSurvivor
         public GameObject doppelganger; // umbra shit
 
         public static GameObject arrowProjectile; // prefab for our survivor's primary attack projectile
-        public static GameObject arrowProjectile2; // prefab for our survivor's secondary attack projectile
-
+        public static GameObject arrowProjectile2;
+        public static GameObject arrowProjectile3;
+        public static GameObject slashattack;
         private static readonly Color characterColor = new Color(0.55f, 0.55f, 0.55f); // color used for the survivor
 
         private void Awake()
@@ -326,20 +328,30 @@ namespace ExampleSurvivor
             // clone rex's syringe projectile prefab here to use as our own projectile ///cambiado a bola de fuego
             arrowProjectile = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/MageFireBombProjectile"), "Prefabs/Projectiles/ExampleArrowProjectile2", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
 
-            arrowProjectile2 = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/LemurianBouncyFireball"), "Prefabs/Projectiles/ExampleArrowProjectile", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
-            
+            arrowProjectile2 = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/LemurianBigFireball"), "Prefabs/Projectiles/ExampleArrowProjectile", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
+
+            arrowProjectile3 = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/MageFireboltExpanded"), "Prefabs/Projectiles/ExampleArrowProjectile2", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
+
+            //slashattack = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/effects/LemurianSlash"), "Prefabs/Projectiles/Slashattack", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
+
             // just setting the numbers to 1 as the entitystate will take care of those
             arrowProjectile.GetComponent<ProjectileController>().procCoefficient = 1f;
             arrowProjectile.GetComponent<ProjectileDamage>().damage = 1f;
-            arrowProjectile.GetComponent<ProjectileDamage>().damageType = DamageType.Generic;
+            arrowProjectile.GetComponent<ProjectileDamage>().damageType = DamageType.PercentIgniteOnHit;
 
             arrowProjectile2.GetComponent<ProjectileController>().procCoefficient = 1f;
             arrowProjectile2.GetComponent<ProjectileDamage>().damage = 1f;
-            arrowProjectile2.GetComponent<ProjectileDamage>().damageType = DamageType.Generic;
+            arrowProjectile2.GetComponent<ProjectileDamage>().damageType = DamageType.IgniteOnHit;
+
+
+            //slashattack.GetComponent<ProjectileController>().procCoefficient = 1f;
+            //slashattack.GetComponent<ProjectileDamage>().damage = 1f;
+            //slashattack.GetComponent<ProjectileDamage>().damageType = DamageType.Generic;
 
             // register it for networking
             if (arrowProjectile) PrefabAPI.RegisterNetworkPrefab(arrowProjectile);
             if (arrowProjectile2) PrefabAPI.RegisterNetworkPrefab(arrowProjectile2);
+            //if (slashattack) PrefabAPI.RegisterNetworkPrefab(slashattack);
 
             // add it to the projectile catalog or it won't work in multiplayer
             ProjectileCatalog.getAdditionalEntries += list =>
@@ -352,6 +364,12 @@ namespace ExampleSurvivor
                 list.Add(arrowProjectile2);
 
             };
+
+            //ProjectileCatalog.getAdditionalEntries += list =>
+            //{
+            //    list.Add(slashattack);
+
+            //};
 
             // write a clean survivor description here!
             string desc = "Agumon comes from Digiword.<color=#CCD3E0>" + Environment.NewLine + Environment.NewLine;
@@ -400,6 +418,7 @@ namespace ExampleSurvivor
             PassiveSetup();
             PrimarySetup();
             SecondarySetup();
+            UtilitySetup();
         }
 
         void RegisterStates()
@@ -480,6 +499,51 @@ namespace ExampleSurvivor
                 unlockableName = "",
                 viewableNode = new ViewablesCatalog.Node(newSkillDef.skillNameToken, false, null)
             };*/
+            //////////////////7
+            //LoadoutAPI.AddSkill(typeof(Slash));
+
+            //mySkillDef = ScriptableObject.CreateInstance<SkillDef>();
+            //mySkillDef.activationState = new SerializableEntityStateType(typeof(Slash));
+            //mySkillDef.activationStateMachineName = "Weapon";
+            //mySkillDef.baseMaxStock = 1;
+            //mySkillDef.baseRechargeInterval = 0f;
+            //mySkillDef.beginSkillCooldownOnSkillEnd = false;
+            //mySkillDef.canceledFromSprinting = false;
+            //mySkillDef.fullRestockOnAssign = true;
+            //mySkillDef.interruptPriority = InterruptPriority.Any;
+            //mySkillDef.isBullets = false;
+            //mySkillDef.isCombatSkill = true;
+            //mySkillDef.mustKeyPress = false;
+            //mySkillDef.noSprint = true;
+            //mySkillDef.rechargeStock = 1;
+            //mySkillDef.requiredStock = 1;
+            //mySkillDef.shootDelay = 0.5f;
+            //mySkillDef.stockToConsume = 1;
+            //mySkillDef.icon = Assets.icon1;
+            //mySkillDef.skillDescriptionToken = "EXAMPLESURVIVOR_PRIMARY_CROSSBOW_DESCRIPTION";
+            //mySkillDef.skillName = "EXAMPLESURVIVOR_PRIMARY_CROSSBOW_NAME";
+            //mySkillDef.skillNameToken = "EXAMPLESURVIVOR_PRIMARY_CROSSBOW_NAME";
+
+            //LoadoutAPI.AddSkillDef(mySkillDef);
+
+            //component.primary = characterPrefab.AddComponent<GenericSkill>();
+            // newFamily = ScriptableObject.CreateInstance<SkillFamily>();
+            //newFamily.variants = new SkillFamily.Variant[1];
+            //LoadoutAPI.AddSkillFamily(newFamily);
+            //component.primary.SetFieldValue("_skillFamily", newFamily);
+            // skillFamily = component.primary.skillFamily;
+
+
+            ////////////////////
+            //Array.Resize(ref skillFamily.variants, skillFamily.variants.Length + 1);
+            //skillFamily.variants[skillFamily.variants.Length - 1] = new SkillFamily.Variant
+            //{
+            //    skillDef = mySkillDef,
+            //    unlockableName = "",
+            //    viewableNode = new ViewablesCatalog.Node(mySkillDef.skillNameToken, false, null)
+            //};
+
+
         }
 
         private void SecondarySetup()
@@ -530,7 +594,66 @@ namespace ExampleSurvivor
             };
 
         }
-            private void CreateDoppelganger()
+
+        void UtilitySetup()
+        {
+            SkillLocator component = characterPrefab.GetComponent<SkillLocator>();
+
+            LanguageAPI.Add("EXAMPLESURVIVOR_PRIMARY_CROSSBOW3_NAME", "Dash");
+            LanguageAPI.Add("EXAMPLESURVIVOR_PRIMARY_CROSSBOW3_DESCRIPTION", "Perform a <style=cIsDamage> Dash covered in flames</style>.");
+
+            // set up your primary skill def here!
+
+            SkillDef mySkillDef = ScriptableObject.CreateInstance<SkillDef>();
+            mySkillDef.activationState = new SerializableEntityStateType(typeof(DodgeState));
+            mySkillDef.activationStateMachineName = "Weapon";
+            mySkillDef.baseMaxStock = 1;
+            mySkillDef.baseRechargeInterval = 3f;
+            mySkillDef.beginSkillCooldownOnSkillEnd = false;
+            mySkillDef.canceledFromSprinting = false;
+            mySkillDef.fullRestockOnAssign = true;
+            mySkillDef.interruptPriority = InterruptPriority.Any;
+            mySkillDef.isBullets = false;
+            mySkillDef.isCombatSkill = true;
+            mySkillDef.mustKeyPress = false;
+            mySkillDef.noSprint = true;
+            mySkillDef.rechargeStock = 1;
+            mySkillDef.requiredStock = 1;
+            mySkillDef.shootDelay = 0f;
+            mySkillDef.stockToConsume = 1;
+            mySkillDef.icon = Assets.icon3;
+            mySkillDef.skillDescriptionToken = "EXAMPLESURVIVOR_PRIMARY_CROSSBOW3_DESCRIPTION";
+            mySkillDef.skillName = "EXAMPLESURVIVOR_PRIMARY_CROSSBOW3_NAME";
+            mySkillDef.skillNameToken = "EXAMPLESURVIVOR_PRIMARY_CROSSBOW3_NAME";
+
+            LoadoutAPI.AddSkillDef(mySkillDef);
+
+            component.utility = characterPrefab.AddComponent<GenericSkill>();
+            SkillFamily newFamily = ScriptableObject.CreateInstance<SkillFamily>();
+            newFamily.variants = new SkillFamily.Variant[1];
+            LoadoutAPI.AddSkillFamily(newFamily);
+            component.utility.SetFieldValue("_skillFamily", newFamily);
+            SkillFamily skillFamily = component.utility.skillFamily;
+
+            skillFamily.variants[0] = new SkillFamily.Variant
+            {
+                skillDef = mySkillDef,
+                unlockableName = "",
+                viewableNode = new ViewablesCatalog.Node(mySkillDef.skillNameToken, false, null)
+            };
+
+
+            // add this code after defining a new skilldef if you're adding an alternate skill
+
+            /*Array.Resize(ref skillFamily.variants, skillFamily.variants.Length + 1);
+            skillFamily.variants[skillFamily.variants.Length - 1] = new SkillFamily.Variant
+            {
+                skillDef = newSkillDef,
+                unlockableName = "",
+                viewableNode = new ViewablesCatalog.Node(newSkillDef.skillNameToken, false, null)
+            };*/
+        }
+        private void CreateDoppelganger()
         {
             // set up the doppelganger for artifact of vengeance here
             // quite simple, gets a bit more complex if you're adding your own ai, but commando ai will do
@@ -700,6 +823,7 @@ namespace EntityStates.ExampleSurvivorStates
 
         public override void OnExit()
         {
+            
             base.OnExit();
         }
 
@@ -731,6 +855,7 @@ namespace EntityStates.ExampleSurvivorStates
 
             if (base.fixedAge >= this.duration && base.isAuthority)
             {
+
                 this.outer.SetNextStateToMain();
             }
         }
@@ -740,4 +865,287 @@ namespace EntityStates.ExampleSurvivorStates
             return InterruptPriority.Skill;
         }
     }
+
+    //public class Slash : BaseSkillState
+    //{
+    //    // Token: 0x06003A14 RID: 14868 RVA: 0x000EE390 File Offset: 0x000EC590
+    //    public override void OnEnter()
+    //    {
+    //        base.OnEnter();
+    //        this.duration = Slash.baseDuration / this.attackSpeedStat;
+    //        this.modelAnimator = base.GetModelAnimator();
+    //        Transform modelTransform = base.GetModelTransform();
+    //        this.attack = new OverlapAttack();
+    //        this.attack.attacker = base.gameObject;
+    //        this.attack.inflictor = base.gameObject;
+    //        this.attack.teamIndex = TeamComponent.GetObjectTeam(this.attack.attacker);
+    //        this.attack.damage = Slash.damageCoefficient * this.damageStat;
+    //        this.attack.hitEffectPrefab = Slash.hitEffectPrefab;
+    //        this.attack.isCrit = Util.CheckRoll(this.critStat, base.characterBody.master);
+    //        Util.PlayScaledSound(Slash.attackString, base.gameObject, this.attackSpeedStat);
+    //        if (modelTransform)
+    //        {
+    //            this.attack.hitBoxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "Bite");
+    //        }
+    //        if (this.modelAnimator)
+    //        {
+    //            base.PlayAnimation("Gesture, Override", "FireArrow", "FireArrow.playbackRate", this.duration);
+    //        }
+    //        if (base.characterBody)
+    //        {
+    //            base.characterBody.SetAimTimer(2f);
+    //        }
+    //    }
+
+    //    // Token: 0x06003A15 RID: 14869 RVA: 0x000EE4F4 File Offset: 0x000EC6F4
+    //    public override void FixedUpdate()
+    //    {
+    //        base.FixedUpdate();
+    //        if (NetworkServer.active && this.modelAnimator && this.modelAnimator.GetFloat("Bite.hitBoxActive") > 0.1f)
+    //        {
+    //            if (!this.hasBit)
+    //            {
+    //                EffectManager.SimpleMuzzleFlash(Slash.biteEffectPrefab, base.gameObject, "MuzzleMouth", true);
+    //                this.hasBit = true;
+    //            }
+    //            this.attack.forceVector = base.transform.forward * Slash.forceMagnitude;
+    //            this.attack.Fire(null);
+    //        }
+    //        if (base.fixedAge >= this.duration && base.isAuthority)
+    //        {
+    //            this.outer.SetNextStateToMain();
+    //            return;
+    //        }
+    //    }
+
+    //    // Token: 0x06003A16 RID: 14870 RVA: 0x0000D472 File Offset: 0x0000B672
+    //    public override InterruptPriority GetMinimumInterruptPriority()
+    //    {
+    //        return InterruptPriority.PrioritySkill;
+    //    }
+
+    //    // Token: 0x04003397 RID: 13207
+    //    public static float baseDuration = 3.5f;
+
+    //    // Token: 0x04003398 RID: 13208
+    //    public static float damageCoefficient = 4f;
+
+    //    // Token: 0x04003399 RID: 13209
+    //    public static float forceMagnitude = 16f;
+
+    //    // Token: 0x0400339A RID: 13210
+    //    public static float radius = 3f;
+
+    //    // Token: 0x0400339B RID: 13211
+    //    public static GameObject hitEffectPrefab;
+
+    //    // Token: 0x0400339C RID: 13212
+    //    public static GameObject biteEffectPrefab;
+
+    //    // Token: 0x0400339D RID: 13213
+    //    public static string attackString;
+
+    //    // Token: 0x0400339E RID: 13214
+    //    private OverlapAttack attack;
+
+    //    // Token: 0x0400339F RID: 13215
+    //    private Animator modelAnimator;
+
+    //    // Token: 0x040033A0 RID: 13216
+    //    private float duration;
+
+    //    // Token: 0x040033A1 RID: 13217
+    //    private bool hasBit;
+    //}
+
+    public class DodgeState : BaseState
+    {
+        public float baseDuration = 0.75f;
+        private float duration = 0.5f;
+        private Animator animator;
+        public float damageCoefficient = 1f;
+     
+
+        private void FireArrow()
+        {
+            
+            {
+                
+
+                base.characterBody.AddSpreadBloom(0.75f);
+                Ray aimRay = base.GetAimRay();
+                base.characterBody.AddBuff(BuffIndex.AffixRed);
+                
+                if (base.isAuthority)
+                {
+                    ProjectileManager.instance.FireProjectile(ExampleSurvivor.ExampleSurvivor.arrowProjectile3, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), base.gameObject, this.damageCoefficient * this.damageStat, 0f, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);
+                    base.characterBody.AddBuff(BuffIndex.AffixRed);
+                }
+            }
+        }
+
+        private void addBuff(BuffIndex affixRed)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void WaitForSeconds(double v)
+        {
+            throw new NotImplementedException();
+        }
+
+        // Token: 0x06003E1F RID: 15903 RVA: 0x00102CA0 File Offset: 0x00100EA0
+        public override void OnEnter()
+        {
+            base.OnEnter();
+ 
+            this.animator = base.GetModelAnimator();
+            ChildLocator component = this.animator.GetComponent<ChildLocator>();
+            if (base.isAuthority && base.inputBank && base.characterDirection)
+            {
+                this.forwardDirection = ((base.inputBank.moveVector == Vector3.zero) ? base.characterDirection.forward : base.inputBank.moveVector).normalized;
+            }
+            Vector3 rhs = base.characterDirection ? base.characterDirection.forward : this.forwardDirection;
+            Vector3 rhs2 = Vector3.Cross(Vector3.up, rhs);
+            float num = Vector3.Dot(this.forwardDirection, rhs);
+            float num2 = Vector3.Dot(this.forwardDirection, rhs2);
+            this.animator.SetFloat("forwardSpeed", num, 0.1f, Time.fixedDeltaTime);
+            this.animator.SetFloat("rightSpeed", num2, 0.1f, Time.fixedDeltaTime);
+            if (Mathf.Abs(num) > Mathf.Abs(num2))
+            {
+                base.PlayAnimation("Body", (num > 0f) ? "Dash" : "Dash", "Dodge.playbackRate", this.duration);
+                FireArrow();
+
+            }
+            else
+            {
+                base.PlayAnimation("Body", (num2 > 0f) ? "Dash" : "Dash", "Dodge.playbackRate", this.duration);
+                FireArrow();
+
+
+            }
+            if (DodgeState.jetEffect)
+            {
+                Transform transform = component.FindChild("LeftJet");
+                Transform transform2 = component.FindChild("RightJet");
+                if (transform)
+                {
+                    UnityEngine.Object.Instantiate<GameObject>(DodgeState.jetEffect, transform);
+                    FireArrow();
+
+
+                }
+                if (transform2)
+                {
+                    UnityEngine.Object.Instantiate<GameObject>(DodgeState.jetEffect, transform2);
+                    FireArrow();
+
+                }
+
+            }
+            this.RecalculateRollSpeed();
+            if (base.characterMotor && base.characterDirection)
+            {
+                base.characterMotor.velocity.y = 0f;
+                base.characterMotor.velocity = this.forwardDirection * this.rollSpeed;
+
+            }
+            Vector3 b = base.characterMotor ? base.characterMotor.velocity : Vector3.zero;
+            this.previousPosition = base.transform.position - b;
+        }
+
+        // Token: 0x06003E20 RID: 15904 RVA: 0x00102EFD File Offset: 0x001010FD
+        private void RecalculateRollSpeed()
+        {
+            this.rollSpeed = this.moveSpeedStat * Mathf.Lerp(this.initialSpeedCoefficient, this.finalSpeedCoefficient, base.fixedAge / this.duration);
+        }
+
+        // Token: 0x06003E21 RID: 15905 RVA: 0x00102F2C File Offset: 0x0010112C
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+            this.RecalculateRollSpeed();
+            if (base.cameraTargetParams)
+            {
+                //base.cameraTargetParams.fovOverride = Mathf.Lerp(DodgeState.dodgeFOV, 60f, base.fixedAge / this.duration);
+                base.cameraTargetParams.fovOverride = -2.5f;
+            }
+            Vector3 normalized = (base.transform.position - this.previousPosition).normalized;
+            if (base.characterMotor && base.characterDirection && normalized != Vector3.zero)
+            {
+                Vector3 vector = normalized * this.rollSpeed;
+                float y = vector.y;
+                vector.y = 0f;
+                float d = Mathf.Max(Vector3.Dot(vector, this.forwardDirection), 0f);
+                vector = this.forwardDirection * d;
+                vector.y += Mathf.Max(y, 0f);
+                base.characterMotor.velocity = vector;
+                
+            }
+            this.previousPosition = base.transform.position;
+            
+            if (base.fixedAge >= this.duration && base.isAuthority)
+            {
+                
+                this.outer.SetNextStateToMain();
+                return;
+            }
+        }
+
+        // Token: 0x06003E22 RID: 15906 RVA: 0x0010305D File Offset: 0x0010125D
+        public override void OnExit()
+        {
+            if (base.cameraTargetParams)
+            {
+                
+                base.cameraTargetParams.fovOverride = -1f;
+            }
+            
+            base.OnExit();
+        }
+
+        // Token: 0x06003E23 RID: 15907 RVA: 0x00103082 File Offset: 0x00101282
+        public override void OnSerialize(NetworkWriter writer)
+        {
+            base.OnSerialize(writer);
+            writer.Write(this.forwardDirection);
+        }
+
+        // Token: 0x06003E24 RID: 15908 RVA: 0x00103097 File Offset: 0x00101297
+        public override void OnDeserialize(NetworkReader reader)
+        {
+            base.OnDeserialize(reader);
+            this.forwardDirection = reader.ReadVector3();
+        }
+
+        // Token: 0x0400392E RID: 14638
+
+        public float initialSpeedCoefficient = 5.8f;
+
+        // Token: 0x0400392F RID: 14639
+
+        public float finalSpeedCoefficient = 4.8f;
+
+        // Token: 0x04003930 RID: 14640
+        public static string dodgeSoundString;
+
+        // Token: 0x04003931 RID: 14641
+        public static GameObject jetEffect;
+
+        // Token: 0x04003932 RID: 14642
+        public static float dodgeFOV;
+
+        // Token: 0x04003933 RID: 14643
+        private float rollSpeed = 5.5f;
+
+        // Token: 0x04003934 RID: 14644
+        private Vector3 forwardDirection;
+
+        // Token: 0x04003936 RID: 14646
+        private Vector3 previousPosition;
+    }
+
+    
 }
+
+
