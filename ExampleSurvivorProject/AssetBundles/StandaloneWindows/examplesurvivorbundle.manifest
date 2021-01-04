@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1213791604
+CRC: 2634596390
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a868490aaee5e82bf9148cc92df86b14
+    Hash: 896e5443cebc749644027f66a783a363
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 37d7ae37fbed6ed5b9d3b1c92b3cf570
+    Hash: a0d990ceda6268dfdfbd784d04d44c61
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -26,6 +26,8 @@ ClassTypes:
 - Class: 43
   Script: {instanceID: 0}
 - Class: 48
+  Script: {instanceID: 0}
+- Class: 65
   Script: {instanceID: 0}
 - Class: 74
   Script: {instanceID: 0}
@@ -56,18 +58,22 @@ ClassTypes:
 Assets:
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorRunForward.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/ExampleSurvivorBody.png
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/prueba cubo.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Skill4Icon.png
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/PassiveIconprepre.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Skill1Icon_old.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/PassiveIcon_old.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorRunBackward.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorFireArrow.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Junk/Run.dae
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/PassiveIcon.png
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/Agumon2@Running.fbx
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/babyflame.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/animExampleSurvivor.controller
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Junk/ExampleSurvivorMesh.mesh
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Materials/matExampleSurvivor.mat
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Skill2Icon.png
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/eye_texture.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorIdle.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Junk/Model.dae
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Skill3Icon.png
@@ -75,15 +81,26 @@ Assets:
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorJump.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorRunLeft.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorGestureMask.mask
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/Agumon.blend
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/Materials/Agumon-texture.mat
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/mdlAgumon.prefab
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorFallDown.anim
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/Agumon2@Idle (1).fbx
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Textures/texExampleSurvivor.png
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/Cube.prefab
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/ExampleSurvivorBodyold.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorRunRight.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorIdleIn.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorFallUp.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorSprint.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Junk/agumon_skin_ror.dae
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/animAgumon.controller
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/Agumon-texture.png
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/Cube (1).controller
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/mdlAgumon2.prefab
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorDeath.anim
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/Cube (1).prefab
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/mdlExampleSurvivor.prefab
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/agumon_skin_ror.fbx
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/Agumon2.fbx
 Dependencies: []
