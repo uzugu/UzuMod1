@@ -1,16 +1,11 @@
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
 using System;
-using System.Runtime.InteropServices;
 using UnityEngine.UI;
 
 namespace UnityEngine.Analytics
 {
     public class DataPrivacyButton : Button
     {
-#if UNITY_WEBGL && !UNITY_EDITOR
-        [DllImport("__Internal")]
-        private static extern void OpenNewWindow(string url);
-#endif
         bool urlOpened = false;
 
         DataPrivacyButton()
@@ -30,7 +25,7 @@ namespace UnityEngine.Analytics
             urlOpened = true;
 
         #if UNITY_WEBGL && !UNITY_EDITOR
-            OpenNewWindow(url);
+            Application.ExternalEval("window.open(\"" + url + "\",\"_blank\")");
         #else
             Application.OpenURL(url);
         #endif
