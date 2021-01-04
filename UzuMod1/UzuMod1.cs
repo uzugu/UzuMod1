@@ -109,16 +109,16 @@ namespace ExampleSurvivor
             bodyComponent.bodyFlags = CharacterBody.BodyFlags.ImmuneToExecutes;
             bodyComponent.rootMotionInMainState = false;
             bodyComponent.mainRootSpeed = 0;
-            bodyComponent.baseMaxHealth = 90;
-            bodyComponent.levelMaxHealth = 24;
-            bodyComponent.baseRegen = 0.5f;
-            bodyComponent.levelRegen = 0.25f;
+            bodyComponent.baseMaxHealth = 320;
+            bodyComponent.levelMaxHealth = 50; //24
+            bodyComponent.baseRegen = 0.8f;//0.5
+            bodyComponent.levelRegen = 0.4f;//25
             bodyComponent.baseMaxShield = 0;
             bodyComponent.levelMaxShield = 0;
             bodyComponent.baseMoveSpeed = 7;
             bodyComponent.levelMoveSpeed = 0;
             bodyComponent.baseAcceleration = 80;
-            bodyComponent.baseJumpPower = 15;
+            bodyComponent.baseJumpPower = 20; //15
             bodyComponent.levelJumpPower = 0;
             bodyComponent.baseDamage = 15;
             bodyComponent.levelDamage = 3f;
@@ -553,7 +553,7 @@ namespace ExampleSurvivor
             LanguageAPI.Add("EXAMPLESURVIVOR_SECONDARY_CROSSBOW_NAME", "Baby Flame");
             LanguageAPI.Add("EXAMPLESURVIVOR_SECONDARY_CROSSBOW_DESCRIPTION", "Fire a big flame, dealing <style=cIsDamage>900% damage</style>.");
 
-            // set up your primary skill def here!
+           
 
             SkillDef mySkillDef = ScriptableObject.CreateInstance<SkillDef>();
             mySkillDef.activationState = new SerializableEntityStateType(typeof(ExampleSurvivorFireArrow2));
@@ -964,7 +964,7 @@ namespace EntityStates.ExampleSurvivorStates
         private float duration = 0.5f;
         private Animator animator;
         public float damageCoefficient = 1f;
-     
+        
 
         private void FireArrow()
         {
@@ -974,12 +974,13 @@ namespace EntityStates.ExampleSurvivorStates
 
                 base.characterBody.AddSpreadBloom(0.75f);
                 Ray aimRay = base.GetAimRay();
-                base.characterBody.AddBuff(BuffIndex.AffixRed);
-                
+                //base.characterBody.(BuffIndex.AffixRed);
+                base.outer.commonComponents.characterBody.AddTimedBuff(BuffIndex.AffixRed, 2f);
+
                 if (base.isAuthority)
                 {
                     ProjectileManager.instance.FireProjectile(ExampleSurvivor.ExampleSurvivor.arrowProjectile3, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), base.gameObject, this.damageCoefficient * this.damageStat, 0f, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);
-                    base.characterBody.AddBuff(BuffIndex.AffixRed);
+                    
                 }
             }
         }
@@ -989,10 +990,7 @@ namespace EntityStates.ExampleSurvivorStates
             throw new NotImplementedException();
         }
 
-        private void WaitForSeconds(double v)
-        {
-            throw new NotImplementedException();
-        }
+
 
         // Token: 0x06003E1F RID: 15903 RVA: 0x00102CA0 File Offset: 0x00100EA0
         public override void OnEnter()
