@@ -58,7 +58,7 @@ namespace ExampleSurvivor
             return model;
         }
 
-        internal static void CreatePrefab()
+        internal static void CreatePrefab()     
         {
             // first clone the commando prefab so we can turn that into our own survivor
             characterPrefab = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/CharacterBodies/CommandoBody"), "ExampleSurvivorBody", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "CreatePrefab", 151);
@@ -293,6 +293,26 @@ namespace ExampleSurvivor
 
             hurtBoxGroup.mainHurtBox = componentInChildren;
             hurtBoxGroup.bullseyeCount = 1;
+
+            //make a hitbox for shoulder bash
+            HitBoxGroup hitBoxGroup = model.AddComponent<HitBoxGroup>();
+
+            GameObject chargeHitbox = new GameObject("ChargeHitbox");
+            chargeHitbox.transform.parent = characterPrefab.transform;
+            chargeHitbox.transform.localPosition = Vector3.zero;
+            chargeHitbox.transform.localScale = Vector3.one * 80f;
+            chargeHitbox.transform.parent = model.transform;
+            chargeHitbox.transform.localRotation = Quaternion.identity;
+
+            HitBox hitBox = chargeHitbox.AddComponent<HitBox>();
+            chargeHitbox.layer = LayerIndex.projectile.intVal;
+
+            hitBoxGroup.hitBoxes = new HitBox[]
+            {
+                hitBox
+            };
+
+            hitBoxGroup.groupName = "Charge";
 
             // this is for handling footsteps, not needed but polish is always good
             FootstepHandler footstepHandler = model.AddComponent<FootstepHandler>();
@@ -795,77 +815,7 @@ namespace EntityStates.ExampleSurvivorStates
         }
     }
 
-    public class ExampleSurvivorFireArrow2 : BaseSkillState
-    {
-        public float damageCoefficient = 9f;
-        public float baseDuration = 0.15f;
-        public float recoil = 1f;
-        public static GameObject tracerEffectPrefab = Resources.Load<GameObject>("Prefabs/Effects/Tracers/TracerToolbotRebar");
-
-        private float duration;
-        private float fireDuration;
-        private bool hasFired;
-        private Animator animator;
-        private string muzzleString;
-
-        public override void OnEnter()
-        {
-            base.OnEnter();
-            this.duration = this.baseDuration / this.attackSpeedStat;
-            this.fireDuration = 0.25f * this.duration;         //changed 0.25
-            base.characterBody.SetAimTimer(2f);                 //changed 2
-            this.animator = base.GetModelAnimator();
-            this.muzzleString = "Muzzle";
-
-
-            base.PlayAnimation("Gesture, Override", "FireArrow", "FireArrow.playbackRate", this.duration);
-        }
-
-        public override void OnExit()
-        {
-            
-            base.OnExit();
-        }
-
-        private void FireArrow()
-        {
-            if (!this.hasFired)
-            {
-                this.hasFired = true;
-
-                base.characterBody.AddSpreadBloom(0.75f);
-                Ray aimRay = base.GetAimRay();
-                EffectManager.SimpleMuzzleFlash(Commando.CommandoWeapon.FirePistol.effectPrefab, base.gameObject, this.muzzleString, false);
-
-                if (base.isAuthority)
-                {
-                    ProjectileManager.instance.FireProjectile(ExampleSurvivor.ExampleSurvivor.arrowProjectile2, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), base.gameObject, this.damageCoefficient * this.damageStat, 0f, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);
-                }
-            }
-        }
-
-        public override void FixedUpdate()
-        {
-            base.FixedUpdate();
-
-            if (base.fixedAge >= this.fireDuration)
-            {
-                FireArrow();
-            }
-
-            if (base.fixedAge >= this.duration && base.isAuthority)
-            {
-
-                this.outer.SetNextStateToMain();
-            }
-        }
-
-        public override InterruptPriority GetMinimumInterruptPriority()
-        {
-            return InterruptPriority.Skill;
-        }
-    }
-
+ 
     //public class Slash : BaseSkillState
     //{
     //    // Token: 0x06003A14 RID: 14868 RVA: 0x000EE390 File Offset: 0x000EC590

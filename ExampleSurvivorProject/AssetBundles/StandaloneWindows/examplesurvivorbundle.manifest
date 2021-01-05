@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2311379791
+CRC: 2904627771
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 5a9203585363af459af74598c32c70ba
+    Hash: 97d25b1929d8dbed1fe86b3af053f62a
   TypeTreeHash:
     serializedVersion: 2
     Hash: a0d990ceda6268dfdfbd784d04d44c61
@@ -75,6 +75,7 @@ Assets:
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/Agumon2@Running.fbx
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/babyflame.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/animExampleSurvivor.controller
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/anim/RunningDefDani.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Junk/ExampleSurvivorMesh.mesh
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Materials/matExampleSurvivor.mat
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Skill2Icon.png
@@ -106,10 +107,12 @@ Assets:
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorRunRight.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorIdleIn.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/AgumonEscalado.fbx
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/anim/NinjaRun.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorFallUp.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/anim/Running def.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/RunTest.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/mdlAgumon4.prefab
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/anim/JumpUp.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorSprint.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Junk/agumon_skin_ror.dae
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/DigiController.controller
