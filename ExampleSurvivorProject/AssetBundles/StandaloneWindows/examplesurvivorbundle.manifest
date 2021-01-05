@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1889224835
+CRC: 2311379791
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 3842370f0cf70c6ed2a300a17154c7fc
+    Hash: 5a9203585363af459af74598c32c70ba
   TypeTreeHash:
     serializedVersion: 2
     Hash: a0d990ceda6268dfdfbd784d04d44c61
@@ -60,7 +60,9 @@ Assets:
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/ExampleSurvivorBody.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/runininjini90.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/prueba cubo.anim
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/Texture2D/chr050b01.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Skill4Icon.png
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/Texture2D/chr050a01s.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/PassiveIconprepre.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Skill1Icon_old.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/PassiveIcon_old.png
@@ -76,13 +78,17 @@ Assets:
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Junk/ExampleSurvivorMesh.mesh
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Materials/matExampleSurvivor.mat
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Skill2Icon.png
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/anim/AgumonEscalado@Idle.fbx
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/eye_texture.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorIdle.anim
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/Agumon.fbx
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Junk/Model.dae
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/anim/Idle.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Skill3Icon.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Skill1Icon.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/prefabs/Agumon3.prefab
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/Agumon_6.mesh
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/Agumon.dae
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorJump.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorRunLeft.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorGestureMask.mask
@@ -94,22 +100,32 @@ Assets:
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/Run.fbx
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Textures/texExampleSurvivor.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Cube.prefab
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/anim/AgumonEscalado@Breathing
+  Idle.fbx
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/ExampleSurvivorBodyold.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorRunRight.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorIdleIn.anim
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/AgumonEscalado.fbx
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorFallUp.anim
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/anim/Running def.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/RunTest.anim
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/mdlAgumon4.prefab
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorSprint.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Junk/agumon_skin_ror.dae
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/DigiController.controller
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/anim/AgumonEscalado@Running.fbx
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/TesteoDani(ignorar).anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/animAgumon.controller
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/Agumon-texture.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/Cube (1).controller
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/mdlAgumon3.prefab
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/Texture2D/chr050a01.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/mdlAgumon2.prefab
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorDeath.anim
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/anim/Breathing Idle.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Cube (1).prefab
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/mdlExampleSurvivor.prefab
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/Texture2D/chr050a02s.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/agumon_skin_ror.fbx
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/Agumon2.fbx
 Dependencies: []

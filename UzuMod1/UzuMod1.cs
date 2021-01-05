@@ -53,7 +53,7 @@ namespace ExampleSurvivor
             Destroy(main.transform.Find("AimOrigin").gameObject);
 
             // make sure it's set up right in the unity project
-            GameObject model = Assets.MainAssetBundle.LoadAsset<GameObject>("mdlAgumon3");
+            GameObject model = Assets.MainAssetBundle.LoadAsset<GameObject>("mdlAgumon4");
 
             return model;
         }
