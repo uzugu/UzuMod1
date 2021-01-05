@@ -1165,6 +1165,58 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: aimPitchCycle
   m_TimeParameter: 
+--- !u!1102 &1102228258651879906
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: NinjaRun
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 376f91d9434a12347ae960912d3f127e, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &1102232045472532156
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: RunningDefDani
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 68ee6de2035f90f40a2b91eec8b47544, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &1102261962475261310
 AnimatorState:
   serializedVersion: 5
@@ -1295,7 +1347,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: f9fc1b2afca65774999d9d06401be2fb, type: 2}
+  m_Motion: {fileID: 7400000, guid: 68ee6de2035f90f40a2b91eec8b47544, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1519,6 +1571,32 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: aimYawCycle
   m_TimeParameter: 
+--- !u!1102 &1102714963776995922
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: JumpUp
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: bbf491aaf41dfe74ca872faee61d9f9c, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &1102740768213902912
 AnimatorState:
   serializedVersion: 5
@@ -1542,7 +1620,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: f9fc1b2afca65774999d9d06401be2fb, type: 2}
+  m_Motion: {fileID: 7400000, guid: 68ee6de2035f90f40a2b91eec8b47544, type: 2}
   m_Tag: 
   m_SpeedParameter: walkSpeed
   m_MirrorParameter: 
@@ -1677,7 +1755,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: f9fc1b2afca65774999d9d06401be2fb, type: 2}
+  m_Motion: {fileID: 7400000, guid: 376f91d9434a12347ae960912d3f127e, type: 2}
   m_Tag: 
   m_SpeedParameter: walkSpeed
   m_MirrorParameter: 
@@ -1772,6 +1850,15 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 1102206027616936272}
     m_Position: {x: 334, y: 262, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 1102232045472532156}
+    m_Position: {x: 636, y: 300, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 1102228258651879906}
+    m_Position: {x: 636, y: 360, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 1102714963776995922}
+    m_Position: {x: 864, y: 300, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
