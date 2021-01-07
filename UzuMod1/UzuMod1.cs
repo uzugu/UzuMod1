@@ -300,7 +300,7 @@ namespace ExampleSurvivor
             GameObject chargeHitbox = new GameObject("ChargeHitbox");
             chargeHitbox.transform.parent = characterPrefab.transform;
             chargeHitbox.transform.localPosition = Vector3.zero;
-            chargeHitbox.transform.localScale = Vector3.one * 80f;
+            chargeHitbox.transform.localScale = Vector3.one * 800f;
             chargeHitbox.transform.parent = model.transform;
             chargeHitbox.transform.localRotation = Quaternion.identity;
 
@@ -313,6 +313,7 @@ namespace ExampleSurvivor
             };
 
             hitBoxGroup.groupName = "Charge";
+
 
             // this is for handling footsteps, not needed but polish is always good
             FootstepHandler footstepHandler = model.AddComponent<FootstepHandler>();
