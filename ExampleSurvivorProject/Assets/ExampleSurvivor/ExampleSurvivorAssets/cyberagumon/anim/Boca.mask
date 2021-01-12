@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Boca
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: chr050.001
+    m_Weight: 0
+  - m_Path: GRP_joint
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/CharacterCenterTarget
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/CharacterCenterTarget/CharacterCenterTarget_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_leg_l
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_leg_l/J_knee_l
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_leg_l/J_knee_l/J_foot_l
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_leg_l/J_knee_l/J_foot_l/J_toe_l
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_leg_l/J_knee_l/J_foot_l/J_toe_l/J_toe_l_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_leg_r
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_leg_r/J_knee_r
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_leg_r/J_knee_r/J_foot_r
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_leg_r/J_knee_r/J_foot_r/J_toe_r
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_leg_r/J_knee_r/J_foot_r/J_toe_r/J_toe_r_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_spine01
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_spine01/J_spine02
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_spine01/J_spine02/J_arm_l
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_spine01/J_spine02/J_arm_l/J_elbow_l
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_spine01/J_spine02/J_arm_l/J_elbow_l/J_hand_l
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_spine01/J_spine02/J_arm_l/J_elbow_l/J_hand_l/J_hand_l_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_spine01/J_spine02/J_arm_r
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_spine01/J_spine02/J_arm_r/J_elbow_r
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_spine01/J_spine02/J_arm_r/J_elbow_r/J_hand_r
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_spine01/J_spine02/J_arm_r/J_elbow_r/J_hand_r/J_hand_r_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_spine01/J_spine02/J_neck
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_spine01/J_spine02/J_neck/J_head
+    m_Weight: 1
+  - m_Path: GRP_joint/J_root/J_center/J_spine01/J_spine02/J_neck/J_head/CharacterFaceCenterTarget
+    m_Weight: 1
+  - m_Path: GRP_joint/J_root/J_center/J_spine01/J_spine02/J_neck/J_head/CharacterFaceCenterTarget/CharacterFaceCenterTarget_end
+    m_Weight: 1
+  - m_Path: GRP_joint/J_root/J_center/J_spine01/J_spine02/J_neck/J_head/J_joe
+    m_Weight: 1
+  - m_Path: GRP_joint/J_root/J_center/J_spine01/J_spine02/J_neck/J_head/J_joe/HUDTarget
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_spine01/J_spine02/J_neck/J_head/J_joe/HUDTarget/HUDTarget_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_tail
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root/J_center/J_tail/J_tail_end
+    m_Weight: 0

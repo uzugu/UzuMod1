@@ -1937,40 +1937,6 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: -0.033464193, y: 0.005383171, z: 0.0010166089, w: 0.9994249}
-        inSlope: {x: 0, y: 0, z: 0, w: 0}
-        outSlope: {x: -0.15646219, y: -0.2718519, z: 0.3765372, w: -0.004172325}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
-      - serializedVersion: 3
-        time: 0.4
-        value: {x: 0.028266676, y: 0.0035059243, z: 0.0039364705, w: 0.9995865}
-        inSlope: {x: 0.00062864274, y: 0.00026833732, z: -0.0004109461, w: 0}
-        outSlope: {x: -0.00025564805, y: 0.00031013042, z: -0.00041385647, w: 0}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
-      - serializedVersion: 3
-        time: 0.84444445
-        value: {x: -0.033464193, y: 0.005383171, z: 0.0010166089, w: 0.9994249}
-        inSlope: {x: -0.15726127, y: -0.27186075, z: 0.37651587, w: -0.004157424}
-        outSlope: {x: 0, y: 0, z: 0, w: 0}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    path: GRP_joint/J_root/J_center/J_spine01
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
         value: {x: 0.14351584, y: 0.010681578, z: 0.0013172295, w: 0.9895896}
         inSlope: {x: 0, y: 0, z: 0, w: 0}
         outSlope: {x: -0.3100559, y: -0.35734382, z: 0.6630426, w: 0.047832727}
@@ -2471,6 +2437,40 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     path: GRP_joint/J_root/J_center/J_tail
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.070322044, y: 0.008023767, z: 0.0036060312, w: 0.9974855}
+        inSlope: {x: 0, y: 0, z: 0, w: 0}
+        outSlope: {x: -0.1561828, y: -0.25653046, z: 0.3652577, w: -0.010281801}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.4
+        value: {x: -0.070322044, y: 0.008023767, z: 0.0036060312, w: 0.9974855}
+        inSlope: {x: -0.15608966, y: -0.25657237, z: 0.36530486, w: -0.010281801}
+        outSlope: {x: -0.15613809, y: -0.25652605, z: 0.36525244, w: -0.010326505}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.84444445
+        value: {x: -0.070322044, y: 0.008023767, z: 0.0036060312, w: 0.9974855}
+        inSlope: {x: -0.15615486, y: -0.25657424, z: 0.36530745, w: -0.010192394}
+        outSlope: {x: 0, y: 0, z: 0, w: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GRP_joint/J_root/J_center/J_spine01
   m_CompressedRotationCurves: []
   m_EulerCurves: []
   m_PositionCurves:
@@ -2805,6 +2805,22 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     path: GRP_joint
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -4.0372194e-10, y: 0, z: -0.0000000038999133}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GRP_joint/J_root/J_center/J_spine01
   m_ScaleCurves: []
   m_FloatCurves: []
   m_PPtrCurves: []
@@ -2886,13 +2902,6 @@ AnimationClip:
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 1772701884
-      attribute: 2
-      script: {fileID: 0}
-      typeID: 4
-      customType: 0
-      isPPtrCurve: 0
-    - serializedVersion: 2
       path: 4086562
       attribute: 2
       script: {fileID: 0}
@@ -2965,6 +2974,20 @@ AnimationClip:
     - serializedVersion: 2
       path: 1804130349
       attribute: 2
+      script: {fileID: 0}
+      typeID: 4
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 1772701884
+      attribute: 2
+      script: {fileID: 0}
+      typeID: 4
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 1772701884
+      attribute: 1
       script: {fileID: 0}
       typeID: 4
       customType: 0
@@ -11857,154 +11880,6 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.033464193
-        inSlope: 0
-        outSlope: -0.15646219
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.4
-        value: 0.028266676
-        inSlope: 0.00062864274
-        outSlope: -0.00025564805
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.84444445
-        value: -0.033464193
-        inSlope: -0.15726127
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalRotation.x
-    path: GRP_joint/J_root/J_center/J_spine01
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0.005383171
-        inSlope: 0
-        outSlope: -0.2718519
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.4
-        value: 0.0035059243
-        inSlope: 0.00026833732
-        outSlope: 0.00031013042
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.84444445
-        value: 0.005383171
-        inSlope: -0.27186075
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalRotation.y
-    path: GRP_joint/J_root/J_center/J_spine01
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0.0010166089
-        inSlope: 0
-        outSlope: 0.3765372
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.4
-        value: 0.0039364705
-        inSlope: -0.0004109461
-        outSlope: -0.00041385647
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.84444445
-        value: 0.0010166089
-        inSlope: 0.37651587
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalRotation.z
-    path: GRP_joint/J_root/J_center/J_spine01
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0.9994249
-        inSlope: 0
-        outSlope: -0.004172325
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.4
-        value: 0.9995865
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.84444445
-        value: 0.9994249
-        inSlope: -0.004157424
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalRotation.w
-    path: GRP_joint/J_root/J_center/J_spine01
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
         value: 0.14351584
         inSlope: 0
         outSlope: -0.3100559
@@ -14174,6 +14049,211 @@ AnimationClip:
       m_RotationOrder: 4
     attribute: m_LocalRotation.w
     path: GRP_joint/J_root/J_center/J_tail
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -4.0372194e-10
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalPosition.x
+    path: GRP_joint/J_root/J_center/J_spine01
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalPosition.y
+    path: GRP_joint/J_root/J_center/J_spine01
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -0.0000000038999133
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalPosition.z
+    path: GRP_joint/J_root/J_center/J_spine01
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -0.070322044
+        inSlope: 0
+        outSlope: -0.1561828
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.4
+        value: -0.070322044
+        inSlope: -0.15608966
+        outSlope: -0.15613809
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.84444445
+        value: -0.070322044
+        inSlope: -0.15615486
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.x
+    path: GRP_joint/J_root/J_center/J_spine01
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.008023767
+        inSlope: 0
+        outSlope: -0.25653046
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.4
+        value: 0.008023767
+        inSlope: -0.25657237
+        outSlope: -0.25652605
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.84444445
+        value: 0.008023767
+        inSlope: -0.25657424
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.y
+    path: GRP_joint/J_root/J_center/J_spine01
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.0036060312
+        inSlope: 0
+        outSlope: 0.3652577
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.4
+        value: 0.0036060312
+        inSlope: 0.36530486
+        outSlope: 0.36525244
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.84444445
+        value: 0.0036060312
+        inSlope: 0.36530745
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.z
+    path: GRP_joint/J_root/J_center/J_spine01
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.9974855
+        inSlope: 0
+        outSlope: -0.010281801
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.4
+        value: 0.9974855
+        inSlope: -0.010281801
+        outSlope: -0.010326505
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.84444445
+        value: 0.9974855
+        inSlope: -0.010192394
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.w
+    path: GRP_joint/J_root/J_center/J_spine01
     classID: 4
     script: {fileID: 0}
   m_EulerEditorCurves:
@@ -17527,7 +17607,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -3.8360002
+        value: -8.068001
         inSlope: -18.230236
         outSlope: -18.230236
         tangentMode: 0
@@ -17536,16 +17616,16 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.4
-        value: 3.2379246
-        inSlope: 0
-        outSlope: 0
+        value: -8.068001
+        inSlope: -18.230236
+        outSlope: -18.230236
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.84444445
-        value: -3.8360002
+        value: -8.068001
         inSlope: -18.230236
         outSlope: -18.230236
         tangentMode: 0
@@ -17564,7 +17644,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.614
+        value: 0.897
         inSlope: -32.727604
         outSlope: -32.727604
         tangentMode: 0
@@ -17573,16 +17653,16 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.4
-        value: 0.41500002
-        inSlope: 0
-        outSlope: 0
+        value: 0.897
+        inSlope: -32.727604
+        outSlope: -32.727604
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.84444445
-        value: 0.614
+        value: 0.897
         inSlope: -32.727604
         outSlope: -32.727604
         tangentMode: 0
@@ -17601,7 +17681,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.096
+        value: 0.351
         inSlope: 44.257664
         outSlope: 44.257664
         tangentMode: 0
@@ -17610,16 +17690,16 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.4
-        value: 0.46300003
-        inSlope: 0
-        outSlope: 0
+        value: 0.351
+        inSlope: 44.257664
+        outSlope: 44.257664
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.84444445
-        value: 0.096
+        value: 0.351
         inSlope: 44.257664
         outSlope: 44.257664
         tangentMode: 0
