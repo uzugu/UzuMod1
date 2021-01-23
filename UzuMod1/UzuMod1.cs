@@ -28,6 +28,7 @@ namespace ExampleSurvivor
         public const string MODUID = "com.uzugu.Agumon"; // put your own names here
 
         public static GameObject characterPrefab; // the survivor body prefab
+        public static GameObject characterPrefabGreymon;
         public GameObject characterDisplay; // the prefab used for character select
         public GameObject doppelganger; // umbra shit
 
@@ -54,6 +55,18 @@ namespace ExampleSurvivor
 
             // make sure it's set up right in the unity project
             GameObject model = Assets.MainAssetBundle.LoadAsset<GameObject>("mdlAgumon4");
+
+            return model;
+        }
+
+        private static GameObject CreateModel1(GameObject main)
+        {
+            Destroy(main.transform.Find("ModelBase").gameObject);
+            Destroy(main.transform.Find("CameraPivot").gameObject);
+            Destroy(main.transform.Find("AimOrigin").gameObject);
+
+            // make sure it's set up right in the unity project
+            GameObject model = Assets.MainAssetBundle.LoadAsset<GameObject>("mdlGreymon");
 
             return model;
         }
@@ -340,6 +353,287 @@ namespace ExampleSurvivor
             aimAnimator.giveupDuration = 8f;
         }
 
+        internal static void CreatePrefabGreymon()
+        {
+            // first clone the commando prefab so we can turn that into our own survivor
+            characterPrefabGreymon = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/CharacterBodies/CommandoBody"), "ExampleSurvivorBody", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "CreatePrefab", 151);
+
+            characterPrefabGreymon.GetComponent<NetworkIdentity>().localPlayerAuthority = true;
+
+            // create the model here, we're gonna replace commando's model with our own
+            GameObject model = CreateModel1(characterPrefabGreymon);
+
+            GameObject gameObject = new GameObject("ModelBase");
+            gameObject.transform.parent = characterPrefabGreymon.transform;
+            gameObject.transform.localPosition = new Vector3(0f, -0.81f, 0f);
+            gameObject.transform.localRotation = Quaternion.identity;
+            gameObject.transform.localScale = new Vector3(1f, 1f, 1f);
+
+            GameObject gameObject2 = new GameObject("CameraPivot");
+            gameObject2.transform.parent = gameObject.transform;
+            gameObject2.transform.localPosition = new Vector3(0f, 1.6f, 0f);
+            gameObject2.transform.localRotation = Quaternion.identity;
+            gameObject2.transform.localScale = Vector3.one;
+
+            GameObject gameObject3 = new GameObject("AimOrigin");
+            gameObject3.transform.parent = gameObject.transform;
+            gameObject3.transform.localPosition = new Vector3(0f, 1.4f, 0f);
+            gameObject3.transform.localRotation = Quaternion.identity;
+            gameObject3.transform.localScale = Vector3.one;
+
+            Transform transform = model.transform;
+            transform.parent = gameObject.transform;
+            transform.localPosition = Vector3.zero;
+            transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+            transform.localRotation = Quaternion.identity;
+
+            CharacterDirection characterDirection = characterPrefabGreymon.GetComponent<CharacterDirection>();
+            characterDirection.moveVector = Vector3.zero;
+            characterDirection.targetTransform = gameObject.transform;
+            characterDirection.overrideAnimatorForwardTransform = null;
+            characterDirection.rootMotionAccumulator = null;
+            characterDirection.modelAnimator = model.GetComponentInChildren<Animator>();
+            characterDirection.driveFromRootRotation = false;
+            characterDirection.turnSpeed = 720f;
+
+            // set up the character body here
+            CharacterBody bodyComponent = characterPrefabGreymon.GetComponent<CharacterBody>();
+            bodyComponent.bodyIndex = -1;
+            bodyComponent.baseNameToken = "EXAMPLESURVIVOR_NAME"; // name token
+            bodyComponent.subtitleNameToken = "EXAMPLESURVIVOR_SUBTITLE"; // subtitle token- used for umbras
+            bodyComponent.bodyFlags = CharacterBody.BodyFlags.ImmuneToExecutes;
+            bodyComponent.rootMotionInMainState = false;
+            bodyComponent.mainRootSpeed = 0;
+            bodyComponent.baseMaxHealth = 320;
+            bodyComponent.levelMaxHealth = 50; //24
+            bodyComponent.baseRegen = 0.8f;//0.5
+            bodyComponent.levelRegen = 0.4f;//25
+            bodyComponent.baseMaxShield = 0;
+            bodyComponent.levelMaxShield = 0;
+            bodyComponent.baseMoveSpeed = 7;
+            bodyComponent.levelMoveSpeed = 0;
+            bodyComponent.baseAcceleration = 80;
+            bodyComponent.baseJumpPower = 20; //15
+            bodyComponent.levelJumpPower = 0;
+            bodyComponent.baseDamage = 15;
+            bodyComponent.levelDamage = 3f;
+            bodyComponent.baseAttackSpeed = 1;
+            bodyComponent.levelAttackSpeed = 0;
+            bodyComponent.baseCrit = 1;
+            bodyComponent.levelCrit = 0;
+            bodyComponent.baseArmor = 0;
+            bodyComponent.levelArmor = 0;
+            bodyComponent.baseJumpCount = 1;
+            bodyComponent.sprintingSpeedMultiplier = 1.45f;
+            bodyComponent.wasLucky = false;
+            bodyComponent.hideCrosshair = false;
+            bodyComponent.aimOriginTransform = gameObject3.transform;
+            bodyComponent.hullClassification = HullClassification.Human;
+            bodyComponent.portraitIcon = Assets.charPortrait;
+            bodyComponent.isChampion = false;
+            bodyComponent.currentVehicle = null;
+            bodyComponent.skinIndex = 0U;
+
+            // the charactermotor controls the survivor's movement and stuff
+            CharacterMotor characterMotor = characterPrefabGreymon.GetComponent<CharacterMotor>();
+            characterMotor.walkSpeedPenaltyCoefficient = 1f;
+            characterMotor.characterDirection = characterDirection;
+            characterMotor.muteWalkMotion = false;
+            characterMotor.mass = 100f;
+            characterMotor.airControl = 0.25f;
+            characterMotor.disableAirControlUntilCollision = false;
+            characterMotor.generateParametersOnAwake = true;
+            //characterMotor.useGravity = true;
+            //characterMotor.isFlying = false;
+
+            InputBankTest inputBankTest = characterPrefabGreymon.GetComponent<InputBankTest>();
+            inputBankTest.moveVector = Vector3.zero;
+
+            CameraTargetParams cameraTargetParams = characterPrefabGreymon.GetComponent<CameraTargetParams>();
+            cameraTargetParams.cameraParams = Resources.Load<GameObject>("Prefabs/CharacterBodies/CommandoBody").GetComponent<CameraTargetParams>().cameraParams;
+            cameraTargetParams.cameraPivotTransform = null;
+            cameraTargetParams.aimMode = CameraTargetParams.AimType.Standard;
+            cameraTargetParams.recoil = Vector2.zero;
+            cameraTargetParams.idealLocalCameraPos = Vector3.zero;
+            cameraTargetParams.dontRaycastToPivot = false;
+
+            // this component is used to locate the character model(duh), important to set this up here
+            ModelLocator modelLocator = characterPrefabGreymon.GetComponent<ModelLocator>();
+            modelLocator.modelTransform = transform;
+            modelLocator.modelBaseTransform = gameObject.transform;
+            modelLocator.dontReleaseModelOnDeath = false;
+            modelLocator.autoUpdateModelTransform = true;
+            modelLocator.dontDetatchFromParent = false;
+            modelLocator.noCorpse = false;
+            modelLocator.normalizeToFloor = false; // set true if you want your character to rotate on terrain like acrid does
+            modelLocator.preserveModel = false;
+
+            // childlocator is something that must be set up in the unity project, it's used to find any child objects for things like footsteps or muzzle flashes
+            // also important to set up if you want quality
+            ChildLocator childLocator = model.GetComponent<ChildLocator>();
+
+            // this component is used to handle all overlays and whatever on your character, without setting this up you won't get any cool effects like burning or freeze on the character
+            // it goes on the model object of course
+            CharacterModel characterModel = model.AddComponent<CharacterModel>();
+            characterModel.body = bodyComponent;
+            characterModel.baseRendererInfos = new CharacterModel.RendererInfo[]
+            {
+                // set up multiple rendererinfos if needed, but for this example there's only the one
+                new CharacterModel.RendererInfo
+                {
+                    defaultMaterial = model.GetComponentInChildren<SkinnedMeshRenderer>().material,
+                    renderer = model.GetComponentInChildren<SkinnedMeshRenderer>(),
+                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
+                    ignoreOverlays = false
+                }
+            };
+
+            characterModel.autoPopulateLightInfos = true;
+            characterModel.invisibilityCount = 0;
+            characterModel.temporaryOverlays = new List<TemporaryOverlay>();
+
+            TeamComponent teamComponent = null;
+            if (characterPrefabGreymon.GetComponent<TeamComponent>() != null) teamComponent = characterPrefabGreymon.GetComponent<TeamComponent>();
+            else teamComponent = characterPrefabGreymon.GetComponent<TeamComponent>();
+            teamComponent.hideAllyCardDisplay = false;
+            teamComponent.teamIndex = TeamIndex.None;
+
+            HealthComponent healthComponent = characterPrefabGreymon.GetComponent<HealthComponent>();
+            healthComponent.health = 90f;
+            healthComponent.shield = 0f;
+            healthComponent.barrier = 0f;
+            healthComponent.magnetiCharge = 0f;
+            healthComponent.body = null;
+            healthComponent.dontShowHealthbar = false;
+            healthComponent.globalDeathEventChanceCoefficient = 1f;
+
+            characterPrefabGreymon.GetComponent<Interactor>().maxInteractionDistance = 3f;
+            characterPrefabGreymon.GetComponent<InteractionDriver>().highlightInteractor = true;
+
+            // this disables ragdoll since the character's not set up for it, and instead plays a death animation
+            CharacterDeathBehavior characterDeathBehavior = characterPrefabGreymon.GetComponent<CharacterDeathBehavior>();
+            characterDeathBehavior.deathStateMachine = characterPrefabGreymon.GetComponent<EntityStateMachine>();
+            characterDeathBehavior.deathState = new SerializableEntityStateType(typeof(GenericCharacterDeath));
+
+            // edit the sfxlocator if you want different sounds
+            SfxLocator sfxLocator = characterPrefabGreymon.GetComponent<SfxLocator>();
+            sfxLocator.deathSound = "Play_ui_player_death";
+            sfxLocator.barkSound = "";
+            sfxLocator.openSound = "";
+            sfxLocator.landingSound = "Play_char_land";
+            sfxLocator.fallDamageSound = "Play_char_land_fall_damage";
+            sfxLocator.aliveLoopStart = "";
+            sfxLocator.aliveLoopStop = "";
+
+            Rigidbody rigidbody = characterPrefabGreymon.GetComponent<Rigidbody>();
+            rigidbody.mass = 100f;
+            rigidbody.drag = 0f;
+            rigidbody.angularDrag = 0f;
+            rigidbody.useGravity = false;
+            rigidbody.isKinematic = true;
+            rigidbody.interpolation = RigidbodyInterpolation.None;
+            rigidbody.collisionDetectionMode = CollisionDetectionMode.Discrete;
+            rigidbody.constraints = RigidbodyConstraints.None;
+
+            CapsuleCollider capsuleCollider = characterPrefab.GetComponent<CapsuleCollider>();
+            capsuleCollider.isTrigger = false;
+            capsuleCollider.material = null;
+            capsuleCollider.center = new Vector3(0f, 0f, 0f);
+            capsuleCollider.radius = 0.5f;
+            capsuleCollider.height = 1.82f;
+            capsuleCollider.direction = 1;
+
+            KinematicCharacterMotor kinematicCharacterMotor = characterPrefabGreymon.GetComponent<KinematicCharacterMotor>();
+            kinematicCharacterMotor.CharacterController = characterMotor;
+            kinematicCharacterMotor.Capsule = capsuleCollider;
+            kinematicCharacterMotor.Rigidbody = rigidbody;
+
+            capsuleCollider.radius = 0.5f;
+            capsuleCollider.height = 1.82f;
+            capsuleCollider.center = new Vector3(0, 0, 0);
+            capsuleCollider.material = null;
+
+            kinematicCharacterMotor.DetectDiscreteCollisions = false;
+            kinematicCharacterMotor.GroundDetectionExtraDistance = 0f;
+            kinematicCharacterMotor.MaxStepHeight = 0.2f;
+            kinematicCharacterMotor.MinRequiredStepDepth = 0.1f;
+            kinematicCharacterMotor.MaxStableSlopeAngle = 55f;
+            kinematicCharacterMotor.MaxStableDistanceFromLedge = 0.5f;
+            kinematicCharacterMotor.PreventSnappingOnLedges = false;
+            kinematicCharacterMotor.MaxStableDenivelationAngle = 55f;
+            kinematicCharacterMotor.RigidbodyInteractionType = RigidbodyInteractionType.None;
+            kinematicCharacterMotor.PreserveAttachedRigidbodyMomentum = true;
+            kinematicCharacterMotor.HasPlanarConstraint = false;
+            kinematicCharacterMotor.PlanarConstraintAxis = Vector3.up;
+            kinematicCharacterMotor.StepHandling = StepHandlingMethod.None;
+            kinematicCharacterMotor.LedgeHandling = true;
+            kinematicCharacterMotor.InteractiveRigidbodyHandling = true;
+            kinematicCharacterMotor.SafeMovement = false;
+
+            // this sets up the character's hurtbox, kinda confusing, but should be fine as long as it's set up in unity right
+            HurtBoxGroup hurtBoxGroup = model.AddComponent<HurtBoxGroup>();
+
+            HurtBox componentInChildren = model.GetComponentInChildren<CapsuleCollider>().gameObject.AddComponent<HurtBox>();
+            componentInChildren.gameObject.layer = LayerIndex.entityPrecise.intVal;
+            componentInChildren.healthComponent = healthComponent;
+            componentInChildren.isBullseye = true;
+            componentInChildren.damageModifier = HurtBox.DamageModifier.Normal;
+            componentInChildren.hurtBoxGroup = hurtBoxGroup;
+            componentInChildren.indexInGroup = 0;
+
+            hurtBoxGroup.hurtBoxes = new HurtBox[]
+            {
+                componentInChildren
+            };
+
+            hurtBoxGroup.mainHurtBox = componentInChildren;
+            hurtBoxGroup.bullseyeCount = 1;
+
+            //make a hitbox for shoulder bash
+            HitBoxGroup hitBoxGroup = model.AddComponent<HitBoxGroup>();
+
+            GameObject chargeHitbox = new GameObject("ChargeHitbox");
+            chargeHitbox.transform.parent = characterPrefabGreymon.transform;
+            chargeHitbox.transform.localPosition = Vector3.zero;
+            chargeHitbox.transform.localScale = Vector3.one * 800f;
+            chargeHitbox.transform.parent = model.transform;
+            chargeHitbox.transform.localRotation = Quaternion.identity;
+
+            HitBox hitBox = chargeHitbox.AddComponent<HitBox>();
+            chargeHitbox.layer = LayerIndex.projectile.intVal;
+
+            hitBoxGroup.hitBoxes = new HitBox[]
+            {
+                hitBox
+            };
+
+            hitBoxGroup.groupName = "Charge";
+
+
+            // this is for handling footsteps, not needed but polish is always good
+            FootstepHandler footstepHandler = model.AddComponent<FootstepHandler>();
+            footstepHandler.baseFootstepString = "Play_player_footstep";
+            footstepHandler.sprintFootstepOverrideString = "";
+            footstepHandler.enableFootstepDust = true;
+            footstepHandler.footstepDustPrefab = Resources.Load<GameObject>("Prefabs/GenericFootstepDust");
+
+            // ragdoll controller is a pain to set up so we won't be doing that here..
+            RagdollController ragdollController = model.AddComponent<RagdollController>();
+            ragdollController.bones = null;
+            ragdollController.componentsToDisableOnRagdoll = null;
+
+            // this handles the pitch and yaw animations, but honestly they are nasty and a huge pain to set up so i didn't bother
+            AimAnimator aimAnimator = model.AddComponent<AimAnimator>();
+            aimAnimator.inputBank = inputBankTest;
+            aimAnimator.directionComponent = characterDirection;
+            aimAnimator.pitchRangeMax = 55f;
+            aimAnimator.pitchRangeMin = -50f;
+            aimAnimator.yawRangeMin = -44f;
+            aimAnimator.yawRangeMax = 44f;
+            aimAnimator.pitchGiveupRange = 30f;
+            aimAnimator.yawGiveupRange = 10f;
+            aimAnimator.giveupDuration = 8f;
+        }
         private void RegisterCharacter()
         {
             // now that the body prefab's set up, clone it here to make the display prefab
@@ -440,6 +734,7 @@ namespace ExampleSurvivor
             PrimarySetup();
             SecondarySetup();
             UtilitySetup();
+            SpecialSetup();
         }
 
         void RegisterStates()
@@ -674,6 +969,66 @@ namespace ExampleSurvivor
                 viewableNode = new ViewablesCatalog.Node(newSkillDef.skillNameToken, false, null)
             };*/
         }
+
+        private void SpecialSetup()
+        {
+            SkillLocator component = characterPrefab.GetComponent<SkillLocator>();
+
+            LanguageAPI.Add("AXL_SPECIAL_NAME", "Ray Gun");
+            LanguageAPI.Add("AXL_SPECIAL_DESCRIPTION", "A rapid firing laser that can shock some enemies, dealing <style=cIsDamage>50% damage</style>, <style=cIsDamage>60% damage</style> and <style=cIsDamage>80% damage</style>. ");
+
+            // set up your primary skill def here!
+
+            SkillDef mySkillDef = ScriptableObject.CreateInstance<SkillDef>();
+            mySkillDef.activationState = new SerializableEntityStateType(typeof(rayGun));
+            mySkillDef.activationStateMachineName = "Weapon";
+            mySkillDef.baseMaxStock = 2;
+            mySkillDef.baseRechargeInterval = 4.8f;
+            mySkillDef.beginSkillCooldownOnSkillEnd = false;
+            mySkillDef.canceledFromSprinting = false;
+            mySkillDef.fullRestockOnAssign = true;
+            mySkillDef.interruptPriority = InterruptPriority.Any;
+            mySkillDef.isBullets = false;
+            mySkillDef.isCombatSkill = true;
+            mySkillDef.mustKeyPress = false;
+            mySkillDef.noSprint = true;
+            mySkillDef.rechargeStock = 1;
+            mySkillDef.requiredStock = 1;
+            mySkillDef.shootDelay = 0.2f;
+            mySkillDef.stockToConsume = 1;
+            mySkillDef.icon = Assets.icon4;
+            mySkillDef.skillDescriptionToken = "AXL_SPECIAL_DESCRIPTION";
+            mySkillDef.skillName = "AXL_SPECIAL_NAME";
+            mySkillDef.skillNameToken = "AXL_SPECIAL_NAME";
+
+            LoadoutAPI.AddSkillDef(mySkillDef);
+
+            component.special = characterPrefab.AddComponent<GenericSkill>();
+            SkillFamily newFamily = ScriptableObject.CreateInstance<SkillFamily>();
+            newFamily.variants = new SkillFamily.Variant[1];
+            LoadoutAPI.AddSkillFamily(newFamily);
+            component.special.SetFieldValue("_skillFamily", newFamily);
+            SkillFamily skillFamily = component.special.skillFamily;
+
+            skillFamily.variants[0] = new SkillFamily.Variant
+            {
+                skillDef = mySkillDef,
+                unlockableName = "",
+                viewableNode = new ViewablesCatalog.Node(mySkillDef.skillNameToken, false, null)
+            };
+
+
+            // add this code after defining a new skilldef if you're adding an alternate skill
+
+            /*Array.Resize(ref skillFamily.variants, skillFamily.variants.Length + 1);
+            skillFamily.variants[skillFamily.variants.Length - 1] = new SkillFamily.Variant
+            {
+                skillDef = newSkillDef,
+                unlockableName = "",
+                viewableNode = new ViewablesCatalog.Node(newSkillDef.skillNameToken, false, null)
+            };*/
+        }
+
         private void CreateDoppelganger()
         {
             // set up the doppelganger for artifact of vengeance here
@@ -1094,7 +1449,75 @@ namespace EntityStates.ExampleSurvivorStates
         private Vector3 previousPosition;
     }
 
-    
+    public class rayGun : BaseSkillState
+    {
+        public float damageCoefficient = 0.5f;
+        public float baseDuration = 0.10f;
+        public float recoil = 0.5f;
+        //public static GameObject tracerEffectPrefab = Resources.Load<GameObject>("Prefabs/Effects/Tracers/TracerToolbotRebar");
+        public static GameObject tracerEffectPrefab = Resources.Load<GameObject>("prefabs/effects/tracers/TracerGolem");
+        public static GameObject hitEffectPrefab = Resources.Load<GameObject>("prefabs/effects/impacteffects/Hitspark1");
+
+        private float duration;
+        private float fireDuration;
+        private bool hasFired;
+        private Animator animator;
+        private string muzzleString;
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            this.duration = this.baseDuration / this.attackSpeedStat;
+            this.fireDuration = 0.20f * this.duration;
+            base.characterBody.SetAimTimer(2f);
+            this.animator = base.GetModelAnimator();
+            this.muzzleString = "Muzzle";
+
+
+            base.PlayAnimation("Gesture, Override", "FireArrow", "FireArrow.playbackRate", this.duration);
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+        }
+
+        private void FireRG()
+        {
+            if (!this.hasFired)
+            {
+                this.hasFired = true;
+                //wololo
+                //characterPrefab=
+                base.characterBody.AddSpreadBloom(0.75f);
+                Ray aimRay = base.GetAimRay();
+                EffectManager.SimpleMuzzleFlash(Commando.CommandoWeapon.FirePistol.effectPrefab, base.gameObject, this.muzzleString, false);
+
+                if (base.isAuthority)
+                {
+                   
+                }
+            }
+        }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+
+            if (base.fixedAge >= this.fireDuration)
+            {
+                FireRG();
+            }
+
+        }
+
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
+            return InterruptPriority.Skill;
+        }
+    }
 }
+    
+
 
 
