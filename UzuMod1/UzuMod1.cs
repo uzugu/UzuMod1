@@ -42,6 +42,7 @@ namespace ExampleSurvivor
         {
             Assets.PopulateAssets(); // first we load the assets from our assetbundle
             CreatePrefab(); // then we create our character's body prefab
+            CreatePrefabGreymon();
             RegisterStates(); // register our skill entitystates for networking
             RegisterCharacter(); // and finally put our new survivor in the game
             CreateDoppelganger(); // not really mandatory, but it's simple and not having an umbra is just kinda lame
@@ -694,9 +695,9 @@ namespace ExampleSurvivor
             desc = desc + "< ! > Sample Text 4.</color>" + Environment.NewLine + Environment.NewLine;
 
             // add the language tokens
-            LanguageAPI.Add("EXAMPLESURVIVOR_NAME", "Agumon");
+            LanguageAPI.Add("EXAMPLESURVIVOR_NAME", "Greymon");
             LanguageAPI.Add("EXAMPLESURVIVOR_DESCRIPTION", desc);
-            LanguageAPI.Add("EXAMPLESURVIVOR_SUBTITLE", "Digimon");
+            LanguageAPI.Add("EXAMPLESURVIVOR_SUBTITLE", "Greymon");
 
             // add our new survivor to the game~
             SurvivorDef survivorDef = new SurvivorDef
@@ -1458,6 +1459,10 @@ namespace EntityStates.ExampleSurvivorStates
         public static GameObject tracerEffectPrefab = Resources.Load<GameObject>("prefabs/effects/tracers/TracerGolem");
         public static GameObject hitEffectPrefab = Resources.Load<GameObject>("prefabs/effects/impacteffects/Hitspark1");
 
+
+        public static GameObject characterPrefabGreymon =ExampleSurvivor.ExampleSurvivor.characterPrefabGreymon;
+
+
         private float duration;
         private float fireDuration;
         private bool hasFired;
@@ -1465,16 +1470,10 @@ namespace EntityStates.ExampleSurvivorStates
         private string muzzleString;
 
         public override void OnEnter()
-        {
+        { 
             base.OnEnter();
-            this.duration = this.baseDuration / this.attackSpeedStat;
-            this.fireDuration = 0.20f * this.duration;
-            base.characterBody.SetAimTimer(2f);
-            this.animator = base.GetModelAnimator();
-            this.muzzleString = "Muzzle";
-
-
-            base.PlayAnimation("Gesture, Override", "FireArrow", "FireArrow.playbackRate", this.duration);
+            base.characterBody.master.bodyPrefab = characterPrefabGreymon;
+            base.characterBody.master.Respawn(gameObject.transform.localPosition, gameObject.transform.localRotation);
         }
 
         public override void OnExit()
