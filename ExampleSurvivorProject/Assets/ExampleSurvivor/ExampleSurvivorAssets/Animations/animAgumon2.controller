@@ -240,34 +240,57 @@ BlendTree:
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0
+--- !u!206 &206566660104776452
+BlendTree:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: DigiBlendRun
+  m_Childs: []
+  m_BlendParameter: forwardSpeed
+  m_BlendParameterY: forwardSpeed
+  m_MinThreshold: 0
+  m_MaxThreshold: 1
+  m_UseAutomaticThresholds: 1
+  m_NormalizedBlendValues: 0
+  m_BlendType: 0
 --- !u!206 &206624328922778594
 BlendTree:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Blend Tree
+  m_Name: DigiRun
   m_Childs:
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 10ff37488a0ef2343a6292599272b236, type: 2}
     m_Threshold: 0
-    m_Position: {x: 10, y: 0}
+    m_Position: {x: 0, y: 1}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: forwardSpeed
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 68ee6de2035f90f40a2b91eec8b47544, type: 2}
-    m_Threshold: 0.5
-    m_Position: {x: 0, y: 0}
+    m_Threshold: 0.33333334
+    m_Position: {x: 1, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: forwardSpeed
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: d21b86f40f3b47f4b95ae50f6106eadd, type: 2}
+    m_Threshold: 0.6666667
+    m_Position: {x: 0, y: -1}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: forwardSpeed
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: 68ee6de2035f90f40a2b91eec8b47544, type: 2}
     m_Threshold: 1
-    m_Position: {x: -10, y: 0}
+    m_Position: {x: -1, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: forwardSpeed
@@ -288,41 +311,33 @@ BlendTree:
   m_Name: BlendTree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: ffc6a8d3f9e325e4baf98479c581fec1, type: 2}
+    m_Motion: {fileID: 7400000, guid: 68ee6de2035f90f40a2b91eec8b47544, type: 2}
     m_Threshold: 0
-    m_Position: {x: 0, y: 0}
+    m_Position: {x: 1, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: 
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 9fb685b0d8ca0d0478184dc6c0f2cb4e, type: 2}
+    m_Motion: {fileID: 7400000, guid: 68ee6de2035f90f40a2b91eec8b47544, type: 2}
     m_Threshold: 0
-    m_Position: {x: 0, y: 0}
+    m_Position: {x: -1, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: 
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 993e85f68ee558343afe3fb90624db41, type: 2}
+    m_Motion: {fileID: 7400000, guid: 10ff37488a0ef2343a6292599272b236, type: 2}
     m_Threshold: 0
-    m_Position: {x: 0, y: 0}
+    m_Position: {x: 0, y: 1}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: 
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: ee31d385e6b9d8b4583777ff43c42920, type: 2}
+    m_Motion: {fileID: 7400000, guid: d21b86f40f3b47f4b95ae50f6106eadd, type: 2}
     m_Threshold: 0
-    m_Position: {x: 0, y: 0}
-    m_TimeScale: 1
-    m_CycleOffset: 0
-    m_DirectBlendParameter: 
-    m_Mirror: 0
-  - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 993e85f68ee558343afe3fb90624db41, type: 2}
-    m_Threshold: 0
-    m_Position: {x: 0, y: 0}
+    m_Position: {x: 0, y: -1}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: 
@@ -330,7 +345,7 @@ BlendTree:
   m_BlendParameter: rightSpeed
   m_BlendParameterY: forwardSpeed
   m_MinThreshold: 0
-  m_MaxThreshold: 1
+  m_MaxThreshold: 0
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 3
@@ -1026,7 +1041,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 68ee6de2035f90f40a2b91eec8b47544, type: 2}
+  m_Motion: {fileID: 206838947902667168}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1121,7 +1136,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Blend Tree
+  m_Name: DigiRun
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -1241,7 +1256,7 @@ AnimatorStateMachine:
     m_Position: {x: 732, y: 372, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102686345597001372}
-    m_Position: {x: 446.6587, y: 445.24756, z: 0}
+    m_Position: {x: 432, y: 228, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102165608877269294}
     m_Position: {x: 776.2191, y: 628.85675, z: 0}
@@ -1278,7 +1293,7 @@ AnimatorStateMachine:
     m_Position: {x: 900, y: 384, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102345032811965674}
-    m_Position: {x: 684, y: 108, z: 0}
+    m_Position: {x: 672, y: 108, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102137896195110440}
     m_Position: {x: 192, y: 672, z: 0}
