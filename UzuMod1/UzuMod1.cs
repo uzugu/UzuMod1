@@ -842,7 +842,7 @@ namespace EntityStates.ExampleSurvivorStates
             this.animator = base.GetModelAnimator();
             this.muzzleString = "Muzzle";
 
-
+            //base.PlayAnimation("Fuego, Additive", "OpenMouth");
             base.PlayAnimation("Gesture, Override", "FireArrow", "FireArrow.playbackRate", this.duration);
         }
 
