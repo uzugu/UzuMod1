@@ -31,6 +31,7 @@ namespace EntityStates.ExampleSurvivorStates
 
 
             base.PlayAnimation("Gesture, Override", "FireArrow", "FireArrow.playbackRate", this.duration);
+            base.PlayAnimation("Body, Override", "OpenMouth");
             if (base.characterBody.isSprinting)
             {
 
@@ -114,7 +115,7 @@ namespace EntityStates.ExampleSurvivorStates
             this.duration = ShoulderBash.baseDuration;
             this.shieldCancel = false;
 
-
+            
             base.characterBody.isSprinting = true;
 
             Util.PlayScaledSound(Croco.Leap.leapSoundString, base.gameObject, 1.75f);

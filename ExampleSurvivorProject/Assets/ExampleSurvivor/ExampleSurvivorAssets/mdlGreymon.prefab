@@ -4156,7 +4156,7 @@ GameObject:
   - component: {fileID: 6075336710181872503}
   - component: {fileID: 6075336710191223128}
   m_Layer: 0
-  m_Name: mdlGreymon
+  m_Name: mdlAgumon5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
