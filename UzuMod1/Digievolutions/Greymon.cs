@@ -455,10 +455,10 @@ namespace ExampleSurvivor.Digievolutions
             // set up your primary skill def here!
 
             SkillDef mySkillDef = ScriptableObject.CreateInstance<SkillDef>();
-            mySkillDef.activationState = new SerializableEntityStateType(typeof(ExampleSurvivorFireArrow));
+            mySkillDef.activationState = new SerializableEntityStateType(typeof(GreymonBlaster));
             mySkillDef.activationStateMachineName = "Weapon";
-            mySkillDef.baseMaxStock = 3;
-            mySkillDef.baseRechargeInterval = 2f;
+            mySkillDef.baseMaxStock = 1;
+            mySkillDef.baseRechargeInterval = 0f;
             mySkillDef.beginSkillCooldownOnSkillEnd = false;
             mySkillDef.canceledFromSprinting = false;
             mySkillDef.fullRestockOnAssign = true;
@@ -467,9 +467,9 @@ namespace ExampleSurvivor.Digievolutions
             mySkillDef.isCombatSkill = true;
             mySkillDef.mustKeyPress = false;
             mySkillDef.noSprint = false;
-            mySkillDef.rechargeStock = 3;
+            mySkillDef.rechargeStock = 1;
             mySkillDef.requiredStock = 1;
-            mySkillDef.shootDelay = 0f;
+            mySkillDef.shootDelay = 2f;
             mySkillDef.stockToConsume = 1;
             mySkillDef.icon = Assets.icon1;
             mySkillDef.skillDescriptionToken = "EXAMPLESURVIVOR_PRIMARY_CROSSBOW_DESCRIPTION";
@@ -667,7 +667,7 @@ namespace ExampleSurvivor.Digievolutions
             // set up your primary skill def here!
 
             SkillDef mySkillDef = ScriptableObject.CreateInstance<SkillDef>();
-            mySkillDef.activationState = new SerializableEntityStateType(typeof(rayGun));
+            mySkillDef.activationState = new SerializableEntityStateType(typeof(Devolution));
             mySkillDef.activationStateMachineName = "Weapon";
             mySkillDef.baseMaxStock = 2;
             mySkillDef.baseRechargeInterval = 4.8f;
@@ -719,11 +719,12 @@ namespace ExampleSurvivor.Digievolutions
 
     namespace EntityStates.ExampleSurvivorStates
     {
-        public class GreymonBlast : BaseSkillState
+
+        public class GreymonBlaster : BaseSkillState
         {
             public float damageCoefficient = 2f;
             public float baseDuration = 0.15f;
-            public float recoil = 0.25f;
+            public float recoil = 2f;
             public static GameObject tracerEffectPrefab = Resources.Load<GameObject>("Prefabs/Effects/Tracers/TracerToolbotRebar");
 
             private float duration;
@@ -758,10 +759,81 @@ namespace ExampleSurvivor.Digievolutions
 
                     base.characterBody.AddSpreadBloom(0.75f);
                     Ray aimRay = base.GetAimRay();
+
+                    if (base.isAuthority)
+                    {
+                        ProjectileManager.instance.FireProjectile(ExampleSurvivor.arrowProjectile, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), base.gameObject, this.damageCoefficient * this.damageStat, 0f, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);
+                        ProjectileManager.instance.FireProjectile(ExampleSurvivor.arrowProjectile, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), base.gameObject, this.damageCoefficient * this.damageStat, 0f, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);
+                        ProjectileManager.instance.FireProjectile(ExampleSurvivor.arrowProjectile, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), base.gameObject, this.damageCoefficient * this.damageStat, 0f, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);
+
+
+                    }
+                }
+            }
+
+            public override void FixedUpdate()
+            {
+                base.FixedUpdate();
+
+                if (base.fixedAge >= this.fireDuration)
+                {
+                    FireArrow();
+                }
+
+                if (base.fixedAge >= this.duration && base.isAuthority)
+                {
+                    this.outer.SetNextStateToMain();
+                }
+            }
+
+            public override InterruptPriority GetMinimumInterruptPriority()
+            {
+                return InterruptPriority.Skill;
+            }
+        }
+        public class GreymonBlast : BaseSkillState
+        {
+            public float damageCoefficient = 10f;
+            public float baseDuration = 0.15f;
+            public float recoil = 0.25f;
+            public static GameObject tracerEffectPrefab = Resources.Load<GameObject>("Prefabs/Effects/Tracers/TracerToolbotRebar");
+
+            private float duration;
+            private float fireDuration;
+            private bool hasFired;
+            private Animator animator;
+            private string muzzleString;
+
+            public override void OnEnter()
+            {
+                base.OnEnter();
+                this.duration = this.baseDuration / this.attackSpeedStat;
+                this.fireDuration = 0.05f * this.duration;         //changed 0.25
+                base.characterBody.SetAimTimer(0.5f);                 //changed 2
+                this.animator = base.GetModelAnimator();
+                this.muzzleString = "Muzzle";
+
+
+                base.PlayAnimation("Gesture, Override", "FireArrow", "FireArrow.playbackRate", this.duration);
+            }
+
+            public override void OnExit()
+            {
+                base.OnExit();
+            }
+
+            private void FireArrow()
+            {
+                if (!this.hasFired)
+                {
+                    this.hasFired = true;
+
+                    base.characterBody.AddSpreadBloom(7.5f);
+                    Ray aimRay = base.GetAimRay();
                     
                     if (base.isAuthority)
                     {
-                        ProjectileManager.instance.FireProjectile(Digievolutions.Greymon.GreymonBlast, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), base.gameObject, this.damageCoefficient * this.damageStat, 0f, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);
+                        ProjectileManager.instance.FireProjectile(Digievolutions.Greymon.GreymonBlast, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), base.gameObject, this.damageCoefficient * this.damageStat, 1f, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);
                     }
                 }
             }
@@ -787,5 +859,201 @@ namespace ExampleSurvivor.Digievolutions
             }
         }
 
-    }
+        public class Devolution : BaseSkillState
+        {
+            public float damageCoefficient = 0.5f;
+            public float baseDuration = 0.10f;
+            public float recoil = 0.5f;
+            //public static GameObject tracerEffectPrefab = Resources.Load<GameObject>("Prefabs/Effects/Tracers/TracerToolbotRebar");
+            public static GameObject tracerEffectPrefab = Resources.Load<GameObject>("prefabs/effects/tracers/TracerGolem");
+            public static GameObject hitEffectPrefab = Resources.Load<GameObject>("prefabs/effects/impacteffects/Hitspark1");
+
+
+            public static GameObject characterPrefabGreymon = ExampleSurvivor.characterPrefab;
+
+
+            private float duration;
+            private float fireDuration;
+            private bool hasFired;
+            private Animator animator;
+            private string muzzleString;
+
+            public override void OnEnter()
+            {
+                base.OnEnter();
+                base.characterBody.master.bodyPrefab = characterPrefabGreymon;
+                base.characterBody.master.Respawn(gameObject.transform.localPosition, gameObject.transform.localRotation);
+            }
+
+            public override void OnExit()
+            {
+                base.OnExit();
+            }
+
+            private void FireRG()
+            {
+                if (!this.hasFired)
+                {
+                    this.hasFired = true;
+                    //wololo
+                    //characterPrefab=
+                    base.characterBody.AddSpreadBloom(0.75f);
+                    Ray aimRay = base.GetAimRay();
+                    //EffectManager.SimpleMuzzleFlash(Commando.CommandoWeapon.FirePistol.effectPrefab, base.gameObject, this.muzzleString, false);
+
+                    if (base.isAuthority)
+                    {
+
+                    }
+                }
+            }
+
+            public override void FixedUpdate()
+            {
+                base.FixedUpdate();
+
+                if (base.fixedAge >= this.fireDuration)
+                {
+                    FireRG();
+                }
+
+            }
+
+            public override InterruptPriority GetMinimumInterruptPriority()
+            {
+                return InterruptPriority.Skill;
+            }
+        }
+
+        public class Charge : BaseState
+        {
+
+            public float damageCoefficient = 2f;
+            public float baseDuration = 0.15f;
+            public float recoil = 2f;
+            public static GameObject tracerEffectPrefab = Resources.Load<GameObject>("Prefabs/Effects/Tracers/TracerToolbotRebar");
+
+            private float duration;
+            private float fireDuration;
+            private bool hasFired;
+            private Animator animator;
+            private string muzzleString;
+            // Token: 0x0600400F RID: 16399 RVA: 0x0010C464 File Offset: 0x0010A664
+            public override void OnEnter()
+            {
+                base.OnEnter();
+                this.animator = base.GetModelAnimator();
+                //this.childLocator = this.animator.GetComponent<ChildLocator>();
+                FootstepHandler component = this.animator.GetComponent<FootstepHandler>();
+
+                //base.PlayCrossfade("Body", "ChargeForward", 0.2f);
+                this.ResetOverlapAttack();
+                this.SetSprintEffectActive(true);
+                if (this.childLocator)
+                {
+                    this.sphereCheckTransform = this.childLocator.FindChild("SphereCheckTransform");
+                }
+                if (!this.sphereCheckTransform && base.characterBody)
+                {
+                    this.sphereCheckTransform = base.characterBody.coreTransform;
+                }
+                if (!this.sphereCheckTransform)
+                {
+                    this.sphereCheckTransform = base.transform;
+                }
+            }
+
+            // Token: 0x06004010 RID: 16400 RVA: 0x0010C559 File Offset: 0x0010A759
+            private void SetSprintEffectActive(bool active)
+            {
+                if (this.childLocator)
+                {
+                    Transform transform = this.childLocator.FindChild("SprintEffect");
+                    if (transform == null)
+                    {
+                        return;
+                    }
+                    transform.gameObject.SetActive(active);
+                }
+            }
+
+            // Token: 0x06004011 RID: 16401 RVA: 0x0010C588 File Offset: 0x0010A788
+            public override void OnExit()
+            {
+                base.OnExit();
+                base.characterMotor.moveDirection = Vector3.zero;
+                Util.PlaySound(Charge.endSoundString, base.gameObject);
+                Util.PlaySound("stop_bison_charge_attack_loop", base.gameObject);
+                this.SetSprintEffectActive(false);
+                FootstepHandler component = this.animator.GetComponent<FootstepHandler>();
+                if (component)
+                {
+                    component.baseFootstepString = this.baseFootstepString;
+                }
+            }
+
+            // Token: 0x06004012 RID: 16402 RVA: 0x0010C5F4 File Offset: 0x0010A7F4
+            public override void FixedUpdate()
+            {
+                this.targetMoveVector = Vector3.ProjectOnPlane(Vector3.SmoothDamp(this.targetMoveVector, base.inputBank.aimDirection, ref this.targetMoveVectorVelocity, Charge.turnSmoothTime, Charge.turnSpeed), Vector3.up).normalized;
+                base.characterDirection.moveVector = this.targetMoveVector;
+                Vector3 forward = base.characterDirection.forward;
+                float value = this.moveSpeedStat * Charge.chargeMovementSpeedCoefficient;
+                base.characterMotor.moveDirection = forward * Charge.chargeMovementSpeedCoefficient;
+                this.animator.SetFloat("forwardSpeed", value);
+                if (base.isAuthority && this.attack.Fire(null))
+                {
+                    Util.PlaySound(Charge.headbuttImpactSound, base.gameObject);
+                }
+                if (this.overlapResetStopwatch >= 1f / Charge.overlapResetFrequency)
+                {
+                    this.overlapResetStopwatch -= 1f / Charge.overlapResetFrequency;
+                }
+                if (base.isAuthority && Physics.OverlapSphere(this.sphereCheckTransform.position, Charge.overlapSphereRadius, LayerIndex.world.mask).Length != 0)
+                {
+                    Util.PlaySound(Charge.headbuttImpactSound, base.gameObject);
+                    EffectManager.SimpleMuzzleFlash(Charge.hitEffectPrefab, base.gameObject, "SphereCheckTransform", true);
+                    base.healthComponent.TakeDamageForce(forward * Charge.selfStunForce, true, false);
+                    StunState stunState = new StunState();
+                    stunState.stunDuration = Charge.selfStunDuration;
+                    this.outer.SetNextState(stunState);
+                    return;
+                }
+                this.stopwatch += Time.fixedDeltaTime;
+                this.overlapResetStopwatch += Time.fixedDeltaTime;
+                if (this.stopwatch > Charge.chargeDuration)
+                {
+                    this.outer.SetNextStateToMain();
+                }
+                base.FixedUpdate();
+            }
+
+            // Token: 0x06004013 RID: 16403 RVA: 0x0010C7BC File Offset: 0x0010A9BC
+            private void ResetOverlapAttack()
+            {
+                if (!this.hitboxGroup)
+                {
+                    Transform modelTransform = base.GetModelTransform();
+                    if (modelTransform)
+                    {
+                        this.hitboxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "Charge");
+                    }
+                }
+                this.attack = new OverlapAttack();
+                this.attack.attacker = base.gameObject;
+                this.attack.inflictor = base.gameObject;
+                this.attack.teamIndex = TeamComponent.GetObjectTeam(this.attack.attacker);
+                this.attack.damage = Charge.damageCoefficient * this.damageStat;
+                this.attack.hitEffectPrefab = Charge.hitEffectPrefab;
+                this.attack.forceVector = Vector3.up * Charge.upwardForceMagnitude;
+                this.attack.pushAwayForce = Charge.awayForceMagnitude;
+                this.attack.hitBoxGroup = this.hitboxGroup;
+            }
+
+            // Token: 0x06004014 RID: 16404 RVA: 0x0000CFF7 File Offset: 0x0000B1F7
+            public override InterruptPriority GetMinimumInterruptPriority()
+            {
+                return InterruptPriority.Skill;
+            }
+        }
     }

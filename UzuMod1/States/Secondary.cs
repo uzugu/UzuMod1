@@ -31,7 +31,7 @@ namespace EntityStates.ExampleSurvivorStates
 
 
             base.PlayAnimation("Gesture, Override", "FireArrow", "FireArrow.playbackRate", this.duration);
-            base.PlayAnimation("Fuego, Override", "OpenMouth");
+            base.PlayAnimation("Fuego", "OpenMouth");
             if (base.characterBody.isSprinting)
             {
 
