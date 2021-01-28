@@ -69,8 +69,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4073450576468716736}
+  - component: {fileID: 3570600235184901561}
   m_Layer: 0
-  m_Name: HeadHitbox
+  m_Name: HeadG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,12 +85,26 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1821728114282900311}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.7, y: 83.5, z: 24.56469}
-  m_LocalScale: {x: 40, y: 40, z: 0}
+  m_LocalPosition: {x: -18, y: 156.7, z: 226.3}
+  m_LocalScale: {x: 61.795998, y: 61.795998, z: 0}
   m_Children: []
   m_Father: {fileID: 6075336710190861625}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &3570600235184901561
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821728114282900311}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 2
+  m_Height: 7
+  m_Direction: 0
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2944672053332305313
 GameObject:
   m_ObjectHideFlags: 0

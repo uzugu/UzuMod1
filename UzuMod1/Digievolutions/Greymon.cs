@@ -33,8 +33,8 @@ namespace ExampleSurvivor.Digievolutions
             CreatePrefabGreymon();
             RegisterStates(); // register our skill entitystates for networking
             RegisterCharacter(); // and finally put our new survivor in the game
-            //CreateDoppelganger(); // not really mandatory, but it's simple and not having an umbra is just kinda lame
-            
+                                 //CreateDoppelganger(); // not really mandatory, but it's simple and not having an umbra is just kinda lame
+
         }
 
         private static GameObject CreateModel1(GameObject main)
@@ -329,9 +329,9 @@ namespace ExampleSurvivor.Digievolutions
             aimAnimator.yawGiveupRange = 10f;
             aimAnimator.giveupDuration = 8f;
 
-            
+
         }
-        public static  void RegisterStates()
+        public static void RegisterStates()
         {
             // register the entitystates for networking reasons
             LoadoutAPI.AddSkill(typeof(ExampleSurvivorFireArrow));
@@ -345,7 +345,7 @@ namespace ExampleSurvivor.Digievolutions
 
             // clone rex's syringe projectile prefab here to use as our own projectile ///cambiado a bola de fuego
             GreymonBlast = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/LunarWispTrackingBomb"), "Prefabs/Projectiles/Greymonblast", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
-            
+
             //arrowProjectile2 = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/LemurianBigFireball"), "Prefabs/Projectiles/ExampleArrowProjectile", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
 
             //arrowProjectile3 = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/MageFireboltExpanded"), "Prefabs/Projectiles/ExampleArrowProjectile2", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
@@ -416,7 +416,7 @@ namespace ExampleSurvivor.Digievolutions
             //};
         }
 
-        static void  SkillSetup()
+        static void SkillSetup()
         {
             // get rid of the original skills first, otherwise we'll have commando's loadout and we don't want that
             foreach (GenericSkill obj in characterPrefabGreymon.GetComponentsInChildren<GenericSkill>())
@@ -608,10 +608,10 @@ namespace ExampleSurvivor.Digievolutions
             // set up your primary skill def here!
 
             SkillDef mySkillDef = ScriptableObject.CreateInstance<SkillDef>();
-            mySkillDef.activationState = new SerializableEntityStateType(typeof(DodgeState));
+            mySkillDef.activationState = new SerializableEntityStateType(typeof(Slash));
             mySkillDef.activationStateMachineName = "Weapon";
             mySkillDef.baseMaxStock = 1;
-            mySkillDef.baseRechargeInterval = 3f;
+            mySkillDef.baseRechargeInterval = 0f;
             mySkillDef.beginSkillCooldownOnSkillEnd = false;
             mySkillDef.canceledFromSprinting = false;
             mySkillDef.fullRestockOnAssign = true;
@@ -830,7 +830,7 @@ namespace ExampleSurvivor.Digievolutions
 
                     base.characterBody.AddSpreadBloom(7.5f);
                     Ray aimRay = base.GetAimRay();
-                    
+
                     if (base.isAuthority)
                     {
                         ProjectileManager.instance.FireProjectile(Digievolutions.Greymon.GreymonBlast, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), base.gameObject, this.damageCoefficient * this.damageStat, 1f, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);
@@ -925,5 +925,82 @@ namespace ExampleSurvivor.Digievolutions
             }
         }
 
+        public class Slash : BaseSkillState
+        {
+            public static float damageCoefficient = 5.5f;
+            public float baseDuration = 1.6f;
+            public static float attackRecoil = 1.5f;
+            public static float hitHopVelocity = 5.5f;
+            public static float earlyExitTime = 0.575f;
+            public int swingIndex;
+
+            private bool inCombo;
+            private float earlyExitDuration;
+            private float duration;
+            private bool hasFired;
+            private float hitPauseTimer;
+            private OverlapAttack attack;
+            private bool inHitPause;
+            private bool hasHopped;
+            private float stopwatch;
+            private bool cancelling;
+            private Animator modelAnimator;
+            private BaseState.HitStopCachedState hitStopCachedState;
+            private RootMotionAccumulator rootMotionAccumulator;
+            //private PaladinSwordController swordController;
+
+            public override void OnEnter()
+            {
+                base.OnEnter();
+                this.rootMotionAccumulator = base.GetModelRootMotionAccumulator();
+                this.modelAnimator = base.GetModelAnimator();
+                this.duration = 2f / this.attackSpeedStat;
+                this.attack = new OverlapAttack();
+                this.attack.attacker = base.gameObject;
+                this.attack.inflictor = base.gameObject;
+                this.attack.teamIndex = TeamComponent.GetObjectTeam(this.attack.attacker);
+                this.attack.damage = 5f;
+                Transform modelTransform = base.GetModelTransform();
+                if (modelTransform)
+                {
+                    this.attack.hitBoxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "HeadG");
+                }
+                base.PlayCrossfade("Fuego", "Gcharge", "ExampleSurvivorFireArrow.playbackRate", this.duration, 0.5f);
+            }
+
+            // Token: 0x06003A29 RID: 14889 RVA: 0x000EE944 File Offset: 0x000ECB44
+            public override void FixedUpdate()
+            {
+                base.FixedUpdate();
+                if (this.rootMotionAccumulator)
+                {
+                    Vector3 vector = this.rootMotionAccumulator.ExtractRootMotion();
+                    if (vector != Vector3.zero && base.isAuthority && base.characterMotor)
+                    {
+                        base.characterMotor.rootMotion += vector;
+                    }
+                }
+                if (base.isAuthority)
+                {
+                    this.attack.forceVector = (base.characterDirection ? (base.characterDirection.forward * 2f) : Vector3.zero);
+                    if (this.modelAnimator && this.modelAnimator.GetFloat("LeapAttack.hitBoxActive") > 0.5f)
+                    {
+                        this.attack.Fire(null);
+                    }
+                }
+                if (base.fixedAge >= this.duration && base.isAuthority)
+                {
+                    this.outer.SetNextStateToMain();
+                    return;
+                }
+            }
+
+            // Token: 0x06003A2A RID: 14890 RVA: 0x0000D472 File Offset: 0x0000B672
+            public override InterruptPriority GetMinimumInterruptPriority()
+            {
+                return InterruptPriority.PrioritySkill;
+            }
+        }
     }
 }
+    

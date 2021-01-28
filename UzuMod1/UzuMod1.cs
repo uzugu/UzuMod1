@@ -304,25 +304,27 @@ namespace ExampleSurvivor
             hurtBoxGroup.mainHurtBox = componentInChildren;
             hurtBoxGroup.bullseyeCount = 1;
 
-            //make a hitbox for shoulder bash
-            HitBoxGroup hitBoxGroup = model.AddComponent<HitBoxGroup>();
 
-            GameObject chargeHitbox = new GameObject("ChargeHitbox");
-            chargeHitbox.transform.parent = characterPrefab.transform;
-            chargeHitbox.transform.localPosition = Vector3.zero;
-            chargeHitbox.transform.localScale = Vector3.one * 800f;
-            chargeHitbox.transform.parent = model.transform;
-            chargeHitbox.transform.localRotation = Quaternion.identity;
 
-            HitBox hitBox = chargeHitbox.AddComponent<HitBox>();
-            chargeHitbox.layer = LayerIndex.projectile.intVal;
 
-            hitBoxGroup.hitBoxes = new HitBox[]
-            {
-                hitBox
-            };
+            //HitBoxGroup HitBoxGroup = model.AddComponent<HitBoxGroup>();
 
-            hitBoxGroup.groupName = "Charge";
+            //GameObject Hitbox = childLocator.FindChild("J_haed").gameObject;
+            //Hitbox.transform.localPosition = new Vector3(0f, 13.3f, 13.7f);
+            //Hitbox.transform.localRotation = Quaternion.identity;
+            //Hitbox.transform.localScale = new Vector3(48, 41, 60);
+
+            //HitBox HitBox = Hitbox.AddComponent<HitBox>();
+            //Hitbox.layer = LayerIndex.projectile.intVal;
+
+            //HitBoxGroup.hitBoxes = new HitBox[]
+            //{
+            //    HitBox
+            //};
+
+            //HitBoxGroup.groupName = "Head";
+
+
 
 
             // this is for handling footsteps, not needed but polish is always good
