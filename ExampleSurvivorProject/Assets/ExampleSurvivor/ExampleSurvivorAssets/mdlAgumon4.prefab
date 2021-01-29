@@ -144,6 +144,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7787216912217837447}
+  - component: {fileID: 3960060331881256666}
   m_Layer: 0
   m_Name: HeadH
   m_TagString: Untagged
@@ -159,12 +160,25 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5089041417242274460}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: 59.6, z: 53.7}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: 1, y: 62.3, z: 131}
+  m_LocalScale: {x: 150, y: 150, z: 150}
   m_Children: []
   m_Father: {fileID: 6075336710190861625}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3960060331881256666
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5089041417242274460}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6075336710191222949
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,10 +622,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transformPairs:
-  - name: Root
-    transform: {fileID: 0}
-  - name: Pelvis
-    transform: {fileID: 0}
+  - name: HeadH
+    transform: {fileID: 7787216912217837447}
+  - name: HeadHitbox
+    transform: {fileID: 4073450576468716736}
   - name: L_Hip
     transform: {fileID: 0}
   - name: L_Knee

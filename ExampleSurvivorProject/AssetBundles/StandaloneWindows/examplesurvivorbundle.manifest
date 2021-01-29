@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3605300844
+CRC: 190066503
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1a0398ca38af6085ac1a9d105ade9301
+    Hash: c0e14380c782068108429084922e8992
   TypeTreeHash:
     serializedVersion: 2
     Hash: 696604893e2eaf3998d731dff0a4d92d
@@ -52,11 +52,11 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 24f98ceb39626e542bce4568de94b61d, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: db294d07add6b364f99a346939dd2a8a, type: 3}
-- Class: 114
   Script: {fileID: 11500000, guid: 7ade51fc5319ad3459ce2de62570bf78, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: b0f08e644e13c7d46a78c4e7fa299176, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: db294d07add6b364f99a346939dd2a8a, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 135
@@ -105,8 +105,10 @@ Assets:
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Materials/matExampleSurvivor.mat
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Skill2Icon.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/anim/AgumonEscalado@Idle.fbx
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/anim/ACharge.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Greymon/Anim/GFallIdle.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/eye_texture.png
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/anim/ACharge 1.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Greymon/Anim/GWalkF.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorIdle.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Greymon/Materials/chr326a01.mat

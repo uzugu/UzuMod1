@@ -31,7 +31,7 @@ namespace EntityStates.ExampleSurvivorStates
 
 
             base.PlayAnimation("Gesture, Override", "FireArrow", "FireArrow.playbackRate", this.duration);
-            base.PlayAnimation("Fuego", "OpenMouth");
+            base.PlayAnimation("Fuego", "ACharge");
             if (base.characterBody.isSprinting)
             {
 
@@ -88,7 +88,7 @@ namespace EntityStates.ExampleSurvivorStates
     }
     public class ShoulderBash : BaseSkillState
     {
-        public static float baseDuration = 0.65f;
+        public static float baseDuration = 1.65f;
         public static float chargeDamageCoefficient = 4.5f;
         public static float knockbackDamageCoefficient = 7f;
         public static float massThresholdForKnockback = 150;
@@ -130,7 +130,7 @@ namespace EntityStates.ExampleSurvivorStates
 
             if (base.characterMotor && base.characterDirection)
             {
-                base.characterMotor.velocity.y *= 0.2f;
+                base.characterMotor.velocity.y *= 0.5f;
                 base.characterMotor.velocity = this.forwardDirection * this.dashSpeed;
             }
 
@@ -142,9 +142,9 @@ namespace EntityStates.ExampleSurvivorStates
 
             if (modelTransform)
             {
-                hitBoxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "Hammer");
+                hitBoxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "HeadH");
             }
-            hitBoxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "Hammer");
+            hitBoxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "HeadH");
 
             this.attack = new OverlapAttack();
             this.attack.attacker = base.gameObject;

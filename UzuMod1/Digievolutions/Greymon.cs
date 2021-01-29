@@ -284,26 +284,8 @@ namespace ExampleSurvivor.Digievolutions
             hurtBoxGroup.mainHurtBox = componentInChildren;
             hurtBoxGroup.bullseyeCount = 1;
 
-            //make a hitbox for shoulder bash
-            HitBoxGroup hitBoxGroup = model.AddComponent<HitBoxGroup>();
-
-            GameObject chargeHitbox = new GameObject("ChargeHitbox");
-            chargeHitbox.transform.parent = characterPrefabGreymon.transform;
-            chargeHitbox.transform.localPosition = Vector3.zero;
-            chargeHitbox.transform.localScale = Vector3.one * 800f;
-            chargeHitbox.transform.parent = model.transform;
-            chargeHitbox.transform.localRotation = Quaternion.identity;
-
-            HitBox hitBox = chargeHitbox.AddComponent<HitBox>();
-            chargeHitbox.layer = LayerIndex.projectile.intVal;
-
-            hitBoxGroup.hitBoxes = new HitBox[]
-            {
-                hitBox
-            };
-
-            hitBoxGroup.groupName = "Charge";
-
+            Modules.Helpers.CreateHitbox(model, childLocator.FindChild("HeadG"), "HeadG");
+            Modules.Helpers.CreateHitbox(model, childLocator.FindChild("HeadCh"), "HeadCh");
 
             // this is for handling footsteps, not needed but polish is always good
             FootstepHandler footstepHandler = model.AddComponent<FootstepHandler>();
@@ -608,10 +590,10 @@ namespace ExampleSurvivor.Digievolutions
             // set up your primary skill def here!
 
             SkillDef mySkillDef = ScriptableObject.CreateInstance<SkillDef>();
-            mySkillDef.activationState = new SerializableEntityStateType(typeof(Slash));
+            mySkillDef.activationState = new SerializableEntityStateType(typeof(Charge));
             mySkillDef.activationStateMachineName = "Weapon";
             mySkillDef.baseMaxStock = 1;
-            mySkillDef.baseRechargeInterval = 0f;
+            mySkillDef.baseRechargeInterval = 2.5f;
             mySkillDef.beginSkillCooldownOnSkillEnd = false;
             mySkillDef.canceledFromSprinting = false;
             mySkillDef.fullRestockOnAssign = true;
@@ -743,7 +725,7 @@ namespace ExampleSurvivor.Digievolutions
                 this.muzzleString = "Muzzle";
 
 
-                base.PlayAnimation("Gesture, Override", "FireArrow", "FireArrow.playbackRate", this.duration);
+                base.PlayAnimation("Fuego", "GOpenMouth");
             }
 
             public override void OnExit()
@@ -927,9 +909,9 @@ namespace ExampleSurvivor.Digievolutions
 
         public class Slash : BaseSkillState
         {
-            public static float damageCoefficient = 5.5f;
-            public float baseDuration = 1.6f;
-            public static float attackRecoil = 1.5f;
+            public static float damageCoefficient = 5000f;
+            public float baseDuration = 1.5f;
+            public static float attackRecoil = 0.5f;
             public static float hitHopVelocity = 5.5f;
             public static float earlyExitTime = 0.575f;
             public int swingIndex;
@@ -944,63 +926,351 @@ namespace ExampleSurvivor.Digievolutions
             private bool hasHopped;
             private float stopwatch;
             private bool cancelling;
-            private Animator modelAnimator;
+            private Animator animator;
             private BaseState.HitStopCachedState hitStopCachedState;
-            private RootMotionAccumulator rootMotionAccumulator;
             //private PaladinSwordController swordController;
 
             public override void OnEnter()
             {
                 base.OnEnter();
-                this.rootMotionAccumulator = base.GetModelRootMotionAccumulator();
-                this.modelAnimator = base.GetModelAnimator();
-                this.duration = 2f / this.attackSpeedStat;
-                this.attack = new OverlapAttack();
-                this.attack.attacker = base.gameObject;
-                this.attack.inflictor = base.gameObject;
-                this.attack.teamIndex = TeamComponent.GetObjectTeam(this.attack.attacker);
-                this.attack.damage = 5f;
+                this.duration = this.baseDuration / this.attackSpeedStat;
+                this.earlyExitDuration = this.duration * Slash.earlyExitTime;
+                this.hasFired = false;
+                this.cancelling = false;
+                this.animator = base.GetModelAnimator();
+               // this.swordController = base.GetComponent<PaladinSwordController>();
+                base.StartAimMode(1.5f + this.duration, false);
+                base.characterBody.isSprinting = false;
+                this.inCombo = false;
+
+                //if (this.swordController) this.swordController.attacking = true;
+
+                HitBoxGroup hitBoxGroup = null;
                 Transform modelTransform = base.GetModelTransform();
+                base.PlayAnimation("Fuego", "GCharge");
                 if (modelTransform)
                 {
-                    this.attack.hitBoxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "HeadG");
+                    hitBoxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "HeadG");
                 }
-                base.PlayCrossfade("Fuego", "Gcharge", "ExampleSurvivorFireArrow.playbackRate", this.duration, 0.5f);
+
+                if (this.swingIndex > 1)
+                {
+                    this.swingIndex = 0;
+                    this.inCombo = true;
+                }
+
+               // Util.PlaySound(Modules.Sounds.Cloth1, base.gameObject);
+
+                string animString = "Slash" + (1 + swingIndex).ToString();
+
+                if (this.inCombo)
+                {
+                    if (!this.animator.GetBool("isMoving") && this.animator.GetBool("isGrounded")) base.PlayCrossfade("FullBody, Override", "SlashCombo1", "Slash.playbackRate", this.duration, 0.05f);
+                    base.PlayCrossfade("Gesture, Override", "SlashCombo1", "Slash.playbackRate", this.duration, 0.05f);
+                }
+                else
+                {
+                    if (!this.animator.GetBool("isMoving") && this.animator.GetBool("isGrounded")) base.PlayCrossfade("FullBody, Override", animString, "Slash.playbackRate", this.duration, 0.05f);
+                    base.PlayCrossfade("Gesture, Override", animString, "Slash.playbackRate", this.duration, 0.05f);
+                }
+
+                float dmg = Slash.damageCoefficient;
+
+                this.attack = new OverlapAttack();
+                this.attack.damageType = DamageType.Generic;
+                this.attack.attacker = base.gameObject;
+                this.attack.inflictor = base.gameObject;
+                this.attack.teamIndex = base.GetTeam();
+                this.attack.damage = dmg * this.damageStat;
+                this.attack.procCoefficient = 1;
+                //this.attack.hitEffectPrefab = this.swordController.hitEffect;
+                this.attack.forceVector = Vector3.zero;
+                this.attack.pushAwayForce = 750f;
+                this.attack.hitBoxGroup = hitBoxGroup;
+                this.attack.isCrit = base.RollCrit();
             }
 
-            // Token: 0x06003A29 RID: 14889 RVA: 0x000EE944 File Offset: 0x000ECB44
+            public override void OnExit()
+            {
+                base.OnExit();
+
+                if (!this.hasFired) this.FireAttack();
+
+                if (this.inHitPause)
+                {
+                    base.ConsumeHitStopCachedState(this.hitStopCachedState, base.characterMotor, this.animator);
+                    this.inHitPause = false;
+                }
+
+                //base.PlayAnimation("FullBody, Override", "BufferEmpty");
+                //base.PlayAnimation("Gesture, Override", "BufferEmpty");
+
+                //if (this.swordController) this.swordController.attacking = false;
+            }
+
+            public void FireAttack()
+            {
+                if (!this.hasFired)
+                {
+                    this.hasFired = true;
+                    //this.swordController.PlaySwingSound();
+
+                    if (base.isAuthority)
+                    {
+                        string muzzleString = null;
+                        if (this.swingIndex == 0) muzzleString = "SwingRight";
+                        else muzzleString = "SwingLeft";
+
+                        //base.AddRecoil(-1f * Slash.attackRecoil, -2f * Slash.attackRecoil, -0.5f * Slash.attackRecoil, 0.5f * Slash.attackRecoil);
+                        //EffectManager.SimpleMuzzleFlash(this.swordController.swingEffect, base.gameObject, muzzleString, true);
+
+                        Ray aimRay = base.GetAimRay();
+
+                      
+
+                        if (this.attack.Fire())
+                        {
+                            //this.swordController.PlayHitSound(0);
+
+                            if (!this.hasHopped)
+                            {
+                                if (base.characterMotor && !base.characterMotor.isGrounded)
+                                {
+                                    base.SmallHop(base.characterMotor, Slash.hitHopVelocity);
+                                }
+
+                                if (base.skillLocator.utility.skillDef.skillNameToken == "PALADIN_UTILITY_DASH_NAME") base.skillLocator.utility.RunRecharge(1f);
+
+                                this.hasHopped = true;
+                            }
+
+                            if (!this.inHitPause)
+                            {
+                                this.hitStopCachedState = base.CreateHitStopCachedState(base.characterMotor, this.animator, "Slash.playbackRate");
+                                this.hitPauseTimer = (2f ) / this.attackSpeedStat;
+                                this.inHitPause = true;
+                            }
+                        }
+                    }
+                }
+            }
+
             public override void FixedUpdate()
             {
                 base.FixedUpdate();
-                if (this.rootMotionAccumulator)
+                if (this.animator) this.animator.SetBool("inCombat", true);
+                this.hitPauseTimer -= Time.fixedDeltaTime;
+
+                if (this.hitPauseTimer <= 0f && this.inHitPause)
                 {
-                    Vector3 vector = this.rootMotionAccumulator.ExtractRootMotion();
-                    if (vector != Vector3.zero && base.isAuthority && base.characterMotor)
-                    {
-                        base.characterMotor.rootMotion += vector;
-                    }
+                    base.ConsumeHitStopCachedState(this.hitStopCachedState, base.characterMotor, this.animator);
+                    this.inHitPause = false;
                 }
+
+                if (!this.inHitPause)
+                {
+                    this.stopwatch += Time.fixedDeltaTime;
+                }
+                else
+                {
+                    if (base.characterMotor) base.characterMotor.velocity = Vector3.zero;
+                    if (this.animator) this.animator.SetFloat("Slash.playbackRate", 0f);
+                }
+
+                if (this.stopwatch >= this.duration * 1.225f && this.stopwatch <= this.duration * 1.5f)
+                {
+                    this.FireAttack();
+                }
+
+                if (this.stopwatch >= (this.duration * 0.5f) && base.inputBank.skill2.down && base.skillLocator.secondary.skillDef.skillNameToken == "PALADIN_SECONDARY_LUNARSHARD_NAME")
+                {
+                    this.cancelling = true;
+                    base.skillLocator.secondary.ExecuteIfReady();
+                    return;
+                }
+
                 if (base.isAuthority)
                 {
-                    this.attack.forceVector = (base.characterDirection ? (base.characterDirection.forward * 2f) : Vector3.zero);
-                    if (this.modelAnimator && this.modelAnimator.GetFloat("LeapAttack.hitBoxActive") > 0.5f)
+                    if (base.fixedAge >= this.earlyExitDuration && base.inputBank.skill1.down)
                     {
-                        this.attack.Fire(null);
+                        var nextSwing = new Slash();
+                        nextSwing.swingIndex = this.swingIndex + 1;
+                        this.outer.SetNextState(nextSwing);
+                        return;
                     }
-                }
-                if (base.fixedAge >= this.duration && base.isAuthority)
-                {
-                    this.outer.SetNextStateToMain();
-                    return;
+
+                    if (base.fixedAge >= this.duration)
+                    {
+                        this.outer.SetNextStateToMain();
+                        return;
+                    }
                 }
             }
 
-            // Token: 0x06003A2A RID: 14890 RVA: 0x0000D472 File Offset: 0x0000B672
             public override InterruptPriority GetMinimumInterruptPriority()
             {
-                return InterruptPriority.PrioritySkill;
+                if (this.cancelling) return InterruptPriority.Any;
+                else return InterruptPriority.Skill;
+            }
+
+            public override void OnSerialize(NetworkWriter writer)
+            {
+                base.OnSerialize(writer);
+                writer.Write(this.swingIndex);
+            }
+
+            public override void OnDeserialize(NetworkReader reader)
+            {
+                base.OnDeserialize(reader);
+                this.swingIndex = reader.ReadInt32();
             }
         }
+
+        public class Charge : BaseState
+        {
+        
+            public static float damageCoefficient = 20f;
+            public float baseDuration = 1.5f;
+            public static float attackRecoil = 0.5f;
+            public static float hitHopVelocity = 5.5f;
+            public static float earlyExitTime = 0.575f;
+            public int swingIndex;
+
+
+            private OverlapAttack attack;
+ 
+            private float stopwatch;
+            private bool cancelling;
+            private Animator animator;
+            private BaseState.HitStopCachedState hitStopCachedState;
+            private ChildLocator childLocator;
+            private Transform sphereCheckTransform;
+            
+            private static float chargeMovementSpeedCoefficient = 100f;
+            private float overlapResetStopwatch = 1f;
+            private static float overlapResetFrequency = 1f;
+            private static float selfStunDuration = 1f;
+            private HitBoxGroup hitboxGroup = null;
+            
+            private static float turnSmoothTime = 1f;
+            private static float turnSpeed = 2f;
+            private static float overlapSphereRadius = 0.1f;
+            private static Vector3 selfStunForce;
+            private static float chargeDuration=0.5f;
+            private Vector3 targetMoveVector;
+            private Vector3 targetMoveVectorVelocity;
+
+            //private PaladinSwordController swordController;
+
+            // Token: 0x0600400F RID: 16399 RVA: 0x0010C464 File Offset: 0x0010A664
+            public override void OnEnter()
+                {
+                    base.OnEnter();
+                    this.animator = base.GetModelAnimator();
+                    this.childLocator = this.animator.GetComponent<ChildLocator>();
+                   
+                    
+                    base.PlayCrossfade("Body", "ChargeForward", 0.2f);
+                    this.ResetOverlapAttack();
+                    this.SetSprintEffectActive(true);
+                    if (this.childLocator)
+                    {
+                        this.sphereCheckTransform = this.childLocator.FindChild("SphereCheckTransform");
+                    }
+                    if (!this.sphereCheckTransform && base.characterBody)
+                    {
+                        this.sphereCheckTransform = base.characterBody.coreTransform;
+                    }
+                    if (!this.sphereCheckTransform)
+                    {
+                        this.sphereCheckTransform = base.transform;
+                    }
+                }
+
+                // Token: 0x06004010 RID: 16400 RVA: 0x0010C559 File Offset: 0x0010A759
+                private void SetSprintEffectActive(bool active)
+                {
+                   
+                }
+
+                // Token: 0x06004011 RID: 16401 RVA: 0x0010C588 File Offset: 0x0010A788
+                public override void OnExit()
+                {
+                    base.OnExit();
+                    base.characterMotor.moveDirection = Vector3.zero;
+                    
+                    Util.PlaySound("stop_bison_charge_attack_loop", base.gameObject);
+                    this.SetSprintEffectActive(false);
+                    FootstepHandler component = this.animator.GetComponent<FootstepHandler>();
+                    if (component)
+                    {
+                       
+                    }
+                }
+
+                // Token: 0x06004012 RID: 16402 RVA: 0x0010C5F4 File Offset: 0x0010A7F4
+                public override void FixedUpdate()
+                {
+                    this.targetMoveVector = Vector3.ProjectOnPlane(Vector3.SmoothDamp(this.targetMoveVector, base.inputBank.aimDirection, ref this.targetMoveVectorVelocity, Charge.turnSmoothTime, Charge.turnSpeed), Vector3.up).normalized;
+                    base.characterDirection.moveVector = this.targetMoveVector;
+                    Vector3 forward = base.characterDirection.forward;
+                    float value = this.moveSpeedStat * Charge.chargeMovementSpeedCoefficient;
+                    base.characterMotor.moveDirection = forward * Charge.chargeMovementSpeedCoefficient;
+                    this.animator.SetFloat("forwardSpeed", value);
+                    if (base.isAuthority && this.attack.Fire(null))
+                    {
+                       
+                    }
+                    if (this.overlapResetStopwatch >= 1f / Charge.overlapResetFrequency)
+                    {
+                        this.overlapResetStopwatch -= 1f / Charge.overlapResetFrequency;
+                    }
+                    if (base.isAuthority && Physics.OverlapSphere(this.sphereCheckTransform.position, Charge.overlapSphereRadius, LayerIndex.world.mask).Length != 0)
+                    {
+                        
+                         base.healthComponent.TakeDamageForce(forward * 1f, true, false);
+                        StunState stunState = new StunState();
+                        stunState.stunDuration = Charge.selfStunDuration;
+                        this.outer.SetNextState(stunState);
+                        return;
+                    }
+                    this.stopwatch += Time.fixedDeltaTime;
+                    this.overlapResetStopwatch += Time.fixedDeltaTime;
+                    if (this.stopwatch > Charge.chargeDuration)
+                    {
+                        this.outer.SetNextStateToMain();
+                    }
+                    base.FixedUpdate();
+                }
+
+                // Token: 0x06004013 RID: 16403 RVA: 0x0010C7BC File Offset: 0x0010A9BC
+                private void ResetOverlapAttack()
+                {
+                
+                if (!this.hitboxGroup)
+                    {
+                        Transform modelTransform = base.GetModelTransform();
+                        if (modelTransform)
+                        {
+                            this.hitboxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "HeadCh");
+                        }
+                    }
+                    this.attack = new OverlapAttack();
+                    this.attack.attacker = base.gameObject;
+                    this.attack.inflictor = base.gameObject;
+                    this.attack.teamIndex = TeamComponent.GetObjectTeam(this.attack.attacker);
+                    this.attack.damage = Charge.damageCoefficient * this.damageStat;
+                   
+                    this.attack.forceVector = Vector3.up * 1f;
+                    this.attack.pushAwayForce = 1f;
+                    this.attack.hitBoxGroup = this.hitboxGroup;
+                }
+
+                // Token: 0x06004014 RID: 16404 RVA: 0x0000CFF7 File Offset: 0x0000B1F7
+                public override InterruptPriority GetMinimumInterruptPriority()
+                {
+                    return InterruptPriority.Skill;
+                }
+            }
     }
 }
-    

@@ -307,22 +307,7 @@ namespace ExampleSurvivor
 
 
 
-            //HitBoxGroup HitBoxGroup = model.AddComponent<HitBoxGroup>();
-
-            //GameObject Hitbox = childLocator.FindChild("J_haed").gameObject;
-            //Hitbox.transform.localPosition = new Vector3(0f, 13.3f, 13.7f);
-            //Hitbox.transform.localRotation = Quaternion.identity;
-            //Hitbox.transform.localScale = new Vector3(48, 41, 60);
-
-            //HitBox HitBox = Hitbox.AddComponent<HitBox>();
-            //Hitbox.layer = LayerIndex.projectile.intVal;
-
-            //HitBoxGroup.hitBoxes = new HitBox[]
-            //{
-            //    HitBox
-            //};
-
-            //HitBoxGroup.groupName = "Head";
+            Modules.Helpers.CreateHitbox(model, childLocator.FindChild("HeadH"), "HeadH");
 
 
 
