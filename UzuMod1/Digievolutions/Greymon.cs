@@ -789,6 +789,7 @@ namespace ExampleSurvivor.Digievolutions
             public override void OnEnter()
             {
                 base.OnEnter();
+                AkSoundEngine.PostEvent(1769321799, base.gameObject);
                 this.duration = this.baseDuration / this.attackSpeedStat;
                 this.fireDuration = 0.05f * this.duration;         //changed 0.25
                 base.characterBody.SetAimTimer(0.5f);                 //changed 2
@@ -1129,7 +1130,7 @@ namespace ExampleSurvivor.Digievolutions
         public class Charge : BaseState
         {
         
-            public static float damageCoefficient = 20f;
+            public static float damageCoefficient = 10f;
             public float baseDuration = 1.5f;
             public static float attackRecoil = 0.5f;
             public static float hitHopVelocity = 5.5f;
@@ -1197,7 +1198,7 @@ namespace ExampleSurvivor.Digievolutions
                 public override void OnExit()
                 {
                     base.OnExit();
-                    base.characterMotor.moveDirection = Vector3.zero;
+                    base.characterMotor.moveDirection = Vector3.zero; 
                     
                     Util.PlaySound("stop_bison_charge_attack_loop", base.gameObject);
                     this.SetSprintEffectActive(false);

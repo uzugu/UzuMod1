@@ -13,6 +13,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using KinematicCharacterController;
 using System.Collections;
+using System.IO;
+using UnityEngine;
 
 namespace ExampleSurvivor
 {
@@ -781,12 +783,12 @@ namespace ExampleSurvivor
             }
 
             // include this if you're using a custom soundbank
-            /*using (Stream manifestResourceStream2 = Assembly.GetExecutingAssembly().GetManifestResourceStream("ExampleSurvivor.ExampleSurvivor.bnk"))
+            using (Stream manifestResourceStream2 = Assembly.GetExecutingAssembly().GetManifestResourceStream("UzuMod1.DigiSoundBank.bnk"))
             {
                 byte[] array = new byte[manifestResourceStream2.Length];
                 manifestResourceStream2.Read(array, 0, array.Length);
                 SoundAPI.SoundBanks.Add(array);
-            }*/
+            }
 
             // and now we gather the assets
             charPortrait = MainAssetBundle.LoadAsset<Sprite>("ExampleSurvivorBody").texture;
@@ -828,7 +830,7 @@ namespace EntityStates.ExampleSurvivorStates
             base.characterBody.SetAimTimer(0.5f);                 //changed 2
             this.animator = base.GetModelAnimator();
             this.muzzleString = "Muzzle";
-
+           
             base.PlayAnimation("Fuego", "OpenMouth","FireArrow.playbackRate", this.duration);
             base.PlayAnimation("Gesture, Override", "FireArrow", "FireArrow.playbackRate", this.duration);
         }
@@ -1176,6 +1178,9 @@ namespace EntityStates.ExampleSurvivorStates
         public override void OnEnter()
         { 
             base.OnEnter();
+            AkSoundEngine.PostEvent(716442263, base.gameObject);
+            
+            
             base.characterBody.master.bodyPrefab = characterPrefabGreymon;
             base.characterBody.master.Respawn(gameObject.transform.localPosition, gameObject.transform.localRotation);
         }

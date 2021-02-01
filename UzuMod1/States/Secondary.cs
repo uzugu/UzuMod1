@@ -23,6 +23,7 @@ namespace EntityStates.ExampleSurvivorStates
         public override void OnEnter()
         {
             base.OnEnter();
+            AkSoundEngine.PostEvent(2535423261, base.gameObject);  /// cambiar de sitio en el futuro para el cabezaso
             this.duration = this.baseDuration / this.attackSpeedStat;
             this.fireDuration = 0.25f * this.duration;         //changed 0.25
             base.characterBody.SetAimTimer(2f);                 //changed 2
