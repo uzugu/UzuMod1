@@ -1,0 +1,187 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MGBoca
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: chr302.001
+    m_Weight: 0
+  - m_Path: GRP_joint
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_leg_L
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_leg_L/J_knee_L
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_leg_L/J_knee_L/J_foot_L
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_leg_L/J_knee_L/J_foot_L/J_toe_L
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_leg_L/J_knee_L/J_foot_L/J_toe_L/J_toe_L_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_leg_L/J_knee_L/J_foot_L/J_toe_L/J_toe_L_end/J_toe_L_end_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_leg_R
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_leg_R/J_knee_R
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_leg_R/J_knee_R/J_foot_R
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_leg_R/J_knee_R/J_foot_R/J_toe_R
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_leg_R/J_knee_R/J_foot_R/J_toe_R/J_toe_R_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_leg_R/J_knee_R/J_foot_R/J_toe_R/J_toe_R_end/J_toe_R_end_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/CharacterCenterTarget
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/CharacterCenterTarget/CharacterCenterTarget_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/CharacterCenterTarget/CharacterCenterTarget_end/CharacterCenterTarget_end_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_hane_tukene_L
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_hane_tukene_L/J_hane_tukene_L_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_hane_tukene_L/J_hane_tukene_L_end/J_hane_tukene_L_end_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_hane_tukene_R
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_hane_tukene_R/J_hane_tukene_R_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_hane_tukene_R/J_hane_tukene_R_end/J_hane_tukene_R_end_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_hane_tukeneB_L
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_hane_tukeneB_L/J_hane_tukeneB_L_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_hane_tukeneB_L/J_hane_tukeneB_L_end/J_hane_tukeneB_L_end_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_hane_tukeneB_R
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_hane_tukeneB_R/J_hane_tukeneB_R_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_hane_tukeneB_R/J_hane_tukeneB_R_end/J_hane_tukeneB_R_end_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_hane_tukeneC_L
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_hane_tukeneC_L/J_hane_tukeneC_L_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_hane_tukeneC_L/J_hane_tukeneC_L_end/J_hane_tukeneC_L_end_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_hane_tukeneC_R
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_hane_tukeneC_R/J_hane_tukeneC_R_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_hane_tukeneC_R/J_hane_tukeneC_R_end/J_hane_tukeneC_R_end_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_head
+    m_Weight: 1
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_head/CharacterFaceCenterTarget
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_head/CharacterFaceCenterTarget/CharacterFaceCenterTarget_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_head/CharacterFaceCenterTarget/CharacterFaceCenterTarget_end/CharacterFaceCenterTarget_end_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_head/HUDTarget
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_head/HUDTarget/HUDTarget_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_head/HUDTarget/HUDTarget_end/HUDTarget_end_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_head/J_chin
+    m_Weight: 1
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_head/J_chin/J_chin_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_head/J_chin/J_chin_end/J_chin_end_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_huta_L
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_huta_L/J_huta_L_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_huta_L/J_huta_L_end/J_huta_L_end_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_huta_R
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_huta_R/J_huta_R_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_huta_R/J_huta_R_end/J_huta_R_end_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_shoulder_L
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_shoulder_L/J_arm_L
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_shoulder_L/J_arm_L/J_ancon_L
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_shoulder_L/J_arm_L/J_ancon_L/J_claw000
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_shoulder_L/J_arm_L/J_ancon_L/J_claw000/J_claw01
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_shoulder_L/J_arm_L/J_ancon_L/J_claw000/J_claw01/J_claw02
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_shoulder_L/J_arm_L/J_ancon_L/J_claw000/J_claw01/J_claw02/J_claw03
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_shoulder_L/J_arm_L/J_ancon_L/J_claw000/J_claw01/J_claw02/J_claw03/J_claw04
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_shoulder_L/J_arm_L/J_ancon_L/J_claw000/J_claw01/J_claw02/J_claw03/J_claw04/J_clawTop
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_shoulder_L/J_arm_L/J_ancon_L/J_claw000/J_claw01/J_claw02/J_claw03/J_claw04/J_clawTop/J_clawTop_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_shoulder_L/J_arm_L/J_ancon_L/J_claw000/J_claw01/J_claw02/J_claw03/J_claw04/J_clawTop/J_clawTop_end/J_clawTop_end_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_shoulder_R
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_shoulder_R/J_arm_R
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_shoulder_R/J_arm_R/J_ancon_R
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_shoulder_R/J_arm_R/J_ancon_R/J_hand_R
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_shoulder_R/J_arm_R/J_ancon_R/J_hand_R/J_tumeH_R
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_shoulder_R/J_arm_R/J_ancon_R/J_hand_R/J_tumeH_R/J_tumeH_R_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_shoulder_R/J_arm_R/J_ancon_R/J_hand_R/J_tumeH_R/J_tumeH_R_end/J_tumeH_R_end_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_shoulder_R/J_arm_R/J_ancon_R/J_hand_R/J_tumeN_R
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_shoulder_R/J_arm_R/J_ancon_R/J_hand_R/J_tumeN_R/J_tumeN_R_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_shoulder_R/J_arm_R/J_ancon_R/J_hand_R/J_tumeN_R/J_tumeN_R_end/J_tumeN_R_end_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_shoulder_R/J_arm_R/J_ancon_R/J_hand_R/J_tumeO_R
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_shoulder_R/J_arm_R/J_ancon_R/J_hand_R/J_tumeO_R/J_tumeO_R_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_spine01/J_spine02/J_shoulder_R/J_arm_R/J_ancon_R/J_hand_R/J_tumeO_R/J_tumeO_R_end/J_tumeO_R_end_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_tail1
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_tail1/J_tail2
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_tail1/J_tail2/J_tail3
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_tail1/J_tail2/J_tail3/J_tail4
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_tail1/J_tail2/J_tail3/J_tail4/J_tail5
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_tail1/J_tail2/J_tail3/J_tail4/J_tail5/J_tail6
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_tail1/J_tail2/J_tail3/J_tail4/J_tail5/J_tail6/J_tail6_end
+    m_Weight: 0
+  - m_Path: GRP_joint/J_root_032/J_center/J_tail1/J_tail2/J_tail3/J_tail4/J_tail5/J_tail6/J_tail6_end/J_tail6_end_end
+    m_Weight: 0
