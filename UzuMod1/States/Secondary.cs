@@ -23,7 +23,7 @@ namespace EntityStates.ExampleSurvivorStates
         public override void OnEnter()
         {
             base.OnEnter();
-            AkSoundEngine.PostEvent(2535423261, base.gameObject);  /// cambiar de sitio en el futuro para el cabezaso
+            /// cambiar de sitio en el futuro para el cabezaso
             this.duration = this.baseDuration / this.attackSpeedStat;
             this.fireDuration = 0.25f * this.duration;         //changed 0.25
             base.characterBody.SetAimTimer(2f);                 //changed 2
@@ -38,7 +38,7 @@ namespace EntityStates.ExampleSurvivorStates
 
                 this.hasFired = true;
                 base.skillLocator.secondary.skillDef.activationStateMachineName = "Body";
-                this.outer.SetNextState(new ShoulderBash());
+                this.outer.SetNextState(new ChargeAgu());
                 return;
             }
         }
@@ -53,6 +53,7 @@ namespace EntityStates.ExampleSurvivorStates
         {
             if (!this.hasFired)
             {
+                AkSoundEngine.PostEvent(2535423261, base.gameObject);
                 this.hasFired = true;
 
                 base.characterBody.AddSpreadBloom(0.75f);
@@ -145,7 +146,7 @@ namespace EntityStates.ExampleSurvivorStates
             {
                 hitBoxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "HeadH");
             }
-            hitBoxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "HeadH");
+            //hitBoxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "HeadH");
 
             this.attack = new OverlapAttack();
             this.attack.attacker = base.gameObject;
@@ -265,101 +266,150 @@ namespace EntityStates.ExampleSurvivorStates
         }
     }
 
-    public class ShoulderBashImpact : BaseState
+    public class ChargeAgu : BaseState
     {
-        public HealthComponent victimHealthComponent;
-        public Vector3 idealDirection;
-        public bool isCrit;
 
-        public static float baseDuration = 0.35f;
-        public static float recoilAmplitude = 4.5f;
+        public static float damageCoefficient = 10f;
+        public float baseDuration = 1.5f;
+        public static float attackRecoil = 0.5f;
+        public static float hitHopVelocity = 5.5f;
+        public static float earlyExitTime = 0.575f;
+        public int swingIndex;
 
-        private float duration;
-        private bool shieldCancel;
 
+        private OverlapAttack attack;
+
+        private float stopwatch;
+        private bool cancelling;
+        private Animator animator;
+        private BaseState.HitStopCachedState hitStopCachedState;
+        private ChildLocator childLocator;
+        private Transform sphereCheckTransform;
+
+        private static float chargeMovementSpeedCoefficient = 100f;
+        private float overlapResetStopwatch = 1f;
+        private static float overlapResetFrequency = 1f;
+        private static float selfStunDuration = 1f;
+        private HitBoxGroup hitboxGroup = null;
+
+        private static float turnSmoothTime = 1f;
+        private static float turnSpeed = 2f;
+        private static float overlapSphereRadius = 0.1f;
+        private static Vector3 selfStunForce;
+        private static float chargeDuration = 0.5f;
+        private Vector3 targetMoveVector;
+        private Vector3 targetMoveVectorVelocity;
+
+        //private PaladinSwordController swordController;
+
+        // Token: 0x0600400F RID: 16399 RVA: 0x0010C464 File Offset: 0x0010A664
         public override void OnEnter()
         {
             base.OnEnter();
-            this.duration = ShoulderBashImpact.baseDuration / this.attackSpeedStat;
-            //if (!base.HasBuff(EnforcerPlugin.EnforcerPlugin.skateboardBuff)) base.PlayAnimation("FullBody, Override", "BashRecoil");
-            base.SmallHop(base.characterMotor, ShoulderBash.smallHopVelocity);
+            this.animator = base.GetModelAnimator();
+            this.childLocator = this.animator.GetComponent<ChildLocator>();
 
-            //Util.PlayScaledSound(EnforcerPlugin.Sounds.ShoulderBashHit, base.gameObject, 0.5f);
 
-            if (NetworkServer.active)
+            base.PlayCrossfade("Body", "ChargeForward", 0.2f);
+            this.ResetOverlapAttack();
+            this.SetSprintEffectActive(true);
+            if (this.childLocator)
             {
-                if (this.victimHealthComponent)
-                {
-                    DamageInfo damageInfo = new DamageInfo
-                    {
-                        attacker = base.gameObject,
-                        damage = this.damageStat * ShoulderBash.knockbackDamageCoefficient,
-                        crit = this.isCrit,
-                        procCoefficient = 1f,
-                        damageColorIndex = DamageColorIndex.Item,
-                        damageType = DamageType.Stun1s,
-                        position = base.characterBody.corePosition
-                    };
-
-                    this.victimHealthComponent.TakeDamage(damageInfo);
-                    GlobalEventManager.instance.OnHitEnemy(damageInfo, this.victimHealthComponent.gameObject);
-                    GlobalEventManager.instance.OnHitAll(damageInfo, this.victimHealthComponent.gameObject);
-                }
+                this.sphereCheckTransform = this.childLocator.FindChild("SphereCheckTransform");
             }
-
-            if (base.characterMotor) base.characterMotor.velocity = this.idealDirection * -ShoulderBash.knockbackForce;
-
-            if (base.isAuthority)
+            if (!this.sphereCheckTransform && base.characterBody)
             {
-                base.AddRecoil(-0.5f * ShoulderBashImpact.recoilAmplitude * 3f, -0.5f * ShoulderBashImpact.recoilAmplitude * 3f, -0.5f * ShoulderBashImpact.recoilAmplitude * 8f, 0.5f * ShoulderBashImpact.recoilAmplitude * 3f);
-                EffectManager.SimpleImpactEffect(Loader.SwingZapFist.overchargeImpactEffectPrefab, this.victimHealthComponent.transform.position, base.characterDirection.forward, true);
+                this.sphereCheckTransform = base.characterBody.coreTransform;
+            }
+            if (!this.sphereCheckTransform)
+            {
+                this.sphereCheckTransform = base.transform;
             }
         }
 
+        // Token: 0x06004010 RID: 16400 RVA: 0x0010C559 File Offset: 0x0010A759
+        private void SetSprintEffectActive(bool active)
+        {
+
+        }
+
+        // Token: 0x06004011 RID: 16401 RVA: 0x0010C588 File Offset: 0x0010A788
+        public override void OnExit()
+        {
+            base.OnExit();
+            base.characterMotor.moveDirection = Vector3.zero;
+
+            Util.PlaySound("stop_bison_charge_attack_loop", base.gameObject);
+            this.SetSprintEffectActive(false);
+            FootstepHandler component = this.animator.GetComponent<FootstepHandler>();
+            if (component)
+            {
+
+            }
+        }
+
+        // Token: 0x06004012 RID: 16402 RVA: 0x0010C5F4 File Offset: 0x0010A7F4
         public override void FixedUpdate()
         {
-            base.FixedUpdate();
-
-            if (base.inputBank && base.isAuthority)
+            this.targetMoveVector = Vector3.ProjectOnPlane(Vector3.SmoothDamp(this.targetMoveVector, base.inputBank.aimDirection, ref this.targetMoveVectorVelocity, ChargeAgu.turnSmoothTime, ChargeAgu.turnSpeed), Vector3.up).normalized;
+            base.characterDirection.moveVector = this.targetMoveVector;
+            Vector3 forward = base.characterDirection.forward;
+            float value = this.moveSpeedStat * ChargeAgu.chargeMovementSpeedCoefficient;
+            base.characterMotor.moveDirection = forward * ChargeAgu.chargeMovementSpeedCoefficient;
+            this.animator.SetFloat("forwardSpeed", value);
+            if (base.isAuthority && this.attack.Fire(null))
             {
-                if (base.skillLocator && base.inputBank)
-                {
-                    if (base.inputBank.skill4.down && base.fixedAge >= 0.4f * this.duration)
-                    {
-                        this.shieldCancel = true;
-                        base.characterBody.isSprinting = false;
-                        base.skillLocator.special.ExecuteIfReady();
-                    }
-                }
-            }
 
-            if (base.fixedAge >= this.duration)
+            }
+            if (this.overlapResetStopwatch >= 1f / ChargeAgu.overlapResetFrequency)
+            {
+                this.overlapResetStopwatch -= 1f / ChargeAgu.overlapResetFrequency;
+            }
+            if (base.isAuthority && Physics.OverlapSphere(this.sphereCheckTransform.position, ChargeAgu.overlapSphereRadius, LayerIndex.world.mask).Length != 0)
+            {
+
+                base.healthComponent.TakeDamageForce(forward * 1f, true, false);
+                StunState stunState = new StunState();
+                stunState.stunDuration = ChargeAgu.selfStunDuration;
+                this.outer.SetNextState(stunState);
+                return;
+            }
+            this.stopwatch += Time.fixedDeltaTime;
+            this.overlapResetStopwatch += Time.fixedDeltaTime;
+            if (this.stopwatch > ChargeAgu.chargeDuration)
             {
                 this.outer.SetNextStateToMain();
             }
+            base.FixedUpdate();
         }
 
-        public override void OnSerialize(NetworkWriter writer)
+        // Token: 0x06004013 RID: 16403 RVA: 0x0010C7BC File Offset: 0x0010A9BC
+        private void ResetOverlapAttack()
         {
-            base.OnSerialize(writer);
-            writer.Write(this.victimHealthComponent ? this.victimHealthComponent.gameObject : null);
-            writer.Write(this.idealDirection);
-            writer.Write(this.isCrit);
+
+            if (!this.hitboxGroup)
+            {
+                Transform modelTransform = base.GetModelTransform();
+                if (modelTransform)
+                {
+                    this.hitboxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "HeadCh");
+                }
+            }
+            this.attack = new OverlapAttack();
+            this.attack.attacker = base.gameObject;
+            this.attack.inflictor = base.gameObject;
+            this.attack.teamIndex = TeamComponent.GetObjectTeam(this.attack.attacker);
+            this.attack.damage = ChargeAgu.damageCoefficient * this.damageStat;
+
+            this.attack.forceVector = Vector3.up * 1f;
+            this.attack.pushAwayForce = 1f;
+            this.attack.hitBoxGroup = this.hitboxGroup;
         }
 
-        public override void OnDeserialize(NetworkReader reader)
-        {
-            base.OnDeserialize(reader);
-            GameObject gameObject = reader.ReadGameObject();
-            this.victimHealthComponent = (gameObject ? gameObject.GetComponent<HealthComponent>() : null);
-            this.idealDirection = reader.ReadVector3();
-            this.isCrit = reader.ReadBoolean();
-        }
-
+        // Token: 0x06004014 RID: 16404 RVA: 0x0000CFF7 File Offset: 0x0000B1F7
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            if (this.shieldCancel) return InterruptPriority.Any;
-            else return InterruptPriority.Frozen;
+            return InterruptPriority.Skill;
         }
     }
 }

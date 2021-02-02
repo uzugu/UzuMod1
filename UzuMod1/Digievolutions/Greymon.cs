@@ -649,7 +649,7 @@ namespace ExampleSurvivor.Digievolutions
             // set up your primary skill def here!
 
             SkillDef mySkillDef = ScriptableObject.CreateInstance<SkillDef>();
-            mySkillDef.activationState = new SerializableEntityStateType(typeof(Devolution));
+            mySkillDef.activationState = new SerializableEntityStateType(typeof(SuperDigievolution));
             mySkillDef.activationStateMachineName = "Weapon";
             mySkillDef.baseMaxStock = 2;
             mySkillDef.baseRechargeInterval = 4.8f;
@@ -842,7 +842,7 @@ namespace ExampleSurvivor.Digievolutions
             }
         }
 
-        public class Devolution : BaseSkillState
+        public class SuperDigievolution : BaseSkillState
         {
             public float damageCoefficient = 0.5f;
             public float baseDuration = 0.10f;
@@ -852,7 +852,7 @@ namespace ExampleSurvivor.Digievolutions
             public static GameObject hitEffectPrefab = Resources.Load<GameObject>("prefabs/effects/impacteffects/Hitspark1");
 
 
-            public static GameObject characterPrefabGreymon = ExampleSurvivor.characterPrefab;
+            public static GameObject characterPrefabMetalGreymon = MetalGreymon.characterPrefabMetalGreymon;
 
 
             private float duration;
@@ -864,7 +864,8 @@ namespace ExampleSurvivor.Digievolutions
             public override void OnEnter()
             {
                 base.OnEnter();
-                base.characterBody.master.bodyPrefab = characterPrefabGreymon;
+                AkSoundEngine.PostEvent(2194996566, base.gameObject);
+                base.characterBody.master.bodyPrefab = characterPrefabMetalGreymon;
                 base.characterBody.master.Respawn(gameObject.transform.localPosition, gameObject.transform.localRotation);
             }
 

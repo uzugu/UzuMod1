@@ -53,6 +53,8 @@ namespace ExampleSurvivor
             //Greymon
             //MakeGreymon.Init();
             Digievolutions.Greymon.Init();
+            Digievolutions.MetalGreymon.Init();
+            Digievolutions.WarGreymon.Init();
         }
 
         private static GameObject CreateModel(GameObject main)
@@ -310,7 +312,7 @@ namespace ExampleSurvivor
 
 
             Modules.Helpers.CreateHitbox(model, childLocator.FindChild("HeadH"), "HeadH");
-
+            Modules.Helpers.CreateHitbox(model, childLocator.FindChild("HeadHitbox"), "HeadHitbox");
 
 
 
@@ -582,7 +584,7 @@ namespace ExampleSurvivor
             mySkillDef.activationState = new SerializableEntityStateType(typeof(ExampleSurvivorFireArrow2));
             mySkillDef.activationStateMachineName = "Weapon";
             mySkillDef.baseMaxStock = 1;
-            mySkillDef.baseRechargeInterval = 5f;
+            mySkillDef.baseRechargeInterval = 2f; //5f
             mySkillDef.beginSkillCooldownOnSkillEnd = false;
             mySkillDef.canceledFromSprinting = false;
             mySkillDef.fullRestockOnAssign = true;

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 190066503
+CRC: 2245224926
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: c0e14380c782068108429084922e8992
+    Hash: d17b47aeea6693497464f170f8335939
   TypeTreeHash:
     serializedVersion: 2
     Hash: 696604893e2eaf3998d731dff0a4d92d
@@ -48,15 +48,15 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 67079b849227b734694872d8810229b8, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: aaabc320440a02340b0239f0cf1745a2, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 24f98ceb39626e542bce4568de94b61d, type: 3}
+  Script: {fileID: 11500000, guid: db294d07add6b364f99a346939dd2a8a, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 7ade51fc5319ad3459ce2de62570bf78, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: b0f08e644e13c7d46a78c4e7fa299176, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: db294d07add6b364f99a346939dd2a8a, type: 3}
+  Script: {fileID: 11500000, guid: aaabc320440a02340b0239f0cf1745a2, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 24f98ceb39626e542bce4568de94b61d, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 135
@@ -85,6 +85,7 @@ Assets:
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/PassiveIconprepre.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Greymon/Anim/GFallToLand.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Skill1Icon_old.png
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/MetalGreymon/Textures/chr302a01.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/PassiveIcon_old.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/anim/Cuerpo.mask
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/mdlEnforcer.prefab
@@ -114,14 +115,17 @@ Assets:
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Greymon/Materials/chr326a01.mat
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/anim/RunningDefIzq.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/Agumon.fbx
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/WarGreymon/WarGreymon.fbx
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/anim/GOpenMouth.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Junk/Model.dae
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/anim/Idle.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Skill3Icon.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/anim/FallingIdle.anim
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/MetalGreymon/Materials/chr302a01.mat
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Skill1Icon.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/animGreymon.controller
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/prefabs/Agumon3.prefab
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/mdlWarGreymon.prefab
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/Agumon_6.mesh
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/Agumon.dae
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorJump.anim
@@ -131,8 +135,10 @@ Assets:
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/Materials/Agumon-texture.mat
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Greymon/Anim/GRun.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/New Animation.anim
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/animMetalGreymon.controller
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/mdlAgumon.prefab
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorFallDown.anim
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/animWarGreymon.controller
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/Agumon2@Idle (1).fbx
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/Run.fbx
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/New Animator Controller.controller
@@ -148,6 +154,7 @@ Assets:
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/ExampleSurvivorBodyold.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/mdlGreymon.prefab
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorRunRight.anim
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/MetalGreymon/metalgreymon.fbx
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/anim/Falling To Landing.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorIdleIn.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/AgumonEscalado.fbx
@@ -160,8 +167,10 @@ Assets:
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/ExampleSurvivorSprint.anim
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Junk/agumon_skin_ror.dae
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/DigiController.controller
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/mdlMetalGreymon.prefab
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/cyberagumon/anim/AgumonEscalado@Running.fbx
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/TesteoDani(ignorar).anim
+- Assets/ExampleSurvivor/ExampleSurvivorAssets/WarGreymon/Textures/chr027a01.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/animAgumon.controller
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/TrueAgumon/Agumon-texture.png
 - Assets/ExampleSurvivor/ExampleSurvivorAssets/Animations/Cube (1).controller
