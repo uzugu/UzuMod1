@@ -931,6 +931,7 @@ namespace ExampleSurvivor.Digievolutions
             private Animator animator;
             private BaseState.HitStopCachedState hitStopCachedState;
             //private PaladinSwordController swordController;
+            public static float ignitePercentChance=1f;
 
             public override void OnEnter()
             {
@@ -979,7 +980,7 @@ namespace ExampleSurvivor.Digievolutions
                 float dmg = Slash.damageCoefficient;
 
                 this.attack = new OverlapAttack();
-                this.attack.damageType = DamageType.Generic;
+                this.attack.damageType = (Util.CheckRoll(Slash.ignitePercentChance, base.characterBody.master) ? DamageType.PercentIgniteOnHit : DamageType.Generic);
                 this.attack.attacker = base.gameObject;
                 this.attack.inflictor = base.gameObject;
                 this.attack.teamIndex = base.GetTeam();

@@ -349,7 +349,7 @@ namespace ExampleSurvivor
             characterDisplay.AddComponent<NetworkIdentity>();
 
             // clone rex's syringe projectile prefab here to use as our own projectile ///cambiado a bola de fuego
-            arrowProjectile = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/MageFireBombProjectile"), "Prefabs/Projectiles/ExampleArrowProjectile2", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
+            arrowProjectile = PrefabAPI.InstantiateClone(EntityStates.LemurianMonster.FireFireball.projectilePrefab.GetComponent<GameObject>(), "Prefabs/Projectiles/ExampleArrowProjectile2", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
 
             arrowProjectile2 = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/LemurianBigFireball"), "Prefabs/Projectiles/ExampleArrowProjectile", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
 
@@ -359,12 +359,12 @@ namespace ExampleSurvivor
             //slashattack = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/effects/LemurianSlash"), "Prefabs/Projectiles/Slashattack", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
 
             // just setting the numbers to 1 as the entitystate will take care of those
-            arrowProjectile.GetComponent<ProjectileController>().procCoefficient = 1f;
+            arrowProjectile.GetComponent<ProjectileController>().procCoefficient = 0.5f;
             arrowProjectile.GetComponent<ProjectileDamage>().damage = 1f;
             arrowProjectile.GetComponent<ProjectileDamage>().damageType = DamageType.PercentIgniteOnHit;
 
             arrowProjectile2.GetComponent<ProjectileController>().procCoefficient = 1f;
-            arrowProjectile2.GetComponent<ProjectileDamage>().damage = 1f;
+            arrowProjectile2.GetComponent<ProjectileDamage>().damage = 5f;
             arrowProjectile2.GetComponent<ProjectileDamage>().damageType = DamageType.IgniteOnHit;
 
 
@@ -833,6 +833,7 @@ namespace EntityStates.ExampleSurvivorStates
             this.animator = base.GetModelAnimator();
             this.muzzleString = "Muzzle";
            
+
             base.PlayAnimation("Fuego", "OpenMouth","FireArrow.playbackRate", this.duration);
             base.PlayAnimation("Gesture, Override", "FireArrow", "FireArrow.playbackRate", this.duration);
         }
@@ -854,7 +855,7 @@ namespace EntityStates.ExampleSurvivorStates
 
                 if (base.isAuthority)
                 {
-                    ProjectileManager.instance.FireProjectile(ExampleSurvivor.ExampleSurvivor.arrowProjectile, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), base.gameObject, this.damageCoefficient * this.damageStat, 0f, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);
+                    ProjectileManager.instance.FireProjectile(EntityStates.LemurianMonster.FireFireball.projectilePrefab, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), base.gameObject, this.damageCoefficient * this.damageStat, 0f, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);
                 }
             }
         }
