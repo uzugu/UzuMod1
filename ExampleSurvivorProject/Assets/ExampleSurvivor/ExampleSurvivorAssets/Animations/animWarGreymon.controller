@@ -390,7 +390,7 @@ BlendTree:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BlendTreeG
+  m_Name: BlendTreeWG
   m_Childs:
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 6bb82d44243c89442b8aab6c95f7ea86, type: 2}
@@ -1235,6 +1235,32 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1102 &1102431013561950534
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: WGIdle
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 280c9e294dfcebf49b0c8798361f8b41, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &1102488493200354444
 AnimatorState:
   serializedVersion: 5
@@ -1498,7 +1524,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 27d46658475dcb94c9b1241922e3c0f6, type: 2}
+  m_Motion: {fileID: 7400000, guid: 280c9e294dfcebf49b0c8798361f8b41, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1605,6 +1631,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 1102190187980963970}
     m_Position: {x: 960.8265, y: 181.43704, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 1102431013561950534}
+    m_Position: {x: 900, y: 468, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

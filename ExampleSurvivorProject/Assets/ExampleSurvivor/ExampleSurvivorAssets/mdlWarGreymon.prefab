@@ -2856,7 +2856,7 @@ GameObject:
   - component: {fileID: 6075336710191223128}
   - component: {fileID: 7694705917633128388}
   m_Layer: 0
-  m_Name: mdlWarlGreymon
+  m_Name: mdlWarGreymon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2900,7 +2900,7 @@ Animator:
   m_GameObject: {fileID: 6075336710191223129}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 738ef0e1045ab794a988256a6cd70d7d, type: 3}
-  m_Controller: {fileID: 9100000, guid: 1338760609b093c4ab89fd94bcb88585, type: 2}
+  m_Controller: {fileID: 9100000, guid: 62f60b576314bdc45aa50cf488eb3ca5, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
