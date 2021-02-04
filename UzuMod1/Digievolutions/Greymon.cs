@@ -105,7 +105,7 @@ namespace ExampleSurvivor.Digievolutions
             bodyComponent.levelRegen = 0.4f;//25
             bodyComponent.baseMaxShield = 0;
             bodyComponent.levelMaxShield = 0;
-            bodyComponent.baseMoveSpeed = 5;
+            bodyComponent.baseMoveSpeed = 7.5f;
             bodyComponent.levelMoveSpeed = 0;
             bodyComponent.baseAcceleration = 80;
             bodyComponent.baseJumpPower = 30; //15
@@ -339,6 +339,7 @@ namespace ExampleSurvivor.Digievolutions
             GreymonBlast.GetComponent<ProjectileDamage>().damage = 1f;
             GreymonBlast.GetComponent<ProjectileDamage>().damageType = DamageType.PercentIgniteOnHit;
 
+
             //arrowProjectile2.GetComponent<ProjectileController>().procCoefficient = 1f;
             //arrowProjectile2.GetComponent<ProjectileDamage>().damage = 1f;
             //arrowProjectile2.GetComponent<ProjectileDamage>().damageType = DamageType.IgniteOnHit;
@@ -451,7 +452,7 @@ namespace ExampleSurvivor.Digievolutions
             mySkillDef.noSprint = false;
             mySkillDef.rechargeStock = 1;
             mySkillDef.requiredStock = 1;
-            mySkillDef.shootDelay = 2f;
+            mySkillDef.shootDelay = 1f;
             mySkillDef.stockToConsume = 1;
             mySkillDef.icon = Assets.icon1;
             mySkillDef.skillDescriptionToken = "EXAMPLESURVIVOR_PRIMARY_CROSSBOW_DESCRIPTION";
@@ -705,7 +706,7 @@ namespace ExampleSurvivor.Digievolutions
         public class GreymonBlaster : BaseSkillState
         {
             public float damageCoefficient = 2f;
-            public float baseDuration = 0.15f;
+            public float baseDuration = 2f;
             public float recoil = 2f;
             public static GameObject tracerEffectPrefab = Resources.Load<GameObject>("Prefabs/Effects/Tracers/TracerToolbotRebar");
 
@@ -741,7 +742,7 @@ namespace ExampleSurvivor.Digievolutions
 
                     base.characterBody.AddSpreadBloom(0.75f);
                     Ray aimRay = base.GetAimRay();
-
+                    //ExampleSurvivor.arrowProjectile.transform.localScale = Vector3.one * 10f;
                     if (base.isAuthority)
                     {
                         ProjectileManager.instance.FireProjectile(ExampleSurvivor.arrowProjectile, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), base.gameObject, this.damageCoefficient * this.damageStat, 0f, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);

@@ -349,7 +349,7 @@ namespace ExampleSurvivor
             characterDisplay.AddComponent<NetworkIdentity>();
 
             // clone rex's syringe projectile prefab here to use as our own projectile ///cambiado a bola de fuego
-            arrowProjectile = PrefabAPI.InstantiateClone(EntityStates.LemurianMonster.FireFireball.projectilePrefab.GetComponent<GameObject>(), "Prefabs/Projectiles/ExampleArrowProjectile2", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
+            arrowProjectile = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/LemurianBigFireball"), "Prefabs/Projectiles/ExampleArrowProjectile", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
 
             arrowProjectile2 = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/LemurianBigFireball"), "Prefabs/Projectiles/ExampleArrowProjectile", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
 
@@ -363,7 +363,7 @@ namespace ExampleSurvivor
             arrowProjectile.GetComponent<ProjectileDamage>().damage = 1f;
             arrowProjectile.GetComponent<ProjectileDamage>().damageType = DamageType.PercentIgniteOnHit;
 
-            arrowProjectile2.GetComponent<ProjectileController>().procCoefficient = 1f;
+            arrowProjectile2.GetComponent<ProjectileController>().procCoefficient = 0.5f;
             arrowProjectile2.GetComponent<ProjectileDamage>().damage = 5f;
             arrowProjectile2.GetComponent<ProjectileDamage>().damageType = DamageType.IgniteOnHit;
 
@@ -477,10 +477,10 @@ namespace ExampleSurvivor
             // set up your primary skill def here!
 
             SkillDef mySkillDef = ScriptableObject.CreateInstance<SkillDef>();
-            mySkillDef.activationState = new SerializableEntityStateType(typeof(ExampleSurvivorFireArrow));
+            mySkillDef.activationState = new SerializableEntityStateType(typeof(FireFire));
             mySkillDef.activationStateMachineName = "Weapon";
-            mySkillDef.baseMaxStock = 3;
-            mySkillDef.baseRechargeInterval = 2f;
+            mySkillDef.baseMaxStock = 1;
+            mySkillDef.baseRechargeInterval = 0f;
             mySkillDef.beginSkillCooldownOnSkillEnd = false;
             mySkillDef.canceledFromSprinting = false;
             mySkillDef.fullRestockOnAssign = true;
@@ -489,9 +489,9 @@ namespace ExampleSurvivor
             mySkillDef.isCombatSkill = true;
             mySkillDef.mustKeyPress = false;
             mySkillDef.noSprint = false;
-            mySkillDef.rechargeStock = 3;
+            mySkillDef.rechargeStock = 1;
             mySkillDef.requiredStock = 1;
-            mySkillDef.shootDelay = 0f;
+            mySkillDef.shootDelay = 1f;
             mySkillDef.stockToConsume = 1;
             mySkillDef.icon = Assets.icon1;
             mySkillDef.skillDescriptionToken = "EXAMPLESURVIVOR_PRIMARY_CROSSBOW_DESCRIPTION";
@@ -828,7 +828,7 @@ namespace EntityStates.ExampleSurvivorStates
         {
             base.OnEnter();
             this.duration = this.baseDuration / this.attackSpeedStat;
-            this.fireDuration = 0.025f * this.duration;         //changed 0.25
+            this.fireDuration = 0.25f * this.duration;         //changed 0.25
             base.characterBody.SetAimTimer(0.5f);                 //changed 2
             this.animator = base.GetModelAnimator();
             this.muzzleString = "Muzzle";
@@ -1227,7 +1227,83 @@ namespace EntityStates.ExampleSurvivorStates
             return InterruptPriority.Skill;
         }
     }
-}
+
+    public class FireFire : BaseSkillState
+    {
+
+      
+        public static GameObject projectilePrefab= EntityStates.LemurianMonster.FireFireball.projectilePrefab;      
+        public static GameObject finalProjectilePrefab= EntityStates.LemurianMonster.FireFireball.projectilePrefab;   
+        public static GameObject muzzleflashEffectPrefab= EntityStates.LemurianMonster.FireFireball.projectilePrefab;     
+        public static int projectileCount = 3;   
+        public static float totalYawSpread = 5f;    
+        public static float baseDuration = 2f;    
+        public static float baseFireDuration = 0.2f;  
+        public static float damageCoefficient = 1.2f;
+        public static float force = 20f;
+        public static string attackSound; 
+        public static string finalAttackSound;
+        public static string muzzleName; 
+        private float duration; 
+        private float fireDuration; 
+        private int projectilesFired;
+        // Token: 0x0600360A RID: 13834 RVA: 0x000DC0A6 File Offset: 0x000DA2A6
+        public override void OnEnter()
+            {
+                base.OnEnter();
+                this.duration = FireFire.baseDuration / this.attackSpeedStat;
+                this.fireDuration = FireFire.baseFireDuration / this.attackSpeedStat;
+            }
+
+            // Token: 0x0600360B RID: 13835 RVA: 0x00032FA7 File Offset: 0x000311A7
+            public override void OnExit()
+            {
+                base.OnExit();
+            }
+
+            // Token: 0x0600360C RID: 13836 RVA: 0x000DC0D4 File Offset: 0x000DA2D4
+            public override void FixedUpdate()
+            {
+                base.FixedUpdate();
+                int num = Mathf.FloorToInt(base.fixedAge / this.fireDuration * (float)FireFire.projectileCount);
+                if (this.projectilesFired <= num && this.projectilesFired < FireFire.projectileCount)
+                {
+                    GameObject prefab = FireFire.projectilePrefab;
+                    string soundString = FireFire.attackSound;
+                    if (this.projectilesFired == FireFire.projectileCount - 1)
+                    {
+                        prefab = FireFire.finalProjectilePrefab;
+                        
+                    }
+                    base.PlayAnimation("Gesture, Additive", "FireSyringe");
+                    base.PlayAnimation("Fuego", "OpenMouth", "FireArrow.playbackRate", this.duration);
+                Util.PlaySound(soundString, base.gameObject);
+                    base.characterBody.SetAimTimer(3f);
+
+                    if (base.isAuthority)
+                    {
+                        Ray aimRay = base.GetAimRay();
+                        float bonusYaw = (float)Mathf.FloorToInt((float)this.projectilesFired - (float)(FireFire.projectileCount - 1) / 2f) / (float)(FireFire.projectileCount - 1) * FireFire.totalYawSpread;
+                        Vector3 forward = Util.ApplySpread(aimRay.direction, 0f, 0f, 1f, 1f, bonusYaw, 0f);
+                        ProjectileManager.instance.FireProjectile(prefab, aimRay.origin, Util.QuaternionSafeLookRotation(forward), base.gameObject, this.damageStat * FireFire.damageCoefficient, FireFire.force, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);
+                    }
+                    this.projectilesFired++;
+                }
+                if (base.fixedAge >= this.duration && base.isAuthority)
+                {
+                    this.outer.SetNextStateToMain();
+                    return;
+                }
+            }
+
+            // Token: 0x0600360D RID: 13837 RVA: 0x0000CFF7 File Offset: 0x0000B1F7
+            public override InterruptPriority GetMinimumInterruptPriority()
+            {
+                return InterruptPriority.Skill;
+            }
+
+        }
+    }
     
 
 

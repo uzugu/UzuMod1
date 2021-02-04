@@ -24,7 +24,8 @@ namespace ExampleSurvivor.Digievolutions
         public static GameObject characterPrefabMetalGreymon;
         public GameObject characterDisplay; // the prefab used for character select
         public static GameObject GreymonMetalBlast;
-
+        public static GameObject GigaDestroyer;
+        public static GameObject ClawHook;
 
         public static void Init()
         {
@@ -99,15 +100,15 @@ namespace ExampleSurvivor.Digievolutions
             bodyComponent.bodyFlags = CharacterBody.BodyFlags.ImmuneToExecutes;
             bodyComponent.rootMotionInMainState = false;
             bodyComponent.mainRootSpeed = 0;
-            bodyComponent.baseMaxHealth = 540;
-            bodyComponent.levelMaxHealth = 70; //24
-            bodyComponent.baseRegen = 0.8f;//0.5
-            bodyComponent.levelRegen = 0.4f;//25
+            bodyComponent.baseMaxHealth = 1000;
+            bodyComponent.levelMaxHealth = 100; //24
+            bodyComponent.baseRegen = 1f;//0.5
+            bodyComponent.levelRegen = 0.6f;//25
             bodyComponent.baseMaxShield = 0;
             bodyComponent.levelMaxShield = 0;
             bodyComponent.baseMoveSpeed = 5;
             bodyComponent.levelMoveSpeed = 0;
-            bodyComponent.baseAcceleration = 80;
+            bodyComponent.baseAcceleration = 40;
             bodyComponent.baseJumpPower = 30; //15
             bodyComponent.levelJumpPower = 0;
             bodyComponent.baseDamage = 15;
@@ -327,8 +328,10 @@ namespace ExampleSurvivor.Digievolutions
 
             // clone rex's syringe projectile prefab here to use as our own projectile ///cambiado a bola de fuego
             GreymonMetalBlast = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/LunarWispTrackingBomb"), "Prefabs/Projectiles/Greymonblast", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
+            
+            GigaDestroyer = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/LunarGolemTwinShotProjectile"), "Prefabs/Projectiles/ExampleArrowProjectile", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
 
-            //arrowProjectile2 = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/LemurianBigFireball"), "Prefabs/Projectiles/ExampleArrowProjectile", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
+            ClawHook = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/LoaderYankHook"), "Prefabs/Projectiles/ClawHook", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
 
             //arrowProjectile3 = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/MageFireboltExpanded"), "Prefabs/Projectiles/ExampleArrowProjectile2", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
 
@@ -339,9 +342,13 @@ namespace ExampleSurvivor.Digievolutions
             GreymonMetalBlast.GetComponent<ProjectileDamage>().damage = 1f;
             GreymonMetalBlast.GetComponent<ProjectileDamage>().damageType = DamageType.PercentIgniteOnHit;
 
-            //arrowProjectile2.GetComponent<ProjectileController>().procCoefficient = 1f;
-            //arrowProjectile2.GetComponent<ProjectileDamage>().damage = 1f;
-            //arrowProjectile2.GetComponent<ProjectileDamage>().damageType = DamageType.IgniteOnHit;
+            GigaDestroyer.GetComponent<ProjectileController>().procCoefficient = 1f;
+            GigaDestroyer.GetComponent<ProjectileDamage>().damage = 10f;
+            GigaDestroyer.GetComponent<ProjectileDamage>().damageType = DamageType.IgniteOnHit;
+
+            ClawHook.GetComponent<ProjectileController>().procCoefficient = 1f;
+            ClawHook.GetComponent<ProjectileDamage>().damage = 10f;
+            ClawHook.GetComponent<ProjectileDamage>().damageType = DamageType.IgniteOnHit;
 
 
             //slashattack.GetComponent<ProjectileController>().procCoefficient = 1f;
@@ -350,13 +357,15 @@ namespace ExampleSurvivor.Digievolutions
 
             // register it for networking
             if (GreymonMetalBlast) PrefabAPI.RegisterNetworkPrefab(GreymonMetalBlast);
-            //if (arrowProjectile2) PrefabAPI.RegisterNetworkPrefab(arrowProjectile2);
-            //if (slashattack) PrefabAPI.RegisterNetworkPrefab(slashattack);
+            if (GigaDestroyer) PrefabAPI.RegisterNetworkPrefab(GigaDestroyer);
+            if (ClawHook) PrefabAPI.RegisterNetworkPrefab(ClawHook);
 
             // add it to the projectile catalog or it won't work in multiplayer
             ProjectileCatalog.getAdditionalEntries += list =>
             {
                 list.Add(GreymonMetalBlast);
+                list.Add(GigaDestroyer); 
+                list.Add(ClawHook);
 
             };
 
@@ -541,7 +550,7 @@ namespace ExampleSurvivor.Digievolutions
 
 
             SkillDef mySkillDef = ScriptableObject.CreateInstance<SkillDef>();
-            mySkillDef.activationState = new SerializableEntityStateType(typeof(GreymonBlast));
+            mySkillDef.activationState = new SerializableEntityStateType(typeof(GigaDestroyerFire));
             mySkillDef.activationStateMachineName = "Weapon";
             mySkillDef.baseMaxStock = 1;
             mySkillDef.baseRechargeInterval = 5f;
@@ -590,7 +599,7 @@ namespace ExampleSurvivor.Digievolutions
             // set up your primary skill def here!
 
             SkillDef mySkillDef = ScriptableObject.CreateInstance<SkillDef>();
-            mySkillDef.activationState = new SerializableEntityStateType(typeof(Charge));
+            mySkillDef.activationState = new SerializableEntityStateType(typeof(ClawLaunch));
             mySkillDef.activationStateMachineName = "Weapon";
             mySkillDef.baseMaxStock = 1;
             mySkillDef.baseRechargeInterval = 2.5f;
@@ -941,7 +950,7 @@ namespace ExampleSurvivor.Digievolutions
                 this.hasFired = false;
                 this.cancelling = false;
                 this.animator = base.GetModelAnimator();
-               // this.swordController = base.GetComponent<PaladinSwordController>();
+                // this.swordController = base.GetComponent<PaladinSwordController>();
                 base.StartAimMode(1.5f + this.duration, false);
                 base.characterBody.isSprinting = false;
                 this.inCombo = false;
@@ -962,7 +971,7 @@ namespace ExampleSurvivor.Digievolutions
                     this.inCombo = true;
                 }
 
-               // Util.PlaySound(Modules.Sounds.Cloth1, base.gameObject);
+                // Util.PlaySound(Modules.Sounds.Cloth1, base.gameObject);
 
                 string animString = "Slash" + (1 + swingIndex).ToString();
 
@@ -977,7 +986,7 @@ namespace ExampleSurvivor.Digievolutions
                     base.PlayCrossfade("Gesture, Override", animString, "Slash.playbackRate", this.duration, 0.05f);
                 }
 
-               
+
 
                 this.attack = new OverlapAttack();
                 this.attack.damageType = DamageType.Generic;
@@ -1029,7 +1038,7 @@ namespace ExampleSurvivor.Digievolutions
 
                         Ray aimRay = base.GetAimRay();
 
-                      
+
 
                         if (this.attack.Fire())
                         {
@@ -1039,7 +1048,7 @@ namespace ExampleSurvivor.Digievolutions
                             {
                                 if (base.characterMotor && !base.characterMotor.isGrounded)
                                 {
-                                    
+
                                 }
 
                                 if (base.skillLocator.utility.skillDef.skillNameToken == "PALADIN_UTILITY_DASH_NAME") base.skillLocator.utility.RunRecharge(1f);
@@ -1050,7 +1059,7 @@ namespace ExampleSurvivor.Digievolutions
                             if (!this.inHitPause)
                             {
                                 this.hitStopCachedState = base.CreateHitStopCachedState(base.characterMotor, this.animator, "Slash.playbackRate");
-                                this.hitPauseTimer = (2f ) / this.attackSpeedStat;
+                                this.hitPauseTimer = (2f) / this.attackSpeedStat;
                                 this.inHitPause = true;
                             }
                         }
@@ -1097,7 +1106,7 @@ namespace ExampleSurvivor.Digievolutions
                     if (base.fixedAge >= this.earlyExitDuration && base.inputBank.skill1.down)
                     {
                         var nextSwing = new Slash();
-                        
+
                         this.outer.SetNextState(nextSwing);
                         return;
                     }
@@ -1129,6 +1138,337 @@ namespace ExampleSurvivor.Digievolutions
             }
         }
 
-      
+        public class GigaDestroyerCharge : BaseSkillState
+        {
+            // Token: 0x020009BB RID: 2491
+            public class ChargeTwinShot : BaseState
+            {
+                // Token: 0x040032F8 RID: 13048
+                public static float baseDuration = 3f;
+
+                // Token: 0x040032F9 RID: 13049
+                public static float laserMaxWidth = 0.2f;
+
+                // Token: 0x040032FA RID: 13050
+                public static GameObject effectPrefab=MetalGreymon.GigaDestroyer;
+
+                // Token: 0x040032FB RID: 13051
+                public static string chargeSoundString;
+
+                // Token: 0x040032FC RID: 13052
+                private float duration;
+
+                // Token: 0x040032FD RID: 13053
+                private uint chargePlayID;
+
+                // Token: 0x040032FE RID: 13054
+                private List<GameObject> chargeEffects = new List<GameObject>();
+
+                // Token: 0x06003997 RID: 14743 RVA: 0x000EC280 File Offset: 0x000EA480
+                public override void OnEnter()
+                {
+                    base.OnEnter();
+                    this.duration = ChargeTwinShot.baseDuration / this.attackSpeedStat;
+                    Transform modelTransform = base.GetModelTransform();
+                    this.chargePlayID = Util.PlayScaledSound(ChargeTwinShot.chargeSoundString, base.gameObject, this.attackSpeedStat);
+                    base.PlayCrossfade("Gesture, Additive", "ChargeTwinShot", "TwinShot.playbackRate", this.duration, 0.1f);
+                    if (modelTransform)
+                    {
+                        ChildLocator component = modelTransform.GetComponent<ChildLocator>();
+                        if (component)
+                        {
+                            List<Transform> list = new List<Transform>();
+                            list.Add(component.FindChild("Shooter_R"));
+                            list.Add(component.FindChild("Shooter_L"));
+
+                            if (ChargeTwinShot.effectPrefab)
+                            {
+                                for (int i = 0; i < list.Count; i++)
+                                {
+                                    if (list[i])
+                                    {
+                                        GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(ChargeTwinShot.effectPrefab, list[i].position, list[i].rotation);
+                                        gameObject.transform.parent = list[i];
+                                        ScaleParticleSystemDuration component2 = gameObject.GetComponent<ScaleParticleSystemDuration>();
+                                        if (component2)
+                                        {
+                                            component2.newDuration = this.duration;
+                                        }
+                                        this.chargeEffects.Add(gameObject);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (base.characterBody)
+                    {
+                        base.characterBody.SetAimTimer(this.duration);
+                    }
+                }
+
+                // Token: 0x06003998 RID: 14744 RVA: 0x000EC400 File Offset: 0x000EA600
+                public override void OnExit()
+                {
+                    AkSoundEngine.StopPlayingID(this.chargePlayID);
+                    base.OnExit();
+                    for (int i = 0; i < this.chargeEffects.Count; i++)
+                    {
+                        if (this.chargeEffects[i])
+                        {
+                            EntityState.Destroy(this.chargeEffects[i]);
+                        }
+                    }
+                }
+
+                // Token: 0x06003999 RID: 14745 RVA: 0x000D44F8 File Offset: 0x000D26F8
+                public override void Update()
+                {
+                    base.Update();
+                }
+
+                // Token: 0x0600399A RID: 14746 RVA: 0x000EC458 File Offset: 0x000EA658
+                public override void FixedUpdate()
+                {
+                    base.FixedUpdate();
+                    if (base.fixedAge >= this.duration && base.isAuthority)
+                    {
+                        GigaDestroyerFire nextState = new GigaDestroyerFire();
+                        this.outer.SetNextState(nextState);
+                        return;
+                    }
+                }
+
+                // Token: 0x0600399B RID: 14747 RVA: 0x0000CFF7 File Offset: 0x0000B1F7
+                public override InterruptPriority GetMinimumInterruptPriority()
+                {
+                    return InterruptPriority.Skill;
+                }
+            }
+        }
+
+        public class GigaDestroyerFire : BaseSkillState
+        {
+            // Token: 0x020009BB RID: 2491
+
+
+            public static GameObject projectilePrefab=MetalGreymon.GigaDestroyer;
+
+            // Token: 0x04003301 RID: 13057
+            public static GameObject effectPrefab = MetalGreymon.GigaDestroyer;
+
+            // Token: 0x04003302 RID: 13058
+            public static GameObject dustEffectPrefab = MetalGreymon.GigaDestroyer;
+
+            // Token: 0x04003303 RID: 13059
+            public static GameObject hitEffectPrefab = MetalGreymon.GigaDestroyer;
+
+            // Token: 0x04003304 RID: 13060
+            public static GameObject tracerEffectPrefab = MetalGreymon.GigaDestroyer;
+
+            // Token: 0x04003305 RID: 13061
+            public static float damageCoefficient;
+
+            // Token: 0x04003306 RID: 13062
+            public static float blastRadius;
+
+            // Token: 0x04003307 RID: 13063
+            public static float force;
+
+            // Token: 0x04003308 RID: 13064
+            public static float baseDuration = 2f;
+
+            // Token: 0x04003309 RID: 13065
+            public static string attackSoundString;
+
+            // Token: 0x0400330A RID: 13066
+            public static float aimTime = 2f;
+
+            // Token: 0x0400330B RID: 13067
+            public static string Shooter_R;
+
+            // Token: 0x0400330C RID: 13068
+            public static string Shooter_L;
+
+            // Token: 0x0400330D RID: 13069
+            public static string leftMuzzleBot;
+
+            // Token: 0x0400330E RID: 13070
+            public static string rightMuzzleBot;
+
+            // Token: 0x0400330F RID: 13071
+            private float duration;
+            // Token: 0x060039A1 RID: 14753 RVA: 0x000EC4F0 File Offset: 0x000EA6F0
+            public override void OnEnter()
+            {
+                base.OnEnter();
+                this.duration = GigaDestroyerFire.baseDuration / this.attackSpeedStat;
+                base.GetModelAnimator();
+                base.GetModelTransform();
+                Util.PlaySound(GigaDestroyerFire.attackSoundString, base.gameObject);
+                if (base.characterBody)
+                {
+                    base.characterBody.SetAimTimer(GigaDestroyerFire.aimTime);
+                }
+                base.PlayAnimation("Gesture, Additive", "FireTwinShot", "TwinShot.playbackRate", this.duration);
+                if (GigaDestroyerFire.effectPrefab)
+                //{
+                //    EffectManager.SimpleMuzzleFlash(GigaDestroyerFire.effectPrefab, base.gameObject, GigaDestroyerFire.leftMuzzleTop, false);
+                //    EffectManager.SimpleMuzzleFlash(GigaDestroyerFire.effectPrefab, base.gameObject, GigaDestroyerFire.rightMuzzleTop, false);
+                //    EffectManager.SimpleMuzzleFlash(GigaDestroyerFire.effectPrefab, base.gameObject, GigaDestroyerFire.leftMuzzleBot, false);
+                //    EffectManager.SimpleMuzzleFlash(GigaDestroyerFire.effectPrefab, base.gameObject, GigaDestroyerFire.rightMuzzleBot, false);
+                //}
+                if (GigaDestroyerFire.dustEffectPrefab)
+                {
+                    EffectManager.SimpleMuzzleFlash(GigaDestroyerFire.dustEffectPrefab, base.gameObject, "Root", false);
+                }
+                Ray aimRay = base.GetAimRay();
+                if (base.isAuthority && base.modelLocator && base.modelLocator.modelTransform)
+                {
+                    ChildLocator component = base.modelLocator.modelTransform.GetComponent<ChildLocator>();
+                    if (component)
+                    {
+                        int childIndex = component.FindChildIndex(GigaDestroyerFire.Shooter_R);
+                        int childIndex2 = component.FindChildIndex(GigaDestroyerFire.Shooter_L);
+
+                        Transform transform = component.FindChild("Shooter_R");
+                        Transform transform2 = component.FindChild("Shooter_L");
+         
+                        if (transform)
+                        {
+                            ProjectileManager.instance.FireProjectile(GigaDestroyerFire.projectilePrefab, transform.position, Util.QuaternionSafeLookRotation(aimRay.direction), base.gameObject, this.damageStat * GigaDestroyerFire.damageCoefficient, GigaDestroyerFire.force, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);
+                        }
+                        if (transform2)
+                        {
+                            ProjectileManager.instance.FireProjectile(GigaDestroyerFire.projectilePrefab, transform2.position, Util.QuaternionSafeLookRotation(aimRay.direction, Vector3.down), base.gameObject, this.damageStat * GigaDestroyerFire.damageCoefficient, GigaDestroyerFire.force, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);
+                        }
+
+                    }
+                }
+            }
+
+            // Token: 0x060039A2 RID: 14754 RVA: 0x00032FA7 File Offset: 0x000311A7
+            public override void OnExit()
+            {
+                base.OnExit();
+            }
+
+            // Token: 0x060039A3 RID: 14755 RVA: 0x000EC823 File Offset: 0x000EAA23
+            public override void FixedUpdate()
+            {
+                base.FixedUpdate();
+                if (base.fixedAge >= this.duration && base.isAuthority)
+                {
+                    this.outer.SetNextStateToMain();
+                    return;
+                }
+            }
+
+            // Token: 0x060039A4 RID: 14756 RVA: 0x0000CFF7 File Offset: 0x0000B1F7
+            public override InterruptPriority GetMinimumInterruptPriority()
+            {
+                return InterruptPriority.Skill;
+            }
+        }
+
+        public class ClawLaunch : BaseSkillState
+        {
+
+            // Token: 0x020009C7 RID: 2503
+         
+
+                [SerializeField]
+                public GameObject projectilePrefab = MetalGreymon.ClawHook;
+
+                // Token: 0x04003344 RID: 13124
+                public static float damageCoefficient;
+
+                // Token: 0x04003345 RID: 13125
+                public static GameObject muzzleflashEffectPrefab;
+
+                // Token: 0x04003346 RID: 13126
+                public static string fireSoundString;
+
+                // Token: 0x04003347 RID: 13127
+                public GameObject hookInstance;
+
+                // Token: 0x04003348 RID: 13128
+                protected ProjectileStickOnImpact hookStickOnImpact;
+
+                // Token: 0x04003349 RID: 13129
+                private bool isStuck;
+
+                // Token: 0x0400334A RID: 13130
+                private bool hadHookInstance;
+
+                // Token: 0x0400334B RID: 13131
+                private uint soundID;
+                // Token: 0x060039D3 RID: 14803 RVA: 0x000ED2E0 File Offset: 0x000EB4E0
+                public  override void OnEnter()
+                {
+                    base.OnEnter();
+                    if (base.isAuthority)
+                    {
+                        Ray aimRay = base.GetAimRay();
+                        FireProjectileInfo fireProjectileInfo = new FireProjectileInfo
+                        {
+                            position = aimRay.origin,
+                            rotation = Quaternion.LookRotation(aimRay.direction),
+                            crit = base.characterBody.RollCrit(),
+                            damage = this.damageStat * ClawLaunch.damageCoefficient,
+                            force = 0f,
+                            damageColorIndex = DamageColorIndex.Default,
+                            procChainMask = default(ProcChainMask),
+                            projectilePrefab = this.projectilePrefab,
+                            owner = base.gameObject
+                        };
+                        ProjectileManager.instance.FireProjectile(fireProjectileInfo);
+                    }
+                    EffectManager.SimpleMuzzleFlash(ClawLaunch.muzzleflashEffectPrefab, base.gameObject, "MuzzleLeft", false);
+                    Util.PlaySound(ClawLaunch.fireSoundString, base.gameObject);
+                    base.PlayAnimation("Grapple", "FireHookIntro");
+                }
+
+                // Token: 0x060039D4 RID: 14804 RVA: 0x000ED3D2 File Offset: 0x000EB5D2
+                public void SetHookReference(GameObject hook)
+                {
+                    this.hookInstance = hook;
+                    this.hookStickOnImpact = hook.GetComponent<ProjectileStickOnImpact>();
+                    this.hadHookInstance = true;
+                }
+
+                // Token: 0x060039D5 RID: 14805 RVA: 0x000ED3F0 File Offset: 0x000EB5F0
+                public override void FixedUpdate()
+                {
+                    base.FixedUpdate();
+                    if (this.hookStickOnImpact)
+                    {
+                        if (this.hookStickOnImpact.stuck && !this.isStuck)
+                        {
+                            base.PlayAnimation("Grapple", "FireHookLoop");
+                        }
+                        this.isStuck = this.hookStickOnImpact.stuck;
+                    }
+                    if (base.isAuthority && !this.hookInstance && this.hadHookInstance)
+                    {
+                        this.outer.SetNextStateToMain();
+                    }
+                }
+
+                // Token: 0x060039D6 RID: 14806 RVA: 0x000ED46E File Offset: 0x000EB66E
+                public override void OnExit()
+                {
+                    base.PlayAnimation("Grapple", "FireHookExit");
+                    EffectManager.SimpleMuzzleFlash(ClawLaunch.muzzleflashEffectPrefab, base.gameObject, "MuzzleLeft", false);
+                    base.OnExit();
+                }
+
+                // Token: 0x060039D7 RID: 14807 RVA: 0x0000DC97 File Offset: 0x0000BE97
+                public override InterruptPriority GetMinimumInterruptPriority()
+                {
+                    return InterruptPriority.Pain;
+                }
+            }
+
+        }
     }
-}
+

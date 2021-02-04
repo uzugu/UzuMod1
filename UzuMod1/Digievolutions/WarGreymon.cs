@@ -24,7 +24,7 @@ namespace ExampleSurvivor.Digievolutions
         public static GameObject characterPrefabWarGreymon;
         public GameObject characterDisplay; // the prefab used for character select
         public static GameObject GreymonBlast;
-
+        public static GameObject GreatTornado;
 
         public static void Init()
         {
@@ -99,27 +99,27 @@ namespace ExampleSurvivor.Digievolutions
             bodyComponent.bodyFlags = CharacterBody.BodyFlags.ImmuneToExecutes;
             bodyComponent.rootMotionInMainState = false;
             bodyComponent.mainRootSpeed = 0;
-            bodyComponent.baseMaxHealth = 540;
-            bodyComponent.levelMaxHealth = 70; //24
-            bodyComponent.baseRegen = 0.8f;//0.5
-            bodyComponent.levelRegen = 0.4f;//25
+            bodyComponent.baseMaxHealth = 740;
+            bodyComponent.levelMaxHealth = 80; //24
+            bodyComponent.baseRegen = 1.5f;//0.5
+            bodyComponent.levelRegen = 0.7f;//25
             bodyComponent.baseMaxShield = 0;
             bodyComponent.levelMaxShield = 0;
-            bodyComponent.baseMoveSpeed = 5;
+            bodyComponent.baseMoveSpeed = 20;
             bodyComponent.levelMoveSpeed = 0;
-            bodyComponent.baseAcceleration = 80;
-            bodyComponent.baseJumpPower = 30; //15
+            bodyComponent.baseAcceleration = 120;
+            bodyComponent.baseJumpPower = 20; //15
             bodyComponent.levelJumpPower = 0;
-            bodyComponent.baseDamage = 15;
-            bodyComponent.levelDamage = 3f;
+            bodyComponent.baseDamage = 20;
+            bodyComponent.levelDamage = 7f;
             bodyComponent.baseAttackSpeed = 1;
             bodyComponent.levelAttackSpeed = 0;
             bodyComponent.baseCrit = 1;
             bodyComponent.levelCrit = 0;
             bodyComponent.baseArmor = 0;
             bodyComponent.levelArmor = 0;
-            bodyComponent.baseJumpCount = 1;
-            bodyComponent.sprintingSpeedMultiplier = 1.45f;
+            bodyComponent.baseJumpCount = 2;
+            bodyComponent.sprintingSpeedMultiplier = 1.85f;
             bodyComponent.wasLucky = false;
             bodyComponent.hideCrosshair = false;
             bodyComponent.aimOriginTransform = gameObject3.transform;
@@ -328,8 +328,10 @@ namespace ExampleSurvivor.Digievolutions
             // clone rex's syringe projectile prefab here to use as our own projectile ///cambiado a bola de fuego
             GreymonBlast = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/LunarWispTrackingBomb"), "Prefabs/Projectiles/Greymonblast", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
 
-            //arrowProjectile2 = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/LemurianBigFireball"), "Prefabs/Projectiles/ExampleArrowProjectile", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
+            GreatTornado = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/FireTornado"), "Prefabs/Projectiles/GreatTornado", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
+            
 
+                 
             //arrowProjectile3 = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/MageFireboltExpanded"), "Prefabs/Projectiles/ExampleArrowProjectile2", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
 
             //slashattack = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/effects/LemurianSlash"), "Prefabs/Projectiles/Slashattack", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
@@ -590,7 +592,7 @@ namespace ExampleSurvivor.Digievolutions
             // set up your primary skill def here!
 
             SkillDef mySkillDef = ScriptableObject.CreateInstance<SkillDef>();
-            mySkillDef.activationState = new SerializableEntityStateType(typeof(Charge));
+            mySkillDef.activationState = new SerializableEntityStateType(typeof(GreatTornado));
             mySkillDef.activationStateMachineName = "Weapon";
             mySkillDef.baseMaxStock = 1;
             mySkillDef.baseRechargeInterval = 2.5f;
@@ -702,9 +704,345 @@ namespace ExampleSurvivor.Digievolutions
     namespace EntityStates.ExampleSurvivorStates
     {
 
-       
-    
 
+        public class GreatTornado : BaseState
+        {
+            public float baseDuration = 0.75f;
+            private float duration = 0.5f;
+            private Animator animator;
+            public float damageCoefficient = 4f;
+            private bool hasFired;
+
+            private void FireArrow()
+            {
+
+                {
+
+
+                    base.characterBody.AddSpreadBloom(0.75f);
+                    Ray aimRay = base.GetAimRay();
+                    //base.characterBody.(BuffIndex.AffixRed);
+                    base.outer.commonComponents.characterBody.AddTimedBuff(BuffIndex.AffixRed, 2f);
+
+                    if (base.isAuthority)
+                    {
+                        ProjectileManager.instance.FireProjectile(WarGreymon.GreatTornado, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), base.gameObject, this.damageCoefficient * this.damageStat, 0f, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);
+
+                    }
+                }
+            }
+
+            private void addBuff(BuffIndex affixRed)
+            {
+                throw new NotImplementedException();
+            }
+
+
+
+            // Token: 0x06003E1F RID: 15903 RVA: 0x00102CA0 File Offset: 0x00100EA0
+            public override void OnEnter()
+            {
+                base.OnEnter();
+
+                this.animator = base.GetModelAnimator();
+                if (base.characterBody.isSprinting)
+                {
+
+                    this.hasFired = true;
+                    base.skillLocator.secondary.skillDef.activationStateMachineName = "Body";
+                    this.outer.SetNextState(new WarCharge());
+                    return;
+                }
+                ChildLocator component = this.animator.GetComponent<ChildLocator>();
+                if (base.isAuthority && base.inputBank && base.characterDirection)
+                {
+                    this.forwardDirection = ((base.inputBank.moveVector == Vector3.zero) ? Vector3.up : base.inputBank.moveVector).normalized;
+                }
+                Vector3 rhs = base.characterDirection ? base.characterDirection.forward : this.forwardDirection;
+                Vector3 rhs2 = Vector3.Cross(Vector3.up, rhs);
+                float num = Vector3.Dot(Vector3.up, rhs);
+                float num2 = Vector3.Dot(Vector3.up, rhs2);
+                this.animator.SetFloat("forwardSpeed", num, 0.1f, Time.fixedDeltaTime);
+                this.animator.SetFloat("rightSpeed", num2, 0.1f, Time.fixedDeltaTime);
+                if (Mathf.Abs(num) > Mathf.Abs(num2))
+                {
+                    base.PlayAnimation("Fuego", "WarSpin", "FireArrow.playbackRate", this.duration);
+                    FireArrow();
+
+                }
+                else
+                {
+                    base.PlayAnimation("Fuego", "WarSpin", "FireArrow.playbackRate", this.duration);
+                    FireArrow();
+
+
+                }
+                if (GreatTornado.jetEffect)
+                {
+                    Transform transform = component.FindChild("LeftJet");
+                    Transform transform2 = component.FindChild("RightJet");
+                    if (transform)
+                    {
+                        UnityEngine.Object.Instantiate<GameObject>(GreatTornado.jetEffect, transform);
+                        FireArrow();
+
+
+                    }
+                    if (transform2)
+                    {
+                        UnityEngine.Object.Instantiate<GameObject>(GreatTornado.jetEffect, transform2);
+                        FireArrow();
+
+                    }
+
+                }
+                this.RecalculateRollSpeed();
+                if (base.characterMotor && base.characterDirection)
+                {
+                    base.characterMotor.velocity.y = 0f;
+                    base.characterMotor.velocity = this.forwardDirection * this.rollSpeed;
+
+                }
+                Vector3 b = base.characterMotor ? base.characterMotor.velocity : Vector3.zero;
+                this.previousPosition = base.transform.position - b;
+            }
+
+            // Token: 0x06003E20 RID: 15904 RVA: 0x00102EFD File Offset: 0x001010FD
+            private void RecalculateRollSpeed()
+            {
+                this.rollSpeed = this.moveSpeedStat * Mathf.Lerp(this.initialSpeedCoefficient, this.finalSpeedCoefficient, base.fixedAge / this.duration);
+            }
+
+            // Token: 0x06003E21 RID: 15905 RVA: 0x00102F2C File Offset: 0x0010112C
+            public override void FixedUpdate()
+            {
+                base.FixedUpdate();
+                this.RecalculateRollSpeed();
+                if (base.cameraTargetParams)
+                {
+                    //base.cameraTargetParams.fovOverride = Mathf.Lerp(GreatTornado.dodgeFOV, 60f, base.fixedAge / this.duration);
+                    base.cameraTargetParams.fovOverride = -2.5f;
+                }
+                Vector3 normalized = (base.transform.position - this.previousPosition).normalized;
+                if (base.characterMotor && base.characterDirection && normalized != Vector3.zero)
+                {
+                    Vector3 vector = normalized * this.rollSpeed;
+                    float y = vector.y;
+                    vector.y = 0f;
+                    float d = Mathf.Max(Vector3.Dot(vector, this.forwardDirection), 0f);
+                    vector = this.forwardDirection * d;
+                    vector.y += Mathf.Max(y, 0f);
+                    base.characterMotor.velocity = vector;
+
+                }
+                this.previousPosition = base.transform.position;
+
+                if (base.fixedAge >= this.duration && base.isAuthority)
+                {
+
+                    this.outer.SetNextStateToMain();
+                    return;
+                }
+            }
+
+            // Token: 0x06003E22 RID: 15906 RVA: 0x0010305D File Offset: 0x0010125D
+            public override void OnExit()
+            {
+                if (base.cameraTargetParams)
+                {
+
+                    base.cameraTargetParams.fovOverride = -1f;
+                }
+
+                base.OnExit();
+            }
+
+            // Token: 0x06003E23 RID: 15907 RVA: 0x00103082 File Offset: 0x00101282
+            public override void OnSerialize(NetworkWriter writer)
+            {
+                base.OnSerialize(writer);
+                writer.Write(this.forwardDirection);
+            }
+
+            // Token: 0x06003E24 RID: 15908 RVA: 0x00103097 File Offset: 0x00101297
+            public override void OnDeserialize(NetworkReader reader)
+            {
+                base.OnDeserialize(reader);
+                this.forwardDirection = reader.ReadVector3();
+            }
+
+            // Token: 0x0400392E RID: 14638
+
+            public float initialSpeedCoefficient = 5.8f;
+
+            // Token: 0x0400392F RID: 14639
+
+            public float finalSpeedCoefficient = 0f;
+
+            // Token: 0x04003930 RID: 14640
+            public static string dodgeSoundString;
+
+            // Token: 0x04003931 RID: 14641
+            public static GameObject jetEffect;
+
+            // Token: 0x04003932 RID: 14642
+            public static float dodgeFOV;
+
+            // Token: 0x04003933 RID: 14643
+            private float rollSpeed = 3f;
+
+            // Token: 0x04003934 RID: 14644
+            private Vector3 forwardDirection;
+
+            // Token: 0x04003936 RID: 14646
+            private Vector3 previousPosition;
+        }
+        public class WarCharge : BaseState
+        {
+
+            public static float damageCoefficient = 10f;
+            public float baseDuration = 1.5f;
+            public static float attackRecoil = 0.5f;
+            public static float hitHopVelocity = 5.5f;
+            public static float earlyExitTime = 0.575f;
+            public int swingIndex;
+
+
+            private OverlapAttack attack;
+
+            private float stopwatch;
+            private bool cancelling;
+            private Animator animator;
+            private BaseState.HitStopCachedState hitStopCachedState;
+            private ChildLocator childLocator;
+            private Transform sphereCheckTransform;
+
+            private static float chargeMovementSpeedCoefficient = 100f;
+            private float overlapResetStopwatch = 1f;
+            private static float overlapResetFrequency = 1f;
+            private static float selfStunDuration = 1f;
+            private HitBoxGroup hitboxGroup = null;
+
+            private static float turnSmoothTime = 2f;
+            private static float turnSpeed = 10f;
+            private static float overlapSphereRadius = 0.1f;
+            private static Vector3 selfStunForce;
+            private static float chargeDuration = 1f;
+            private Vector3 targetMoveVector;
+            private Vector3 targetMoveVectorVelocity;
+
+            //private PaladinSwordController swordController;
+
+            // Token: 0x0600400F RID: 16399 RVA: 0x0010C464 File Offset: 0x0010A664
+            public override void OnEnter()
+            {
+                base.OnEnter();
+                this.animator = base.GetModelAnimator();
+                this.childLocator = this.animator.GetComponent<ChildLocator>();
+
+
+                base.PlayCrossfade("Body", "ChargeForward", 0.2f);
+                this.ResetOverlapAttack();
+                this.SetSprintEffectActive(true);
+                if (this.childLocator)
+                {
+                    this.sphereCheckTransform = this.childLocator.FindChild("SphereCheckTransform");
+                }
+                if (!this.sphereCheckTransform && base.characterBody)
+                {
+                    this.sphereCheckTransform = base.characterBody.coreTransform;
+                }
+                if (!this.sphereCheckTransform)
+                {
+                    this.sphereCheckTransform = base.transform;
+                }
+            }
+
+            // Token: 0x06004010 RID: 16400 RVA: 0x0010C559 File Offset: 0x0010A759
+            private void SetSprintEffectActive(bool active)
+            {
+
+            }
+
+            // Token: 0x06004011 RID: 16401 RVA: 0x0010C588 File Offset: 0x0010A788
+            public override void OnExit()
+            {
+                base.OnExit();
+                base.characterMotor.moveDirection = Vector3.zero;
+
+                Util.PlaySound("stop_bison_charge_attack_loop", base.gameObject);
+                this.SetSprintEffectActive(false);
+                FootstepHandler component = this.animator.GetComponent<FootstepHandler>();
+                if (component)
+                {
+
+                }
+            }
+
+            // Token: 0x06004012 RID: 16402 RVA: 0x0010C5F4 File Offset: 0x0010A7F4
+            public override void FixedUpdate()
+            {
+                this.targetMoveVector = Vector3.ProjectOnPlane(Vector3.SmoothDamp(this.targetMoveVector, base.inputBank.aimDirection, ref this.targetMoveVectorVelocity, WarCharge.turnSmoothTime, WarCharge.turnSpeed), Vector3.up).normalized;
+                base.characterDirection.moveVector = this.targetMoveVector;
+                Vector3 forward = base.characterDirection.forward;
+                float value = this.moveSpeedStat * WarCharge.chargeMovementSpeedCoefficient;
+                base.characterMotor.moveDirection = forward * WarCharge.chargeMovementSpeedCoefficient;
+                this.animator.SetFloat("forwardSpeed", value);
+                if (base.isAuthority && this.attack.Fire(null))
+                {
+
+                }
+                if (this.overlapResetStopwatch >= 1f / WarCharge.overlapResetFrequency)
+                {
+                    this.overlapResetStopwatch -= 1f / WarCharge.overlapResetFrequency;
+                }
+                if (base.isAuthority && Physics.OverlapSphere(this.sphereCheckTransform.position, WarCharge.overlapSphereRadius, LayerIndex.world.mask).Length != 0)
+                {
+
+                    base.healthComponent.TakeDamageForce(forward * 1f, true, false);
+                    StunState stunState = new StunState();
+                    stunState.stunDuration = WarCharge.selfStunDuration;
+                    this.outer.SetNextState(stunState);
+                    return;
+                }
+                this.stopwatch += Time.fixedDeltaTime;
+                this.overlapResetStopwatch += Time.fixedDeltaTime;
+                if (this.stopwatch > WarCharge.chargeDuration)
+                {
+                    this.outer.SetNextStateToMain();
+                }
+                base.FixedUpdate();
+            }
+
+            // Token: 0x06004013 RID: 16403 RVA: 0x0010C7BC File Offset: 0x0010A9BC
+            private void ResetOverlapAttack()
+            {
+
+                if (!this.hitboxGroup)
+                {
+                    Transform modelTransform = base.GetModelTransform();
+                    if (modelTransform)
+                    {
+                        this.hitboxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "HeadCh");
+                    }
+                }
+                this.attack = new OverlapAttack();
+                this.attack.attacker = base.gameObject;
+                this.attack.inflictor = base.gameObject;
+                this.attack.teamIndex = TeamComponent.GetObjectTeam(this.attack.attacker);
+                this.attack.damage = WarCharge.damageCoefficient * this.damageStat;
+
+                this.attack.forceVector = Vector3.up * 1f;
+                this.attack.pushAwayForce = 1f;
+                this.attack.hitBoxGroup = this.hitboxGroup;
+            }
+
+            // Token: 0x06004014 RID: 16404 RVA: 0x0000CFF7 File Offset: 0x0000B1F7
+            public override InterruptPriority GetMinimumInterruptPriority()
+            {
+                return InterruptPriority.Skill;
+            }
+        }
         public class Devolution : BaseSkillState
         {
             public float damageCoefficient = 0.5f;
@@ -771,6 +1109,6 @@ namespace ExampleSurvivor.Digievolutions
             }
         }
 
-
+        
     }
 }
