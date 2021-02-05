@@ -438,7 +438,7 @@ namespace ExampleSurvivor.Digievolutions
             // set up your primary skill def here!
 
             SkillDef mySkillDef = ScriptableObject.CreateInstance<SkillDef>();
-            mySkillDef.activationState = new SerializableEntityStateType(typeof(GreymonBlaster));
+            mySkillDef.activationState = new SerializableEntityStateType(typeof(Slash));
             mySkillDef.activationStateMachineName = "Weapon";
             mySkillDef.baseMaxStock = 1;
             mySkillDef.baseRechargeInterval = 0f;
@@ -954,7 +954,7 @@ namespace ExampleSurvivor.Digievolutions
                 base.PlayAnimation("Fuego", "GCharge");
                 if (modelTransform)
                 {
-                    hitBoxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "HeadG");
+                    hitBoxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "HeadH");
                 }
 
                 if (this.swingIndex > 1)

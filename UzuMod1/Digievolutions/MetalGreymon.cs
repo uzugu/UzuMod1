@@ -25,6 +25,9 @@ namespace ExampleSurvivor.Digievolutions
         public GameObject characterDisplay; // the prefab used for character select
         public static GameObject GreymonMetalBlast;
         public static GameObject GigaDestroyer;
+        public static GameObject GigaDestroyerFlash;
+
+        
         public static GameObject ClawHook;
 
         public static void Init()
@@ -332,7 +335,9 @@ namespace ExampleSurvivor.Digievolutions
             GigaDestroyer = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/LunarGolemTwinShotProjectile"), "Prefabs/Projectiles/ExampleArrowProjectile", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
 
             ClawHook = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/LoaderYankHook"), "Prefabs/Projectiles/ClawHook", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
+            GigaDestroyerFlash = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("prefabs/effects/muzzleflashes/MuzzleflashLunarGolemTwinShot"), "Prefabs/Projectiles/gigaDestroyerFlash", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
 
+            
             //arrowProjectile3 = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/MageFireboltExpanded"), "Prefabs/Projectiles/ExampleArrowProjectile2", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
 
             //slashattack = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/effects/LemurianSlash"), "Prefabs/Projectiles/Slashattack", true, "C:\\Users\\test\\Documents\\ror2mods\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor\\ExampleSurvivor.cs", "RegisterCharacter", 155);
@@ -358,6 +363,7 @@ namespace ExampleSurvivor.Digievolutions
             // register it for networking
             if (GreymonMetalBlast) PrefabAPI.RegisterNetworkPrefab(GreymonMetalBlast);
             if (GigaDestroyer) PrefabAPI.RegisterNetworkPrefab(GigaDestroyer);
+            if (GigaDestroyer) PrefabAPI.RegisterNetworkPrefab(GigaDestroyerFlash);
             if (ClawHook) PrefabAPI.RegisterNetworkPrefab(ClawHook);
 
             // add it to the projectile catalog or it won't work in multiplayer
@@ -550,7 +556,7 @@ namespace ExampleSurvivor.Digievolutions
 
 
             SkillDef mySkillDef = ScriptableObject.CreateInstance<SkillDef>();
-            mySkillDef.activationState = new SerializableEntityStateType(typeof(GigaDestroyerFire));
+            mySkillDef.activationState = new SerializableEntityStateType(typeof(ChargeTwinShot));
             mySkillDef.activationStateMachineName = "Weapon";
             mySkillDef.baseMaxStock = 1;
             mySkillDef.baseRechargeInterval = 5f;
@@ -714,6 +720,7 @@ namespace ExampleSurvivor.Digievolutions
         public class GreymonMetalBlaster : BaseSkillState
         {
             public float damageCoefficient = 2f;
+            public float damageStat = 2f;
             public float baseDuration = 0.15f;
             public float recoil = 2f;
             public static GameObject tracerEffectPrefab = Resources.Load<GameObject>("Prefabs/Effects/Tracers/TracerToolbotRebar");
@@ -734,7 +741,7 @@ namespace ExampleSurvivor.Digievolutions
                 this.muzzleString = "Muzzle";
 
 
-                base.PlayAnimation("Fuego", "GOpenMouth");
+                base.PlayAnimation("FuegoM", "MGOpenMouth");
             }
 
             public override void OnExit()
@@ -959,10 +966,10 @@ namespace ExampleSurvivor.Digievolutions
 
                 HitBoxGroup hitBoxGroup = null;
                 Transform modelTransform = base.GetModelTransform();
-                base.PlayAnimation("Fuego", "GCharge");
+                base.PlayAnimation("FuegoM", "MGCharge");
                 if (modelTransform)
                 {
-                    hitBoxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "HeadG");
+                    hitBoxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "HeadM");
                 }
 
                 if (this.swingIndex > 1)
@@ -1141,111 +1148,111 @@ namespace ExampleSurvivor.Digievolutions
         public class GigaDestroyerCharge : BaseSkillState
         {
             // Token: 0x020009BB RID: 2491
-            public class ChargeTwinShot : BaseState
+           
+        }
+        public class ChargeTwinShot : BaseState
+        {
+            // Token: 0x040032F8 RID: 13048
+            public static float baseDuration = 3f;
+
+            // Token: 0x040032F9 RID: 13049
+            public static float laserMaxWidth = 0.2f;
+
+            // Token: 0x040032FA RID: 13050
+            public static GameObject effectPrefab = MetalGreymon.GigaDestroyerFlash;
+
+            // Token: 0x040032FB RID: 13051
+            public static string chargeSoundString;
+
+            // Token: 0x040032FC RID: 13052
+            private float duration;
+
+            // Token: 0x040032FD RID: 13053
+            private uint chargePlayID;
+
+            // Token: 0x040032FE RID: 13054
+            private List<GameObject> chargeEffects = new List<GameObject>();
+
+            // Token: 0x06003997 RID: 14743 RVA: 0x000EC280 File Offset: 0x000EA480
+            public override void OnEnter()
             {
-                // Token: 0x040032F8 RID: 13048
-                public static float baseDuration = 3f;
-
-                // Token: 0x040032F9 RID: 13049
-                public static float laserMaxWidth = 0.2f;
-
-                // Token: 0x040032FA RID: 13050
-                public static GameObject effectPrefab=MetalGreymon.GigaDestroyer;
-
-                // Token: 0x040032FB RID: 13051
-                public static string chargeSoundString;
-
-                // Token: 0x040032FC RID: 13052
-                private float duration;
-
-                // Token: 0x040032FD RID: 13053
-                private uint chargePlayID;
-
-                // Token: 0x040032FE RID: 13054
-                private List<GameObject> chargeEffects = new List<GameObject>();
-
-                // Token: 0x06003997 RID: 14743 RVA: 0x000EC280 File Offset: 0x000EA480
-                public override void OnEnter()
+                base.OnEnter();
+                this.duration = ChargeTwinShot.baseDuration / this.attackSpeedStat;
+                Transform modelTransform = base.GetModelTransform();
+                this.chargePlayID = Util.PlayScaledSound(ChargeTwinShot.chargeSoundString, base.gameObject, this.attackSpeedStat);
+                base.PlayAnimation("FuegoM", "GigaDestroyer", "TwinShot.playbackRate", this.duration*4f);
+                if (modelTransform)
                 {
-                    base.OnEnter();
-                    this.duration = ChargeTwinShot.baseDuration / this.attackSpeedStat;
-                    Transform modelTransform = base.GetModelTransform();
-                    this.chargePlayID = Util.PlayScaledSound(ChargeTwinShot.chargeSoundString, base.gameObject, this.attackSpeedStat);
-                    base.PlayCrossfade("Gesture, Additive", "ChargeTwinShot", "TwinShot.playbackRate", this.duration, 0.1f);
-                    if (modelTransform)
+                    ChildLocator component = modelTransform.GetComponent<ChildLocator>();
+                    if (component)
                     {
-                        ChildLocator component = modelTransform.GetComponent<ChildLocator>();
-                        if (component)
-                        {
-                            List<Transform> list = new List<Transform>();
-                            list.Add(component.FindChild("Shooter_R"));
-                            list.Add(component.FindChild("Shooter_L"));
+                        List<Transform> list = new List<Transform>();
+                        list.Add(component.FindChild("Shooter_R"));
+                        list.Add(component.FindChild("Shooter_L"));
 
-                            if (ChargeTwinShot.effectPrefab)
+                        if (ChargeTwinShot.effectPrefab)
+                        {
+                            for (int i = 0; i < list.Count; i++)
                             {
-                                for (int i = 0; i < list.Count; i++)
+                                if (list[i])
                                 {
-                                    if (list[i])
+                                    GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(ChargeTwinShot.effectPrefab, list[i].position, list[i].rotation);
+                                    gameObject.transform.parent = list[i];
+                                    ScaleParticleSystemDuration component2 = gameObject.GetComponent<ScaleParticleSystemDuration>();
+                                    if (component2)
                                     {
-                                        GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(ChargeTwinShot.effectPrefab, list[i].position, list[i].rotation);
-                                        gameObject.transform.parent = list[i];
-                                        ScaleParticleSystemDuration component2 = gameObject.GetComponent<ScaleParticleSystemDuration>();
-                                        if (component2)
-                                        {
-                                            component2.newDuration = this.duration;
-                                        }
-                                        this.chargeEffects.Add(gameObject);
+                                        component2.newDuration = this.duration;
                                     }
+                                    this.chargeEffects.Add(gameObject);
                                 }
                             }
                         }
                     }
-                    if (base.characterBody)
-                    {
-                        base.characterBody.SetAimTimer(this.duration);
-                    }
                 }
-
-                // Token: 0x06003998 RID: 14744 RVA: 0x000EC400 File Offset: 0x000EA600
-                public override void OnExit()
+                if (base.characterBody)
                 {
-                    AkSoundEngine.StopPlayingID(this.chargePlayID);
-                    base.OnExit();
-                    for (int i = 0; i < this.chargeEffects.Count; i++)
-                    {
-                        if (this.chargeEffects[i])
-                        {
-                            EntityState.Destroy(this.chargeEffects[i]);
-                        }
-                    }
-                }
-
-                // Token: 0x06003999 RID: 14745 RVA: 0x000D44F8 File Offset: 0x000D26F8
-                public override void Update()
-                {
-                    base.Update();
-                }
-
-                // Token: 0x0600399A RID: 14746 RVA: 0x000EC458 File Offset: 0x000EA658
-                public override void FixedUpdate()
-                {
-                    base.FixedUpdate();
-                    if (base.fixedAge >= this.duration && base.isAuthority)
-                    {
-                        GigaDestroyerFire nextState = new GigaDestroyerFire();
-                        this.outer.SetNextState(nextState);
-                        return;
-                    }
-                }
-
-                // Token: 0x0600399B RID: 14747 RVA: 0x0000CFF7 File Offset: 0x0000B1F7
-                public override InterruptPriority GetMinimumInterruptPriority()
-                {
-                    return InterruptPriority.Skill;
+                    base.characterBody.SetAimTimer(this.duration);
                 }
             }
-        }
 
+            // Token: 0x06003998 RID: 14744 RVA: 0x000EC400 File Offset: 0x000EA600
+            public override void OnExit()
+            {
+                AkSoundEngine.StopPlayingID(this.chargePlayID);
+                base.OnExit();
+                for (int i = 0; i < this.chargeEffects.Count; i++)
+                {
+                    if (this.chargeEffects[i])
+                    {
+                        EntityState.Destroy(this.chargeEffects[i]);
+                    }
+                }
+            }
+
+            // Token: 0x06003999 RID: 14745 RVA: 0x000D44F8 File Offset: 0x000D26F8
+            public override void Update()
+            {
+                base.Update();
+            }
+
+            // Token: 0x0600399A RID: 14746 RVA: 0x000EC458 File Offset: 0x000EA658
+            public override void FixedUpdate()
+            {
+                base.FixedUpdate();
+                if (base.fixedAge >= this.duration && base.isAuthority)
+                {
+                    GigaDestroyerFire nextState = new GigaDestroyerFire();
+                    this.outer.SetNextState(nextState);
+                    return;
+                }
+            }
+
+            // Token: 0x0600399B RID: 14747 RVA: 0x0000CFF7 File Offset: 0x0000B1F7
+            public override InterruptPriority GetMinimumInterruptPriority()
+            {
+                return InterruptPriority.Skill;
+            }
+        }
         public class GigaDestroyerFire : BaseSkillState
         {
             // Token: 0x020009BB RID: 2491
@@ -1254,16 +1261,16 @@ namespace ExampleSurvivor.Digievolutions
             public static GameObject projectilePrefab=MetalGreymon.GigaDestroyer;
 
             // Token: 0x04003301 RID: 13057
-            public static GameObject effectPrefab = MetalGreymon.GigaDestroyer;
+            public static GameObject effectPrefab = MetalGreymon.GigaDestroyerFlash;
 
             // Token: 0x04003302 RID: 13058
-            public static GameObject dustEffectPrefab = MetalGreymon.GigaDestroyer;
+            public static GameObject dustEffectPrefab = MetalGreymon.GigaDestroyerFlash;
 
             // Token: 0x04003303 RID: 13059
-            public static GameObject hitEffectPrefab = MetalGreymon.GigaDestroyer;
+            public static GameObject hitEffectPrefab = MetalGreymon.GigaDestroyerFlash;
 
             // Token: 0x04003304 RID: 13060
-            public static GameObject tracerEffectPrefab = MetalGreymon.GigaDestroyer;
+            public static GameObject tracerEffectPrefab = MetalGreymon.GigaDestroyerFlash;
 
             // Token: 0x04003305 RID: 13061
             public static float damageCoefficient;
