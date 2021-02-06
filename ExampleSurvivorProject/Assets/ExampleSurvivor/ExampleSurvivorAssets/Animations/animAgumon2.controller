@@ -101,7 +101,7 @@ AnimatorController:
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
   - serializedVersion: 5
-    m_Name: pruebas
+    m_Name: "Aqui est\xE1 el cabezazo de agumon, con su mascara"
     m_StateMachine: {fileID: 1107512523373269264}
     m_Mask: {fileID: 31900000, guid: d31cf491e9d69234289257d0eaf1b9b6, type: 2}
     m_Motions: []
@@ -1123,6 +1123,32 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1102 &1102173064524502580
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Headbutt
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: d89a9c283667c3943bb3deafede02cf3, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &1102318681436463210
 AnimatorState:
   serializedVersion: 5
@@ -1595,7 +1621,7 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pruebas
+  m_Name: "Aqui est\xE1 el cabezazo de agumon, con su mascara"
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102657668344289812}
@@ -1612,6 +1638,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 1102753264032399026}
     m_Position: {x: 291.8221, y: 368.29196, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 1102173064524502580}
+    m_Position: {x: 180, y: 252, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -1621,7 +1650,7 @@ AnimatorStateMachine:
   m_EntryPosition: {x: 50, y: 120, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: 1102753264032399026}
+  m_DefaultState: {fileID: 1102173064524502580}
 --- !u!1107 &1107536826940416581
 AnimatorStateMachine:
   serializedVersion: 5
